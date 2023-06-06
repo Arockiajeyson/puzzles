@@ -9,7 +9,7 @@ app.set("view engine","jade")
 app.use(express.static("public"))
 app.use('/post',require('./routes/postRoute'))
 app.listen(3000,async()=>{
-    await mongoose.connect('mongodb://localhost/KEmaster')
+    await mongoose.connect('mongodb+srv://Aro:aro123@arockiajeyson.aswzaya.mongodb.net/?retryWrites=true&w=majority')
     console.log('db connected')
     console.log('port is up')
 })
