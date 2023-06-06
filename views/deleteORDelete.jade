@@ -1,0 +1,91 @@
+doctype html
+html
+    head
+        title Puzzle
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css') 
+
+    body
+        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
+            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
+            h4(style='color:white;margin-top:1em;text-align:center') Click the sentence that you want to delete/edit after that click delete/edit button...
+            div(style='width:100%;color:white;display:flex;flex-direction:column;justify-content:center;align-items:center;margin-top:5%')
+                table.TableDeleteEdit   
+                    tr 
+                        th(style="width:7%") S.no 
+                        th Sentence / exercisename : #{exnames}
+                         
+                    each items,index in mydata
+                        tr(class='sentence' data-value="#{items._id}" onclick="myfunction(this)" style="cursor:pointer").deSelect 
+                            td(class='exercisename' style="width:7%")=index+1
+                            td=items.sentence
+                            
+                div(style='width:30%;margin-top:5%')         
+                    a(href='/post/editanddelete' ).deEBack Back
+                    a(href='/post/edit').deEBack Edit 
+                    a(href='/post/delete').deleteExercise.deEBack Delete     
+
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script. 
+                //- let inp =document.querySelector('.inputEX')
+                let exName =document.querySelector('.sentence')
+                //- let sentence =document.querySelector('.idexercise')
+                let exname =''
+                
+
+                function myfunction (element){
+                    exname = element.getAttribute("data-value")
+
+                    let rows = document.getElementsByTagName('tr');
+
+                    for (let i = 1; i < rows.length; i++) {
+                        
+                        if (rows[i].classList.contains('democlass')) {
+                            console.log(rows[i].classList.contains('democlass'))
+                            rows[i].classList.remove('democlass');
+                        }
+                    }
+                    element.setAttribute("class", "democlass")
+                    console.log(exname)
+                   
+                }
+
+
+                $(document).ready(function() {
+                    $('.deleteExercise').click(function() {
+                    var myData = 3;
+                    
+                    $.ajax({
+                        url: "/post/deleteex",
+                        method: "delete",
+                        data: { id: exname },
+                        success: function(response) {
+                            alert(response)
+                            console.log(response);
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                    });
+                });
+                $(document).ready(function() {
+                    $('.sentence').click(function() {
+                    $.ajax({
+                        url: "/post/editid",
+                        method: "post",
+                        data: { id: exname },
+                        success: function(response) {
+                        console.log(response,'lkll');
+                        },
+                        error: function(err) {
+                        console.log(err);
+                        }
+                    });
+                    });
+                });
+
+                
+                    
+                              
+        

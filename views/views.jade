@@ -1,0 +1,46 @@
+doctype html
+html
+    head
+        title Puzzle
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css')
+    body
+        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;')
+            div(style='width:100%;padding:1em;display:flex;border-radius:.3em;position:relative') 
+                span(style='border-radius:50%;background-color:white') 
+                    a(href='https://enability.in' target='_blank' style='text-decoration:none;background-color:transparent')
+                        img(src="https://enability.in/assets/images/enability_logo.png" style='width:6em;padding:.5em')
+                div(style='border-left:1px solid white;margin-left:2.5em;height:90px') 
+                span(style ='font-size:1.6em;font-weight:bolder;cursor:pointer;margin-left:2em;margin-top:.8em;color:white').aboutEnability About
+                span(style ='position: absolute;top:7em;width:18em;left:0').aboutDet
+                img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:7%;padding:.5em;margin-left:77%')
+            //- marquee(direction="right" style='font-size:1.5em') &#128522; Welcome back &#128522;
+            div(style='width:100%;display:flex;flex-direction:row')
+                div(style='width:50%;display:flex;flex-direction:row;justify-content:center;align-items:center;margin-top:3em')   
+                    div 
+                        h1 
+                            img(src="/asset/delete.png", alt="", srcset="" style='width:5%;margin-top:-.3em')
+                            span(style='color:white;margin-left:.3em') The 
+                            span(style='color:white') rearrange 
+                            span(style='color:white') sentences jumbled 
+                        h1 
+                            img(src="/asset/check-mark.png", alt="", srcset="" style='width:6%;margin-top:-.3em')
+                            span(style='color:white;margin-left:.3em') Rearrange the jumbled sentences
+                            img(src="/asset/Jumbled-Sentences-Questions-and-Answers-removebg-preview.png", alt="", srcset="" style='margin-top:-.1em').img-class    
+                div(style='width:30%;height:300px;margin-left:10%').adimStudentpage.content
+                    div.button-class(style='margin-top:2em') 
+                        a(href='/post/adminbtn' style='padding-top:.3em;color:white') Admin 
+                        a(style='margin-top:2em;padding-top:.3em;color:white' href='/post/student' ) Student  
+
+
+        script. 
+                let about = document.querySelector('.aboutDet')
+                let enabilityAbout =document.querySelector('.aboutEnability')
+                enabilityAbout.addEventListener('mouseover',()=>{
+                    about.innerHTML ="A word puzzle application is a web based software designed to provide users with entertaining and challenging puzzles that involve solving word-based problems.Word puzzle applications often provide users with a range of difficulty levels, allowing beginners to start with easier puzzles.Overall, word puzzle applications provide a fun and engaging way for users to improve their vocabulary, spelling, and problem-solving skills while also providing a relaxing and entertaining way to pass the time."
+                    about.style ='position:absolute;left:0;top:7em;width:18em;background-color:white;padding:1em;border-radius:.2em'
+                })
+                enabilityAbout.addEventListener('mouseout',()=>{
+                    about.innerHTML =''
+                    about.style ='position:absolute;left:0;top:7em;width:18em;'
+                })

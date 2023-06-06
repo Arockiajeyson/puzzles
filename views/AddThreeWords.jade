@@ -1,0 +1,40 @@
+doctype html 
+html 
+    head 
+        title Admin
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css')
+    body(style='background-color:#C1D0B5') 
+        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;margin-top:1em;position:relative')
+            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:6%;position:absolute;right:0;top:0')
+            h1(style='color:white') Enter the word and audio in the correct format 
+            div(style='width:70%;background-color:#7fdbff;padding:1em;border-radius:.6em;box-shadow: 5px 5px 5px rgb(83, 81, 81);') 
+                form(action="/post/threeworddata" method='POST' enctype="multipart/form-data") 
+                    p(style='font-size:1.3em;font-weight:bold') Exercise Name : #{data} 
+                    div(style='width:100%;padding:10px;display:flex;justify-content:space-around;font-size:1.2em') 
+                        div 
+                            p(style='font-size:1.5em;font-family:serif') Enter word 1 :
+                            input(type="text" name='word1' style='width:100%;height:45px;border-radius:.5em;outline:none')
+                        div(style='float:right') 
+                            p(style='font-size:1.5em;font-family:serif') Audio 1 :
+                            input(type="file" name='audioFiles' style='width:100%;height:45px;border:none;outline:none')    
+                    div(style='width:100%;padding:10px;display:flex;justify-content:space-around;font-size:1.2em') 
+                        div 
+                            p(style='font-size:1.5em;font-family:serif') Enter word 2 :
+                            input(type="text" name='word2' style='width:100%;height:45px;border-radius:.5em;outline:none')
+                        div(style='float:right') 
+                            p(style='font-size:1.5em;font-family:serif') Audio 2 :
+                            input(type="file" name='audioFiles' style='width:100%;height:45px;border:none;outline:none')
+                    div(style='width:100%;padding:10px;display:flex;justify-content:space-around;font-size:1.2em') 
+                        div 
+                            p(style='font-size:1.5em;font-family:serif') Enter word 3 :
+                            input(type="text" name='word3' style='width:100%;height:45px;border-radius:.5em;outline:none')
+                        div(style='float:right') 
+                            p(style='font-size:1.5em;font-family:serif') Audio 3 :
+                            input(type="file" name='audioFiles' style='width:100%;height:45px;border:none;outline:none')
+                    div(style='width:100%;padding:10px;display:flex;border-radius:.5em;') 
+                        button.btn(style='width:20%;font-size:1.5em;border-radius:.2em;border:none;background-color:#2512b0;color:white;margin-left:4em;box-shadow: 5px 5px 5px rgb(83, 81, 81);').sub Submit 
+                        //- a(style='width:20%;text-align:center;font-size:1.5em;border-radius:.2em;text-decoration:none;background-color:#2512b0;color:white;padding-top:.4em;box-shadow: 5px 5px 5px rgb(83, 81, 81);height:60px;margin-top:1em' ) Next word four
+                        a(style='width:20%;text-align:center;font-size:1.5em;border-radius:.2em;text-decoration:none;background-color:#2512b0;color:white;padding-top:.4em;margin-left:9em;box-shadow: 5px 5px 5px rgb(83, 81, 81);height:60px;margin-top:1em' href='/post/add').sub Back        
+        script. 
+                //- console.log(data)

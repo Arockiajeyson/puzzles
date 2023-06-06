@@ -1,0 +1,13 @@
+doctype html 
+html 
+    head 
+        title Exercise Name
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css')
+    body
+        div.container-md(style='display:flex;flex-direction:column;justify-content:center;align-items:center;margin-top:4.4em') 
+            div
+                h1(style='font-family:serif;color:white') Add new exercise name    
+                form(action="/post/exerciseAdding" method='post' style='display:flex;flex-direction:column') 
+                    input(type="text" name='exerciseName' placeholder='Enter exercise name...' style='width:100%;height:3em;border-radius:.5em;border:none;outline:none;font-size:1.3em;text-align:center')
+                    button(style='margin-top:5em;height:50px;border-radius:.5em;background-color:rgb(171, 99, 239);font-size:1.4em;border:none') Submit

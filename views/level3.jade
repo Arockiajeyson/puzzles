@@ -1,0 +1,504 @@
+doctype html
+html
+    head
+        title Puzzle
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css') 
+
+    body
+        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
+            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
+            h1(style='color:white;margin-top:1em') Arrange the words in correct format...
+            div(style='width:60%;height:85vh').content.button-class-1
+                //- form( enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1 
+                div(style='display:flex;justify-content:space-between')  
+                    h3 Level 2
+                    h3 Q.no : #{level}
+                h3(style='margin-top:3%;text-align:center') Question    
+                div(style='display:flex;border:2px solid black;padding:27px;margin-top:2%;border-radius:.3em;font-size:1.4em;justify-content:space-around;box-shadow: 5px 5px 5px rgb(83, 81, 81);') 
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-1.modeScan #{question[0].Word5}
+                    audio(controls='' style="display:none" class="audio1") 
+                        source(src="/uploaded files/#{question[0].Audio5}" )
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-2.modeScan #{question[0].Word3}
+                    audio(controls='' style="display:none" class="audio2") 
+                        source(src="/uploaded files/#{question[0].Audio3}" )
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-3.modeScan #{question[0].Word4}
+                    audio(controls='' style="display:none" class="audio3") 
+                        source(src="/uploaded files/#{question[0].Audio4}" )
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-4.modeScan #{question[0].Word1}
+                    audio(controls='' style="display:none" class="audio4") 
+                        source(src="/uploaded files/#{question[0].Audio1}" )
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-5.modeScan #{question[0].Word2}
+                    audio(controls='' style="display:none" class="audio5") 
+                        source(src="/uploaded files/#{question[0].Audio2}" )
+                h3(style='margin-top:3%;text-align:center') Answer
+                div(style='display:flex;justify-content:center;border:2px solid black;margin-top:2%;border-radius:.3em;font-size:1.4em;height:25vh;box-shadow: 5px 5px 5px rgb(83, 81, 81);').answerBack 
+                    p(style='padding-top:5%;font-size:1.2em').answer-1 
+                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-2 
+                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-3 
+                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-4 
+                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-5 
+                div(style='display:flex;justify-content:space-between;margin-top:7%')         
+                    a(href='/post/nextQLev3' style='width:30%' class="answerss").answerSuAndRe Submit
+                    a(href='/post/level3game' style='width:30%;float:left').answerSuAndRe Rearrange
+
+
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script. 
+                let inp =document.querySelector('#exercise')
+                let wor1 =document.querySelector('.word-1')
+                let ans1 =document.querySelector('.answer-1')
+                let wor2=document.querySelector('.word-2')
+                let ans2 =document.querySelector('.answer-2')
+                let wor3=document.querySelector('.word-3')
+                let ans3=document.querySelector('.answer-3')
+                let wor4=document.querySelector('.word-4')
+                let ans4=document.querySelector('.answer-4')
+                let wor5=document.querySelector('.word-5')
+                let ans5=document.querySelector('.answer-5')
+                
+
+                if(#{mode} == 1){
+                    console.log('comig')
+                    for(let i=0;i<2;i++){
+                        document.querySelectorAll(".answerSuAndRe")[i].removeAttribute("href")
+                    }
+                    let p1 = document.querySelectorAll(".modeScan")[0].classList[0]
+                    let p2 = document.querySelectorAll(".modeScan")[1].classList[0]
+                    let p3 = document.querySelectorAll(".modeScan")[2].classList[0]
+                    let p4 = document.querySelectorAll(".modeScan")[3].classList[0]
+                    let p5 = document.querySelectorAll(".modeScan")[4].classList[0]
+                    function timeouts(){
+                        
+                        let time1 = setTimeout(()=>{
+                            let v =document.querySelector(`.${p1}`)
+                            v.style.backgroundColor = "yellow"
+                            let pv =document.querySelector(`.${p5}`)
+                            pv.style.backgroundColor = "#b1e1f4"
+                            
+                        }, 1000)
+
+                        let time2 = setTimeout(()=>{
+                            //- clearTimeout(time1)
+                            let pV =document.querySelector(`.${p1}`)
+                            pV.style.backgroundColor = "#b1e1f4"
+                            let v =document.querySelector(`.${p2}`)
+                            v.style.backgroundColor = "yellow"
+                        }, 2000)
+                        
+                        var time3 = setTimeout(()=>{
+                            //- clearTimeout(time1)
+                            let pV =document.querySelector(`.${p2}`)
+                            pV.style.backgroundColor = "#b1e1f4"
+                            let v =document.querySelector(`.${p3}`)
+                            v.style.backgroundColor = "yellow"
+                        }, 3000)
+
+                        var time4 = setTimeout(()=>{
+                            //- clearTimeout(time1)
+                            let pV =document.querySelector(`.${p3}`)
+                            pV.style.backgroundColor = "#b1e1f4"
+                            let v =document.querySelector(`.${p4}`)
+                            v.style.backgroundColor = "yellow"
+                        }, 4000)
+
+
+                        var time5 = setTimeout(()=>{
+                            //- clearTimeout(time1)
+                            let pV =document.querySelector(`.${p4}`)
+                            pV.style.backgroundColor = "#b1e1f4"
+                            let v =document.querySelector(`.${p5}`)
+                            v.style.backgroundColor = "yellow"
+                        }, 5000)
+
+                        document.addEventListener ("click",()=>{
+                            clearTimeout(time1);
+                            clearTimeout(time2);
+                            clearTimeout(time3);
+                            clearTimeout(time4);
+                            clearTimeout(time5);
+                        })
+                        
+                    }
+                    
+                    timeouts()
+                    
+                    let intervel = setInterval(function () {timeouts()}, 6000);
+                    
+                    //- console.log(document.querySelectorAll(".answerSuAndRe")[0].style.backgroundColor='red')
+                    
+                    document.addEventListener ("click",()=>{
+                        clearInterval(intervel);
+                        let p1Color =document.querySelectorAll(".modeScan")[0].style.backgroundColor
+                        let p2Color =document.querySelectorAll(".modeScan")[1].style.backgroundColor
+                        let p3Color =document.querySelectorAll(".modeScan")[2].style.backgroundColor
+                        let p4Color =document.querySelectorAll(".modeScan")[3].style.backgroundColor
+                        let p5Color =document.querySelectorAll(".modeScan")[4].style.backgroundColor
+                        function submit(sub,reag){
+                            if(reag =="yellow"){
+                                location.reload();
+                            }else{
+                                let word1 = document.querySelector('.answer-1').innerHTML
+                                let word2 = document.querySelector('.answer-2').innerHTML
+                                let word3 = document.querySelector('.answer-3').innerHTML
+                                let word4 = document.querySelector('.answer-4').innerHTML
+                                let word5 = document.querySelector('.answer-5').innerHTML
+                                $.ajax({
+                                    url: "/post/resultAnswerL3",
+                                    method: "POST",
+                                    data: {Aword1: word1,Aword2:word2,Aword3:word3,Aword4:word4,Aword5:word5 },
+                                    success: function(response) {
+                                        location.replace('/post/nextQLev3')
+                                        console.log(response);
+                                    },
+                                    error: function(err) {
+                                    console.log(err);
+                                    }
+                                });
+                            }
+                            
+                        }
+
+                        function onclicking(){
+                            let sub1 =setInterval(()=>{
+                                document.querySelectorAll(".answerSuAndRe")[0].style.backgroundColor='yellow'
+                                document.querySelectorAll(".answerSuAndRe")[0].style.color='black'
+                                document.querySelectorAll(".answerSuAndRe")[1].style.backgroundColor='#2512b0'
+                                document.querySelectorAll(".answerSuAndRe")[1].style.color='white'
+                            },1000)
+
+                            let sub2=setInterval(()=>{
+                                document.querySelectorAll(".answerSuAndRe")[1].style.backgroundColor='yellow'
+                                document.querySelectorAll(".answerSuAndRe")[1].style.color='black'
+                                document.querySelectorAll(".answerSuAndRe")[0].style.backgroundColor='#2512b0'
+                                document.querySelectorAll(".answerSuAndRe")[0].style.color='white'
+                            },2000)
+                            document.addEventListener ("click",()=>{
+                                clearInterval(sub1);
+                                clearInterval(sub2);
+                                let one = document.querySelectorAll(".answerSuAndRe")[0].style.backgroundColor
+                                let two = document.querySelectorAll(".answerSuAndRe")[1].style.backgroundColor
+                                submit(one,two)
+                        })
+                        }
+
+                        if(p1Color =="yellow"){
+                            console.log('p1')
+                            let audio1 =document.querySelector('.audio1')
+                            audio1.play()
+                            if(ans1.innerHTML == ' '){
+                                console.log(wor1.innerHTML)
+                                ans1.innerHTML=wor1.innerHTML
+                                wor1.innerHTML =" "
+                            }
+                            else if(ans2.innerHTML ==' '){
+                                ans2.innerHTML=wor1.innerHTML
+                                wor1.innerHTML =" "
+                            }
+                            else if(ans3.innerHTML ==' '){
+                                ans3.innerHTML=wor1.innerHTML
+                                wor1.innerHTML =" "
+                            }else if(ans4.innerHTML ==' '){
+                                ans4.innerHTML=wor1.innerHTML
+                                wor1.innerHTML =" "
+                            }else if(wor1.innerHTML !=" "){
+                                ans5.innerHTML=wor1.innerHTML
+                                wor1.innerHTML =" "
+                            }
+                            if(ans1.innerHTML == " " || ans2.innerHTML == " " || ans3.innerHTML == " " || ans4.innerHTML ==" " || ans5.innerHTML ==" "){
+                                wor1.style.backgroundColor ='#b1e1f4'
+                                timeouts()
+                                intervel = setInterval(function () {timeouts()}, 6000);
+                            }else{
+                                clearInterval(intervel);
+                                wor1.style.backgroundColor ='#b1e1f4'
+                                onclicking()
+                            }
+                            
+                        }else if(p2Color =='yellow'){
+                            let audio1 =document.querySelector('.audio2')
+                            audio1.play()
+                            if(ans1.innerHTML ==' '){
+                                ans1.innerHTML=wor2.innerHTML
+                                wor2.innerHTML =" "
+                            }
+                            else if(ans2.innerHTML ==' '){
+                                ans2.innerHTML=wor2.innerHTML
+                                wor2.innerHTML =" "
+                            }
+                            else if(ans3.innerHTML ==' '){
+                                ans3.innerHTML=wor2.innerHTML
+                                wor2.innerHTML =" "
+                            }else if(ans4.innerHTML ==' '){
+                                ans4.innerHTML=wor2.innerHTML
+                                wor2.innerHTML =" "
+                            }else if(wor2.innerHTML != " "){
+                                ans5.innerHTML=wor2.innerHTML
+                                wor2.innerHTML =" "
+                            }
+                            if(ans1.innerHTML == " " || ans2.innerHTML == " " || ans3.innerHTML == " " || ans4.innerHTML == " " || ans5.innerHTML ==" "){
+                                wor2.style.backgroundColor ='#b1e1f4'
+                                timeouts()
+                                intervel = setInterval(function () {timeouts()}, 6000);
+                            }else{
+                                clearInterval(intervel);
+
+                                wor2.style.backgroundColor ='#b1e1f4'
+                                onclicking()
+                            }
+                        }else if(p3Color =='yellow'){
+                            let audio1 =document.querySelector('.audio3')
+                            audio1.play()
+                            if(ans1.innerHTML ==' '){
+                                ans1.innerHTML=wor3.innerHTML
+                                wor3.innerHTML =" "
+                            }
+                            else if(ans2.innerHTML ==' '){
+                                ans2.innerHTML=wor3.innerHTML
+                                wor3.innerHTML =" "
+                            }
+                            else if(ans3.innerHTML ==' '){
+                                
+                                ans3.innerHTML=wor3.innerHTML
+                                wor3.innerHTML =" "
+                            }else if(ans4.innerHTML ==' '){
+                                ans4.innerHTML=wor3.innerHTML
+                                wor3.innerHTML =" "
+                            }else if(wor3.innerHTML != " "){
+                                ans5.innerHTML=wor3.innerHTML
+                                wor3.innerHTML =" "
+                            }
+                            if(ans1.innerHTML == " " || ans2.innerHTML == " " || ans3.innerHTML == " " || ans4.innerHTML ==" " || ans5.innerHTML ==" "){
+                                wor3.style.backgroundColor ='#b1e1f4'
+                                timeouts()
+                                intervel = setInterval(function () {timeouts()}, 6000);
+                            }else{
+                                clearInterval(intervel);
+                                wor3.style.backgroundColor ='#b1e1f4'
+                                onclicking()
+                            }
+                        }else if(p4Color =="yellow"){
+                            let audio1 =document.querySelector('.audio4')
+                            audio1.play()
+                            if(ans1.innerHTML ==' '){
+                                ans1.innerHTML=wor4.innerHTML
+                                wor4.innerHTML =" "
+                            }
+                            else if(ans2.innerHTML ==' '){
+                                ans2.innerHTML=wor4.innerHTML
+                                wor4.innerHTML =" "
+                            }
+                            else if(ans3.innerHTML ==' '){
+                                ans3.innerHTML=wor4.innerHTML
+                                wor4.innerHTML =" "
+                            }else if(ans4.innerHTML ==' '){
+                                ans4.innerHTML=wor4.innerHTML
+                                wor4.innerHTML =" "
+                            }else if(wor4.innerHTML != " "){
+                                ans5.innerHTML=wor4.innerHTML
+                                wor4.innerHTML =" "
+                            }
+                        
+                            if(ans1.innerHTML == " " || ans2.innerHTML == " " || ans3.innerHTML == " " || ans4.innerHTML == " " || ans5.innerHTML ==" "){
+                                wor4.style.backgroundColor ='#b1e1f4'
+                                timeouts()
+                                intervel = setInterval(function () {timeouts()}, 6000);
+                            }else{
+                                clearInterval(intervel);
+                                wor4.style.backgroundColor ='#b1e1f4'
+                                onclicking()
+                            }
+                        }else if(p5Color =="yellow"){
+                            let audio1 =document.querySelector('.audio4')
+                            audio1.play()
+                            if(ans1.innerHTML ==' '){
+                                ans1.innerHTML=wor5.innerHTML
+                                wor5.innerHTML =" "
+                            }
+                            else if(ans2.innerHTML ==' '){
+                                ans2.innerHTML=wor5.innerHTML
+                                wor5.innerHTML =" "
+                            }
+                            else if(ans3.innerHTML ==' '){
+                                ans3.innerHTML=wor5.innerHTML
+                                wor5.innerHTML =" "
+                            }else if(ans4.innerHTML ==' '){
+                                ans4.innerHTML=wor5.innerHTML
+                                wor5.innerHTML =" "
+                            }else if(wor5.innerHTML !=" "){
+                                ans5.innerHTML=wor5.innerHTML
+                                wor5.innerHTML =" "
+                            }
+                        
+                            if(ans1.innerHTML == " " || ans2.innerHTML == " " || ans3.innerHTML == " " || ans4.innerHTML == " " || ans5.innerHTML ==" "){
+                                wor5.style.backgroundColor ='#b1e1f4'
+                                timeouts()
+                                intervel = setInterval(function () {timeouts()}, 6000);
+                            }else{
+                                clearInterval(intervel);
+                                wor5.style.backgroundColor ='#b1e1f4'
+                                onclicking()
+                            }
+                        }
+                    })
+                    
+                }else{
+                    $(document).ready(function() {
+                    $('.answerss').click(function() {
+                        let word1 = document.querySelector('.answer-1').innerHTML
+                        let word2 = document.querySelector('.answer-2').innerHTML
+                        let word3 = document.querySelector('.answer-3').innerHTML
+                        let word4 = document.querySelector('.answer-4').innerHTML
+                        let word5 = document.querySelector('.answer-5').innerHTML
+                        console.log("clicked")
+                        $.ajax({
+                            url: "/post/resultAnswerL3",
+                            method: "POST",
+                            data: {Aword1: word1,Aword2:word2,Aword3:word3,Aword4:word4,Aword5:word5},
+                            success: function(response) {
+                                alert(response)
+                                console.log(response);
+                            },
+                            error: function(err) {
+                            console.log(err);
+                            }
+                        });
+                    });
+                });
+
+                $(document).ready(function() {
+                    $('.word-1').click(function() {
+                        let audio1 =document.querySelector('.audio1')
+                        audio1.play()
+                        if(ans1.innerHTML == ' '){
+                            console.log(wor1.innerHTML)
+                            ans1.innerHTML=wor1.innerHTML
+                            wor1.innerHTML =" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor1.innerHTML
+                            wor1.innerHTML =" "
+                        }
+                        else if(ans3.innerHTML ==' '){
+                            ans3.innerHTML=wor1.innerHTML
+                            wor1.innerHTML =" "
+                        }else if(ans4.innerHTML ==' '){
+                            ans4.innerHTML=wor1.innerHTML
+                            wor1.innerHTML =" "
+                        }else if(wor1.innerHTML !=" "){
+                            ans5.innerHTML=wor1.innerHTML
+                            wor1.innerHTML =" "
+                        }
+                    
+                    });
+                });
+                
+                $(document).ready(function() {
+                    $('.word-2').click(function() {
+                        let audio1 =document.querySelector('.audio2')
+                        audio1.play()
+                        if(ans1.innerHTML ==' '){
+                            ans1.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }
+                        else if(ans3.innerHTML ==' '){
+                            ans3.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }else if(ans4.innerHTML ==' '){
+                            ans4.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }else if(wor2.innerHTML != " "){
+                            ans5.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }
+                    
+                    });
+                });
+                
+                $(document).ready(function() {
+                    $('.word-3').click(function() {
+                        //- console.log(wor3.innerHTML)
+                        let audio1 =document.querySelector('.audio3')
+                        audio1.play()
+                        if(ans1.innerHTML ==' '){
+                            ans1.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }
+                        else if(ans3.innerHTML ==' '){
+                            
+                            ans3.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }else if(ans4.innerHTML ==' '){
+                            ans4.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }else if(wor3.innerHTML != " "){
+                            ans5.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }
+                    
+                   
+                    });
+                });
+
+                $(document).ready(function() {
+                    $('.word-4').click(function() {
+                        //- console.log(wor3.innerHTML)
+                        let audio1 =document.querySelector('.audio4')
+                        audio1.play()
+                        if(ans1.innerHTML ==' '){
+                            ans1.innerHTML=wor4.innerHTML
+                            wor4.innerHTML =" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor4.innerHTML
+                            wor4.innerHTML =" "
+                        }
+                        else if(ans3.innerHTML ==' '){
+                            ans3.innerHTML=wor4.innerHTML
+                            wor4.innerHTML =" "
+                        }else if(ans4.innerHTML ==' '){
+                            ans4.innerHTML=wor4.innerHTML
+                            wor4.innerHTML =" "
+                        }else if(wor4.innerHTML != " "){
+                            ans5.innerHTML=wor4.innerHTML
+                            wor4.innerHTML =" "
+                        }
+                    
+                   
+                    });
+                });
+                
+                $(document).ready(function() {
+                    $('.word-5').click(function() {
+                        let audio1 =document.querySelector('.audio5')
+                        audio1.play()
+                        if(ans1.innerHTML ==' '){
+                            ans1.innerHTML=wor5.innerHTML
+                            wor5.innerHTML =" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor5.innerHTML
+                            wor5.innerHTML =" "
+                        }
+                        else if(ans3.innerHTML ==' '){
+                            ans3.innerHTML=wor5.innerHTML
+                            wor5.innerHTML =" "
+                        }else if(ans4.innerHTML ==' '){
+                            ans4.innerHTML=wor5.innerHTML
+                            wor5.innerHTML =" "
+                        }else if(wor5.innerHTML !=" "){
+                            ans5.innerHTML=wor5.innerHTML
+                            wor5.innerHTML =" "
+                        }
+                    });
+                });
+                }
+                

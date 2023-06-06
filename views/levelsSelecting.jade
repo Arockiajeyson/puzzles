@@ -1,0 +1,62 @@
+doctype html
+html
+    head
+        title Puzzle
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css') 
+
+    body
+        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
+            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
+            h1(style='color:white;margin-top:1em') Select the exercise name and click the continue button...
+            div(style='width:30%').content.button-class-1
+                //- form( enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1  
+                p(style='font-size:1.3em') Exercise Name : #{name}
+                a(href='/post/level1game' style='padding-top: .1em;').level level 1
+                if level1 ==false
+                    button(style='margin-top:1em;padding-top: .1em;').btn-level.level2 level 2
+                else 
+                    a(href='/post/level2game' style='margin-top:1em;padding-top: .1em;').level level 2
+                if  level2 == false || level1 == false 
+                    button(style='margin-top:1em;padding-top: .1em;').btn-level.level3 level 3
+                else            
+                    a(href='/post/level3game' style='margin-top:1em;padding-top: .1em;').level level 3  
+                a(href='/post/student' style='margin-top:1em;padding-top: .1em;').level Back 
+
+
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script. 
+                let inp =document.querySelector('#exercise')
+                $(document).ready(function() {
+                    $('.level2').click(function() {
+                    $.ajax({
+                        url: "/post/level1TorF",
+                        method: "POST",
+                        data: {name: 'level2' },
+                        success: function(response) {
+                            alert(response)
+                            //- window.location.href = '/post/level1game'
+                            console.log(response);
+                        },
+                        error: function(err) {
+                        console.log(err);
+                        }
+                    });
+                    });
+                });
+                $(document).ready(function() {
+                    $('.level3').click(function() {
+                    $.ajax({
+                        url: "/post/level2TorF",
+                        method: "POST",
+                        data: {name: 'level2' },
+                        success: function(response) {
+                            alert(response)
+                            console.log(response);
+                        },
+                        error: function(err) {
+                        console.log(err);
+                        }
+                    });
+                    });
+                });

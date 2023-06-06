@@ -1,0 +1,147 @@
+doctype html
+html
+    head
+        title Puzzle
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css') 
+
+    body.body
+        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
+            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
+            h1(style='color:white;margin-top:1em') Arrange the words in correct format...
+            div(style='width:50%;height:85vh').content.button-class-1
+                //- form( enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1 
+                div(style='display:flex;justify-content:space-between')  
+                    h3 Level 1
+                    h3 Q.no : #{level}
+                h3(style='margin-top:3%;text-align:center') Question 
+                p(style="display:none").modeCapture #{mode}   
+                div(style='display:flex;border:2px solid black;padding:27px;margin-top:2%;border-radius:.3em;font-size:1.4em;justify-content:space-around;box-shadow: 5px 5px 5px rgb(83, 81, 81);').setTime 
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:25%;text-align:center;height:80%;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.3em').word-1.modeScan #{question[0].Word3}
+                    audio(controls='' style="display:none" class="audio1") 
+                        source(src="/uploaded files/#{question[0].Audio3}" )
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:25%;text-align:center;height:80%;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.3em').word-2.modeScan #{question[0].Word1}
+                    audio(controls='' style="display:none" class="audio2") 
+                        source(src="/uploaded files/#{question[0].Audio1}" )
+                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:25%;text-align:center;height:70px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.3em').word-3.modeScan #{question[0].Word2}
+                    audio(controls='' style="display:none" class="audio3") 
+                        source(src="/uploaded files/#{question[0].Audio2}" )
+                h3(style='margin-top:3%;text-align:center') Answer
+                div(style='display:flex;justify-content:center;border:2px solid black;margin-top:2%;border-radius:.3em;font-size:1.4em;height:25vh;box-shadow: 5px 5px 5px rgb(83, 81, 81);').answerBack 
+                    span(style='padding-top:7%;font-size:1.3em').answer-1 
+                    span(style='padding-top:7%;font-size:1.3em;margin-left:2%').answer-2 
+                    span(style='padding-top:7%;font-size:1.3em;margin-left:2%').answer-3 
+                div(style='display:flex;justify-content:space-between;margin-top:7%')         
+                    a(href='/post/nextQ' style='width:30%' class="answerss").answerSuAndRe Submit
+                    a(href='/post/level1game' style='width:30%;float:left' ).answerSuAndRe Rearrange
+
+
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(type="text/javascript" src="jsfile.js")        
+        script. 
+                let inp =document.querySelector('#exercise')
+                let wor1 =document.querySelector('.word-1')
+                let ans1 =document.querySelector('.answer-1')
+                let wor2=document.querySelector('.word-2')
+                let ans2 =document.querySelector('.answer-2')
+                let wor3=document.querySelector('.word-3')
+                let ans3=document.querySelector('.answer-3')
+                let arr=[]
+                
+                let modes =document.querySelector(".modeCapture").innerHTML
+                //- console.log(#{mode})
+
+                if(#{mode} ==1){
+                   script(type="text/javascript" src="jsfile.js") 
+                   script(language='javascript').
+                    level1()
+                    
+                }else{
+
+                    $(document).ready(function() {
+                    $('.answerss').click(function() {
+                        let word1 = document.querySelector('.answer-1').innerHTML
+                        let word2 = document.querySelector('.answer-2').innerHTML
+                        let word3 = document.querySelector('.answer-3').innerHTML
+                    $.ajax({
+                        url: "/post/resultAnswerL1",
+                        method: "POST",
+                        data: {Aword1: word1,Aword2:word2,Aword3:word3 },
+                        success: function(response) {
+                            alert(response)
+                            console.log(response);
+                        },
+                        error: function(err) {
+                        console.log(err);
+                        }
+                    });
+                    });
+                });
+
+
+                $(document).ready(function() {
+                    $('.word-1').click(function() {
+                        let audio1 =document.querySelector('.audio1')
+                        audio1.play()
+                        if(ans1.innerHTML == ' '){
+                            console.log(wor1.innerHTML)
+                            ans1.innerHTML=wor1.innerHTML
+                            wor1.innerHTML=" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor1.innerHTML
+                            wor1.innerHTML =" "
+                        }
+                        else if(wor1.innerHTML !=" "){
+                            ans3.innerHTML=wor1.innerHTML
+                            wor1.innerHTML =" "
+                        }
+                    
+                    });
+                });
+                
+                $(document).ready(function() {
+                    $('.word-2').click(function() {
+                        let audio1 =document.querySelector('.audio2')
+                        audio1.play()
+                        if(ans1.innerHTML ==' '){
+                            ans1.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }
+                        else if(wor2.innerHTML !=" "){
+                            ans3.innerHTML=wor2.innerHTML
+                            wor2.innerHTML =" "
+                        }
+                    
+                    });
+                });
+                 
+
+                $(document).ready(function() {
+                    $('.word-3').click(function() {
+                        //- console.log(wor3.innerHTML)
+                        let audio1 =document.querySelector('.audio3')
+                        audio1.play()
+                        if(ans1.innerHTML ==' '){
+                            ans1.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }
+                        else if(ans2.innerHTML ==' '){
+                            ans2.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }
+                        else if(wor3.innerHTML !=" "){
+                            console.log(wor3.innerHTML)
+                            ans3.innerHTML=wor3.innerHTML
+                            wor3.innerHTML =" "
+                        }
+                    
+                    });
+                });
+                }
+
+                
