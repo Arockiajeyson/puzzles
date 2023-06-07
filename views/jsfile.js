@@ -1,4 +1,4 @@
-function level1(){
+
     for(let i=0;i<2;i++){
         document.querySelectorAll(".answerSuAndRe")[i].removeAttribute("href")
     }
@@ -174,5 +174,4 @@ function level1(){
             }
         }
     })
-}
-module.exports=level1()
+

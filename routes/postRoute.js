@@ -1,34 +1,37 @@
 const express =require('express')
 const multer =require('multer')
+const session =require('express-session')
+const cookieParser = require("cookie-parser");
 const app =express()
+app.use(cookieParser());
+app.use(session({secret: 'Your_Secret_Key', resave: true, saveUninitialized: true}))
 const SchemaExercise =require('../Schema/exercise')
 const ThreeWordS =require('../Schema/threeWordSchema')
-let existingExercise = ''
-let exerciseName=''
-let idED =0 
-let deleteExercise =''
-let levelName=''
-let leve1Completed =false
-let leve2Completed =false
-let leve3Completed =false
-let correctAnswerLevel1=0
-let totalQuestionLevel1=0
-let correctAnswerLevel2=0
-let totalQuestionLevel2=0
-let correctAnswerLevel3=0
-let totalQuestionLevel3=0
-let completedAnswer=0
-let mode=0
-let start=0
+
+// let existingExercise = ''
+// let exerciseName=''
+// let idED =0 
+// let deleteExercise =''
+// let levelName=''
+// let leve1Completed =false
+// let leve2Completed =false
+// let leve3Completed =false
+// let correctAnswerLevel1=0
+// let totalQuestionLevel1=0
+// let correctAnswerLevel2=0
+// let totalQuestionLevel2=0
+// let correctAnswerLevel3=0
+// let totalQuestionLevel3=0
+
+// let mode=0
+// let start=0
 let AnwWord1 =''
 let AnwWord2 =''
 let AnwWord3 =''
 let AnwWord4 =''
 let AnwWord5 =''
-let autaAnswer =''
-let level1=false
-let level2=false
-let level3=false
+// let autaAnswer =''
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './public/uploaded files');
@@ -43,12 +46,17 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-
+const user ={
+    names:'jeyson'
+}
 
 app.get('/adminbtn',async(req,res)=>{
     try {
-        existingExercise = ''
-        exerciseName=''
+        req.session.existingExercise = ''
+        req.session.exerciseName=''
+        req.session.idED =0 
+        req.session.deleteExercise =''
+        req.session.save()
         res.render('admin.jade')
     } catch (error) {
         res.json(error.message)
@@ -59,8 +67,8 @@ app.get('/adminbtn',async(req,res)=>{
 
 app.get('/add',async(req,res)=>{
     try {
-        console.log(exerciseName)
-        res.render('Add.jade',{myva:exerciseName})
+        console.log(req.session.exerciseName)
+        res.render('Add.jade',{myva:req.session.exerciseName})
     } catch (error) {
         res.json(error.message)
     }
@@ -100,8 +108,9 @@ app.get('/getting/exercise',async(req,res)=>{
 
 app.post('/editid',async(req,res)=>{
     try { 
-        idED = req.body.id
-        console.log(idED)
+        req.session.idED = req.body.id
+        req.session.save()
+        console.log(req.session.idED)
     } catch (error) {
         res.json(error.message)
     }
@@ -110,15 +119,15 @@ app.post('/editid',async(req,res)=>{
 
 app.get('/edit',async(req,res)=>{
     try {
-        const finding = await ThreeWordS.findOne({_id:idED})
+        const finding = await ThreeWordS.findOne({_id:req.session.idED})
         console.log(finding)
         if(finding.wordLength ==3){
             console.log([finding])
-            res.render('editing.jade',{edit:[finding],exnames:deleteExercise})
+            res.render('editing.jade',{edit:[finding],exnames:req.session.deleteExercise})
         }else if(finding.wordLength ==4){
-            res.render('editing4.jade',{edit:[finding],exnames:deleteExercise})
+            res.render('editing4.jade',{edit:[finding],exnames:req.session.deleteExercise})
         }else if(finding.wordLength ==5){
-            res.render('editing5.jade',{edit:[finding],exnames:deleteExercise})
+            res.render('editing5.jade',{edit:[finding],exnames:req.session.deleteExercise})
         }
     } catch (error) {
         res.json(error.message)
@@ -127,9 +136,9 @@ app.get('/edit',async(req,res)=>{
 
 app.get('/continue',async(req,res)=>{
     try {
-        const find = await ThreeWordS.find({exerciseName:deleteExercise})
+        const find = await ThreeWordS.find({exerciseName:req.session.deleteExercise})
         // console.log(find)
-        res.render('deleteORDelete.jade',{mydata:find,exnames:deleteExercise})
+        res.render('deleteORDelete.jade',{mydata:find,exnames:req.session.deleteExercise})
     } catch (error) {
         res.json(error.message)
     }
@@ -140,7 +149,8 @@ app.get('/continue',async(req,res)=>{
 app.post('/exerciseDate',async(req,res)=>{
     try {
         let word =req.body.name
-        deleteExercise = word.toLocaleLowerCase()
+        req.session.deleteExercise = word.toLocaleLowerCase()
+        req.session.save()
         res.render('deleteORDelete.jade')
     } catch (error) {
         res.json(error.message)
@@ -151,7 +161,7 @@ app.post('/exerciseDate',async(req,res)=>{
 
 app.get('/threeWord',async(req,res)=>{
     try {
-        res.render('AddThreeWords.jade',{data:exerciseName})
+        res.render('AddThreeWords.jade',{data:req.session.exerciseName})
     } catch (error) {
         res.json(error.message)
     }
@@ -161,7 +171,7 @@ app.get('/threeWord',async(req,res)=>{
 app.get('/fourWord',async(req,res)=>{
     try {
         // console.log(exerciseName)
-        res.render('AddFourWords.jade',{data:exerciseName})
+        res.render('AddFourWords.jade',{data:req.session.exerciseName})
     } catch (error) {
         res.json(error.message)
     }
@@ -170,7 +180,7 @@ app.get('/fourWord',async(req,res)=>{
 
 app.get('/fiveWord',async(req,res)=>{
     try {
-        res.render('AddFiveWords.jade',{data:exerciseName})
+        res.render('AddFiveWords.jade',{data:req.session.exerciseName})
     } catch (error) {
         res.json(error.message)
     }
@@ -201,7 +211,7 @@ app.post('/threeworddata',upload.array('audioFiles', 3),async(req,res)=>{
     req.body.word1 = wordCap.charAt(0).toUpperCase()+wordCap.slice(1)
     let megeringWord =`${req.body.word1} ${req.body.word2} ${req.body.word3}`
         const storingData = await ThreeWordS.create({
-            exerciseName:exerciseName.toLocaleLowerCase(),
+            exerciseName:req.session.exerciseName.toLocaleLowerCase(),
             wordLength:3,
             sentence:megeringWord,
             Word1:req.body.word1,
@@ -224,7 +234,7 @@ app.post('/fourworddata',upload.array('audioFiles1', 4),async(req,res)=>{
     req.body.word1 = wordCap.charAt(0).toUpperCase()+wordCap.slice(1)
     let megeringWord =`${req.body.word1} ${req.body.word2} ${req.body.word3} ${req.body.word4}`
     const storingData = await ThreeWordS.create({
-        exerciseName:exerciseName.toLocaleLowerCase(),
+        exerciseName:req.session.exerciseName.toLocaleLowerCase(),
         wordLength:4,
         sentence:megeringWord,
         Word1:req.body.word1,
@@ -253,7 +263,7 @@ app.post('/fiveworddata',upload.array('audioFiles2', 5),async(req,res)=>{
     let megeringWord =`${req.body.word1} ${req.body.word2} ${req.body.word3} ${req.body.word4} ${req.body.word5}`
     console.log(megeringWord)
     const storingData = await ThreeWordS.create({
-        exerciseName:exerciseName.toLocaleLowerCase(),
+        exerciseName:req.session.exerciseName.toLocaleLowerCase(),
         wordLength:5,
         sentence:megeringWord,
         Word1:req.body.word1,
@@ -280,7 +290,8 @@ app.post('/exerciseNameStoring',async(req,res)=>{
         let name =req.body.input
         if(name !='') {
             // console.log(req.body)
-            exerciseName=name
+            req.session.exerciseName=name
+            req.session.save()
             // word=myData
             const find =await SchemaExercise.findOne({exerciseName:req.body.input})
             // console.log(req.body)
@@ -329,7 +340,7 @@ app.post('/editThree',upload.array("audioEdit",3),async(req,res)=>{
         
         const audioUrls = req.files.map(file => file.filename)
         
-        const findingEx =await ThreeWordS.findOne({_id:idED})
+        const findingEx =await ThreeWordS.findOne({_id:req.session.idED})
         
         let Word1 = req.body.Word1
         let Word2 =req.body.Word2
@@ -396,7 +407,7 @@ app.post('/editFour',upload.array("audioEdit",4),async(req,res)=>{
         
         const audioUrls = req.files.map(file => file.filename)
         console.log(audioUrls)
-        const findingEx =await ThreeWordS.findOne({_id:idED})
+        const findingEx =await ThreeWordS.findOne({_id:req.session.idED})
         
         let Word1 = req.body.Word1
         let Word2 =req.body.Word2
@@ -528,7 +539,7 @@ app.post('/editFive',upload.array("audioEdit",5),async(req,res)=>{
         
         const audioUrls = req.files.map(file => file.filename)
         console.log(audioUrls)
-        const findingEx =await ThreeWordS.findOne({_id:idED})
+        const findingEx =await ThreeWordS.findOne({_id:req.session.idED})
         
         let Word1 = req.body.Word1
         let Word2 =req.body.Word2
@@ -792,8 +803,9 @@ app.get('/addexercisetoexisting',async(req,res)=>{
 
 app.post('/ToExisiting',async(req,res)=>{
     try {
-        existingExercise = req.body.name
-        exerciseName =existingExercise
+        req.session.existingExercise = req.body.name
+        req.session.exerciseName =existingExercise
+        req.session.save()
         // res.render('QuestionToExisting',{exname:req.body.exercise})
     } catch (error) {
         res.json(error.message)
@@ -802,7 +814,7 @@ app.post('/ToExisiting',async(req,res)=>{
 
 app.get('/addingQToNew',async(req,res)=>{
     try {
-        res.render('QuestionToExisting',{exname:existingExercise})
+        res.render('QuestionToExisting',{exname:req.session.existingExercise})
     } catch (error) {
         res.json(error.message)
     }
@@ -816,6 +828,19 @@ app.get('/addingQToNew',async(req,res)=>{
 
 app.get('/student',async(req,res)=>{
     try {
+        req.session.leve1Completed =false
+        req.session.leve2Completed =false
+        req.session.leve3Completed =false
+        req.session.correctAnswerLevel1=0
+        req.session.totalQuestionLevel1=0
+        req.session.correctAnswerLevel2=0
+        req.session.totalQuestionLevel2=0
+        req.session.correctAnswerLevel3=0
+        req.session.totalQuestionLevel3=0
+        req.session.autaAnswer=""
+        req.session.mode=0
+        req.session.start=0
+        req.session.save()
         const find = await SchemaExercise.find()
         res.render('studentLanding.jade',{exercisename:find})
     } catch (error) {
@@ -826,8 +851,15 @@ app.get('/student',async(req,res)=>{
 
 app.get('/level',async(req,res)=>{
     try {
-        console.log('here')
-        res.render('levelsSelecting.jade',{name:levelName,level1:leve1Completed,level2:leve2Completed,level3:leve3Completed})
+        console.log(req.session.levelName)
+        req.session.correctAnswerLevel1=0
+        req.session.totalQuestionLevel1=0
+        req.session.correctAnswerLevel2=0
+        req.session.totalQuestionLevel2=0
+        req.session.correctAnswerLevel3=0
+        req.session.totalQuestionLevel3=0
+        req.session.save()
+        res.render('levelsSelecting.jade',{name:req.session.levelName,level1:req.session.leve1Completed,level2:req.session.leve2Completed,level3:req.session.leve3Completed})
     } catch (error) {
         res.json(error)
     }
@@ -837,7 +869,8 @@ app.get('/level',async(req,res)=>{
 
 app.post('/levelValue',async(req,res)=>{
     try {
-        levelName= req.body.name
+        req.session.levelName= req.body.name
+        req.session.save()
     } catch (error) {
         res.json(error.message)
     }
@@ -847,9 +880,11 @@ app.post('/mode',async(req,res)=>{
     try {
         // mode= req.body.Mode
        if(req.body.Mode =="Scan"){
-        mode =1
+        req.session.mode =1
+        req.session.save()
        }else{
-        mode=0
+        req.session.mode=0
+        req.session.save()
        }
     } catch (error) {
         res.json(error.message)
@@ -859,7 +894,7 @@ app.post('/mode',async(req,res)=>{
 app.post('/level1TorF',async(req,res)=>{
     try {
         console.log('comoming',req.body.name)
-        if(!leve1Completed){
+        if(!req.session.leve1Completed){
             console.log('comoming')
             res.json('please complete level 1')
         }
@@ -872,13 +907,13 @@ app.post('/level1TorF',async(req,res)=>{
 
 app.post('/level2TorF',async(req,res)=>{
     try {
-        if(!leve1Completed || !leve2Completed){
+        if(!req.session.leve1Completed || !req.session.leve2Completed){
             
-            if(!leve1Completed && !leve2Completed){
+            if(!req.session.leve1Completed && !req.session.leve2Completed){
                 
                 res.json('please complete level 1 and level 2')
                 
-            }else if(!leve1Completed){
+            }else if(!req.session.leve1Completed){
                 res.json('please complete level 1')
                 
             }else{
@@ -898,12 +933,14 @@ app.post('/resultAnswerL1',async(req,res)=>{
         AnwWord1 = req.body.Aword1
         AnwWord2 = req.body.Aword2
         AnwWord3 = req.body.Aword3
-        console.log(mode)
-        let answer = `${AnwWord1} ${AnwWord2} ${AnwWord3}`
-        if(answer == autaAnswer){
-                correctAnswerLevel1 = correctAnswerLevel1+1
+        
+        req.session.answer = `${AnwWord1} ${AnwWord2} ${AnwWord3}`
+        req.session.save()
+        if(req.session.answer == req.session.autaAnswer){
+            req.session.correctAnswerLevel1 = req.session.correctAnswerLevel1+1
+            req.session.save()
         }
-        if(mode ==1){
+        if(req.session.mode ==1){
             res.json('done')
         }
     } catch (error) {
@@ -920,11 +957,13 @@ app.post('/resultAnswerL2',async(req,res)=>{
         AnwWord3 = req.body.Aword3
         AnwWord4 = req.body.Aword4
         console.log(req.body) 
-        let answer = `${AnwWord1} ${AnwWord2} ${AnwWord3} ${AnwWord4}`
-        if(answer == autaAnswer){
-                correctAnswerLevel2 = correctAnswerLevel2+1
+        req.session.answer = `${AnwWord1} ${AnwWord2} ${AnwWord3} ${AnwWord4}`
+        req.session.save()
+        if(req.session.answer == req.session.autaAnswer){
+            req.session.correctAnswerLevel2 = req.session.correctAnswerLevel2+1
+            req.session.save()
         }
-        if(mode ==1){
+        if(req.session.mode ==1){
             res.json('done')
         }
     } catch (error) {
@@ -941,13 +980,15 @@ app.post('/resultAnswerL3',async(req,res)=>{
         AnwWord3 = req.body.Aword3
         AnwWord4 = req.body.Aword4
         AnwWord5 =req.body.Aword5
-        let answer = `${AnwWord1} ${AnwWord2} ${AnwWord3} ${AnwWord4} ${AnwWord5}`
+        req.session.answer = `${AnwWord1} ${AnwWord2} ${AnwWord3} ${AnwWord4} ${AnwWord5}`
+        req.session.save()
         // console.log(autaAnswer)
         // console.log(answer)
-        if(answer == autaAnswer){
-                correctAnswerLevel3 = correctAnswerLevel3+1
+        if(req.session.answer == req.session.autaAnswer){
+            req.session.correctAnswerLevel3 = req.session.correctAnswerLevel3+1
+            req.session.save()
         }
-        if(mode ==1){
+        if(req.session.mode ==1){
             res.json('done')
         }
     } catch (error) {
@@ -960,7 +1001,8 @@ app.post('/resultAnswerL3',async(req,res)=>{
 
 app.get('/nextQ',async(req,res)=>{
     try {
-        start =start+1
+        req.session.start =req.session.start+1
+        req.session.save()
         res.redirect('/post/level1game')
     } catch (error) {
         res.json(error.message)
@@ -973,18 +1015,24 @@ app.get('/nextQ',async(req,res)=>{
 app.get('/level1game',async(req,res)=>{
 
     try {
-        level1 =true
-        if(correctAnswerLevel1 > totalQuestionLevel1) correctAnswerLevel1=0
-        const find =await ThreeWordS.find({exerciseName:levelName.toLocaleLowerCase(),wordLength:3})
-        totalQuestionLevel1=find.length
-        const filter = find.slice(start,start+1)
+        // level1 =true
+        if(req.session.correctAnswerLevel1 > req.session.totalQuestionLevel1) {
+            req.session.correctAnswerLevel1=0
+            req.session.save()
+        }
+        let m =req.session.levelName
+        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:3})
+        req.session.totalQuestionLevel1=find.length
+        const filter = find.slice(req.session.start,req.session.start+1)
         if(filter.length !=0){
-            autaAnswer = filter[0].sentence
-            res.render('level1.jade',{question:filter,level:start+1,mode})
+            req.session.autaAnswer = filter[0].sentence
+            req.session.save()
+            res.render('level1.jade',{question:filter,level:req.session.start+1,mode:req.session.mode})
         }else{
-            start=0
-            leve1Completed =true
-            res.render('result.jade',{correct:correctAnswerLevel1,total:totalQuestionLevel1})
+            req.session.start=0
+            req.session.leve1Completed =true
+            req.session.save()
+            res.render('result.jade',{correct:req.session.correctAnswerLevel1,total:req.session.totalQuestionLevel1})
         }
     } catch (error) {
         res.json(error.message)
@@ -993,7 +1041,8 @@ app.get('/level1game',async(req,res)=>{
 
 app.get('/nextQLev2',async(req,res)=>{
     try {
-        start =start+1
+        req.session.start =req.session.start+1
+        req.session.save()
         res.redirect('/post/level2game')
     } catch (error) {
         res.json(error.message)
@@ -1004,22 +1053,30 @@ app.get('/nextQLev2',async(req,res)=>{
 
 app.get('/level2game',async(req,res)=>{
     try {
-        level1 =false
-        level2 =true
-        correctAnswerLevel1=0
-        totalQuestionLevel1=0
-        if(correctAnswerLevel2 > totalQuestionLevel2) correctAnswerLevel2=0
-        const find =await ThreeWordS.find({exerciseName:levelName.toLocaleLowerCase(),wordLength:4})
+        // level1 =false
+        // level2 =true
+        req.session.correctAnswerLevel1=0
+        req.session.totalQuestionLevel1=0
+        req.session.save()
+        if(req.session.correctAnswerLevel2 > req.session.totalQuestionLevel2) {
+            req.session.correctAnswerLevel2=0
+            req.session.save()
+        }
+        let m =req.session.levelName
+        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:4})
        
-        totalQuestionLevel2=find.length
-        const filter = find.slice(start,start+1)
+        req.session.totalQuestionLevel2=find.length
+        req.session.save()
+        const filter = find.slice(req.session.start,req.session.start+1)
         if(filter.length != 0){
-            autaAnswer = filter[0].sentence
-            res.render('level2.jade',{question:filter,level:start+1,mode})
+            req.session.autaAnswer = filter[0].sentence
+            req.session.save()
+            res.render('level2.jade',{question:filter,level:req.session.start+1,mode:req.session.mode})
         }else{
-            start=0
-            leve2Completed =true
-            res.render('result.jade',{correct:correctAnswerLevel2,total:totalQuestionLevel2})
+            req.session.start=0
+            req.session.leve2Completed =true
+            req.session.save()
+            res.render('result.jade',{correct:req.session.correctAnswerLevel2,total:req.session.totalQuestionLevel2})
         }
     } catch (error) {
         res.json(error.message)
@@ -1028,7 +1085,7 @@ app.get('/level2game',async(req,res)=>{
 
 app.get('/nextQLev3',async(req,res)=>{
     try {
-        start =start+1
+        req.session.start =req.session.start+1
         res.redirect('/post/level3game')
     } catch (error) {
         res.json(error.message)
@@ -1038,24 +1095,32 @@ app.get('/nextQLev3',async(req,res)=>{
 
 app.get('/level3game',async(req,res)=>{
     try {
-        level1 =false
-        level2 =true
-        correctAnswerLevel1=0
-        totalQuestionLevel1=0
-        correctAnswerLevel2=0
-        totalQuestionLevel2=0
-        if(correctAnswerLevel3 > totalQuestionLevel3) correctAnswerLevel3=0
-        const find =await ThreeWordS.find({exerciseName:levelName.toLocaleLowerCase(),wordLength:5})
-        totalQuestionLevel3=find.length
-        const filter = find.slice(start,start+1)
+        // level1 =false
+        // level2 =true
+        req.session.correctAnswerLevel1=0
+        req.session.totalQuestionLevel1=0
+        req.session.correctAnswerLevel2=0
+        req.session.totalQuestionLevel2=0
+        req.session.save()
+        if(req.session.correctAnswerLevel3 > req.session.totalQuestionLevel3) {
+            req.session.correctAnswerLevel3=0
+            req.session.save()
+        }
+        let m =req.session.levelName
+        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:5})
+        req.session.totalQuestionLevel3=find.length
+        req.session.save()
+        const filter = find.slice(req.session.start,req.session.start+1)
         if(filter.length != 0){
-            autaAnswer = filter[0].sentence
+            req.session.autaAnswer = filter[0].sentence
             // console.log(autaAnswer)
-            res.render('level3.jade',{question:filter,level:start+1,mode})
+            req.session.save()
+            res.render('level3.jade',{question:filter,level:req.session.start+1,mode:req.session.mode})
         }else{
-            start=0
-            leve2Completed =true
-            res.render('result.jade',{correct:correctAnswerLevel3,total:totalQuestionLevel3})
+            req.session.start=0
+            req.session.leve2Completed =true
+            req.session.save()
+            res.render('result.jade',{correct:req.session.correctAnswerLevel3,total:req.session.totalQuestionLevel3})
         }
     } catch (error) {
         res.json(error.message)
