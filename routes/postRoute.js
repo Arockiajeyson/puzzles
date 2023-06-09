@@ -25,11 +25,11 @@ const ThreeWordS =require('../Schema/threeWordSchema')
 
 // let mode=0
 // let start=0
-let AnwWord1 =''
-let AnwWord2 =''
-let AnwWord3 =''
-let AnwWord4 =''
-let AnwWord5 =''
+// let AnwWord1 =''
+// let AnwWord2 =''
+// let AnwWord3 =''
+// let AnwWord4 =''
+// let AnwWord5 =''
 // let autaAnswer =''
 
 const storage = multer.diskStorage({
@@ -840,6 +840,11 @@ app.get('/student',async(req,res)=>{
         req.session.autaAnswer=""
         req.session.mode=0
         req.session.start=0
+        req.session.AnwWord1 =''
+        req.session.AnwWord2 =''
+        req.session.AnwWord3 =''
+        req.session.AnwWord4 =''
+        req.session.AnwWord5 =''
         req.session.save()
         const find = await SchemaExercise.find()
         res.render('studentLanding.jade',{exercisename:find})
@@ -930,11 +935,11 @@ app.post('/level2TorF',async(req,res)=>{
 
 app.post('/resultAnswerL1',async(req,res)=>{
     try {
-        AnwWord1 = req.body.Aword1
-        AnwWord2 = req.body.Aword2
-        AnwWord3 = req.body.Aword3
+        req.session.AnwWord1 = req.body.Aword1
+        req.session.AnwWord2 = req.body.Aword2
+        req.session.AnwWord3 = req.body.Aword3
         
-        req.session.answer = `${AnwWord1} ${AnwWord2} ${AnwWord3}`
+        req.session.answer = `${req.session.AnwWord1} ${req.session.AnwWord2} ${req.session.AnwWord3}`
         req.session.save()
         if(req.session.answer == req.session.autaAnswer){
             req.session.correctAnswerLevel1 = req.session.correctAnswerLevel1+1
@@ -952,12 +957,12 @@ app.post('/resultAnswerL1',async(req,res)=>{
 
 app.post('/resultAnswerL2',async(req,res)=>{
     try {
-        AnwWord1 = req.body.Aword1
-        AnwWord2 = req.body.Aword2
-        AnwWord3 = req.body.Aword3
-        AnwWord4 = req.body.Aword4
-        console.log(req.body) 
-        req.session.answer = `${AnwWord1} ${AnwWord2} ${AnwWord3} ${AnwWord4}`
+        req.session.AnwWord1 = req.body.Aword1
+        req.session.AnwWord2 = req.body.Aword2
+        req.session.AnwWord3 = req.body.Aword3
+        req.session.AnwWord4 = req.body.Aword4
+        // console.log(req.body) 
+        req.session.answer = `${req.session.AnwWord1} ${req.session.AnwWord2} ${req.session.AnwWord3} ${req.session.AnwWord4}`
         req.session.save()
         if(req.session.answer == req.session.autaAnswer){
             req.session.correctAnswerLevel2 = req.session.correctAnswerLevel2+1
@@ -975,12 +980,12 @@ app.post('/resultAnswerL2',async(req,res)=>{
 
 app.post('/resultAnswerL3',async(req,res)=>{
     try {
-        AnwWord1 = req.body.Aword1
-        AnwWord2 = req.body.Aword2
-        AnwWord3 = req.body.Aword3
-        AnwWord4 = req.body.Aword4
-        AnwWord5 =req.body.Aword5
-        req.session.answer = `${AnwWord1} ${AnwWord2} ${AnwWord3} ${AnwWord4} ${AnwWord5}`
+        req.session.AnwWord1 = req.body.Aword1
+        req.session.AnwWord2 = req.body.Aword2
+        req.session.AnwWord3 = req.body.Aword3
+        req.session.AnwWord4 = req.body.Aword4
+        req.session.AnwWord5 =req.body.Aword5
+        req.session.answer = `${req.session.AnwWord1} ${req.session.AnwWord2} ${req.session.AnwWord3} ${req.session.AnwWord4} ${req.session.AnwWord5}`
         req.session.save()
         // console.log(autaAnswer)
         // console.log(answer)
