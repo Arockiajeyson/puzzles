@@ -150,6 +150,14 @@ td, th {
     width: 30%;
 }
   
+.emailId{
+    height: 20%;
+    border-radius: .3em;
+    border: none;
+    outline: none;
+    font-size: x-large;
+    box-shadow: 5px 5px 5px rgb(83, 81, 81);
+}
 /* tr:nth-child(even) {
     background-color: #78c9ec;
     color:black

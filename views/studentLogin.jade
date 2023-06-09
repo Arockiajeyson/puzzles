@@ -22,12 +22,12 @@ html
                         
                         if(val.value !=""){
                             $.ajax({
-                                url: "/post/loginChecking",
+                                url: "/post/studentAdminEmailID",
                                 method: "POST",
                                 data: {email: val.value },
                                 success: function(response) {
                                     if(response =="done"){
-                                        location.replace("/post/adminbtn")
+                                        location.replace("/post/student")
                                     }else{
                                         location.reload()
                                     }

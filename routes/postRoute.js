@@ -8,29 +8,7 @@ app.use(session({secret: 'Your_Secret_Key', resave: true, saveUninitialized: tru
 const SchemaExercise =require('../Schema/exercise')
 const ThreeWordS =require('../Schema/threeWordSchema')
 
-// let existingExercise = ''
-// let exerciseName=''
-// let idED =0 
-// let deleteExercise =''
-// let levelName=''
-// let leve1Completed =false
-// let leve2Completed =false
-// let leve3Completed =false
-// let correctAnswerLevel1=0
-// let totalQuestionLevel1=0
-// let correctAnswerLevel2=0
-// let totalQuestionLevel2=0
-// let correctAnswerLevel3=0
-// let totalQuestionLevel3=0
 
-// let mode=0
-// let start=0
-// let AnwWord1 =''
-// let AnwWord2 =''
-// let AnwWord3 =''
-// let AnwWord4 =''
-// let AnwWord5 =''
-// let autaAnswer =''
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -46,17 +24,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-const user ={
-    names:'jeyson'
-}
+
 
 app.get('/adminbtn',async(req,res)=>{
     try {
-        req.session.existingExercise = ''
-        req.session.exerciseName=''
-        req.session.idED =0 
-        req.session.deleteExercise =''
-        req.session.save()
         res.render('admin.jade')
     } catch (error) {
         res.json(error.message)
@@ -67,7 +38,6 @@ app.get('/adminbtn',async(req,res)=>{
 
 app.get('/add',async(req,res)=>{
     try {
-        console.log(req.session.exerciseName)
         res.render('Add.jade',{myva:req.session.exerciseName})
     } catch (error) {
         res.json(error.message)
@@ -85,10 +55,31 @@ app.get('/exerciseName',async(req,res)=>{
 })
 
 
+app.get('/login',async(req,res)=>{
+    try {
+        res.render('adminLogin.jade')
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+app.post('/loginChecking',async(req,res)=>{
+    try {
+        req.session.existingExercise = ''
+        req.session.exerciseName=''
+        req.session.idED =0 
+        req.session.deleteExercise =''
+        req.session.emailId =req.body.email
+        req.session.save()
+        res.json("done")
+    } catch (error) {
+        res.json(error.message)
+    }
+})
 
 app.get('/editanddelete',async(req,res)=>{
     try {
-        const find = await SchemaExercise.find()
+        const find = await SchemaExercise.find({email:req.session.emailId})
         res.render('editAndDelete.jade',{exercisename:find})
     } catch (error) {
         res.json(error.message)
@@ -170,7 +161,6 @@ app.get('/threeWord',async(req,res)=>{
 
 app.get('/fourWord',async(req,res)=>{
     try {
-        // console.log(exerciseName)
         res.render('AddFourWords.jade',{data:req.session.exerciseName})
     } catch (error) {
         res.json(error.message)
@@ -212,6 +202,7 @@ app.post('/threeworddata',upload.array('audioFiles', 3),async(req,res)=>{
     let megeringWord =`${req.body.word1} ${req.body.word2} ${req.body.word3}`
         const storingData = await ThreeWordS.create({
             exerciseName:req.session.exerciseName.toLocaleLowerCase(),
+            email:req.session.emailId,
             wordLength:3,
             sentence:megeringWord,
             Word1:req.body.word1,
@@ -235,6 +226,7 @@ app.post('/fourworddata',upload.array('audioFiles1', 4),async(req,res)=>{
     let megeringWord =`${req.body.word1} ${req.body.word2} ${req.body.word3} ${req.body.word4}`
     const storingData = await ThreeWordS.create({
         exerciseName:req.session.exerciseName.toLocaleLowerCase(),
+        email:req.session.emailId,
         wordLength:4,
         sentence:megeringWord,
         Word1:req.body.word1,
@@ -264,6 +256,7 @@ app.post('/fiveworddata',upload.array('audioFiles2', 5),async(req,res)=>{
     console.log(megeringWord)
     const storingData = await ThreeWordS.create({
         exerciseName:req.session.exerciseName.toLocaleLowerCase(),
+        email:req.session.emailId,
         wordLength:5,
         sentence:megeringWord,
         Word1:req.body.word1,
@@ -286,17 +279,17 @@ app.post('/fiveworddata',upload.array('audioFiles2', 5),async(req,res)=>{
 
 app.post('/exerciseNameStoring',async(req,res)=>{
     try {
-        // console.log(req.body)
+        console.log(req.session.emailId)
         let name =req.body.input
         if(name !='') {
             // console.log(req.body)
             req.session.exerciseName=name
             req.session.save()
             // word=myData
-            const find =await SchemaExercise.findOne({exerciseName:req.body.input})
+            const find =await SchemaExercise.findOne({exerciseName:req.body.input,email:req.session.emailId})
             // console.log(req.body)
             if(!find){
-                const create =await SchemaExercise.create({exerciseName:req.body.input})
+                const create =await SchemaExercise.create({exerciseName:req.body.input,email:req.session.emailId})
                 create.save()
                 // console.log('exercise name')
             }
@@ -349,6 +342,7 @@ app.post('/editThree',upload.array("audioEdit",3),async(req,res)=>{
         req.body.sentence =sentence
         req.body.exerciseName =findingEx.exerciseName
         req.body.wordLength =findingEx.wordLength
+        req.body.email=findingEx.email
         if(findingEx.Word1 != req.body.Word1 || findingEx.Word2 != req.body.Word2 || findingEx.Word3 != req.body.Word3){
             console.log('inside')
             if(findingEx.Word1 != Word1 && findingEx.Word2 != Word2){
@@ -417,6 +411,7 @@ app.post('/editFour',upload.array("audioEdit",4),async(req,res)=>{
         req.body.sentence =sentence
         req.body.exerciseName =findingEx.exerciseName
         req.body.wordLength =findingEx.wordLength
+        req.body.email=findingEx.email
         if(findingEx.Word1 != req.body.Word1 || findingEx.Word2 != req.body.Word2 || findingEx.Word3 != req.body.Word3 || findingEx.Word4 != req.body.Word4){
             // console.log('inside')
             if(findingEx.Word1 !=Word1){
@@ -550,6 +545,7 @@ app.post('/editFive',upload.array("audioEdit",5),async(req,res)=>{
         req.body.sentence =sentence
         req.body.exerciseName =findingEx.exerciseName
         req.body.wordLength =findingEx.wordLength
+        req.body.email=findingEx.email
         if(findingEx.Word1 != req.body.Word1 || findingEx.Word2 != req.body.Word2 || findingEx.Word3 != req.body.Word3 || findingEx.Word4 != req.body.Word4 || findingEx.Word5 != req.body.Word5){
             // console.log('inside')
             if(findingEx.Word1 !=Word1){
@@ -824,9 +820,34 @@ app.get('/addingQToNew',async(req,res)=>{
 
 // student
 
+app.get('/studentLogin',async(req,res)=>{
+    try {
+        // req.session.leve1Completed =false
+        // req.session.leve2Completed =false
+        // req.session.leve3Completed =false
+        // req.session.correctAnswerLevel1=0
+        // req.session.totalQuestionLevel1=0
+        // req.session.correctAnswerLevel2=0
+        // req.session.totalQuestionLevel2=0
+        // req.session.correctAnswerLevel3=0
+        // req.session.totalQuestionLevel3=0
+        // req.session.autaAnswer=""
+        // req.session.mode=0
+        // req.session.start=0
+        // req.session.AnwWord1 =''
+        // req.session.AnwWord2 =''
+        // req.session.AnwWord3 =''
+        // req.session.AnwWord4 =''
+        // req.session.AnwWord5 =''
+        // req.session.emailOfStLo=''
+        // req.session.save()
+        res.render('studentLogin.jade')
+    } catch (error) {
+        res.json(error.message)
+    }
+})
 
-
-app.get('/student',async(req,res)=>{
+app.post('/studentAdminEmailID',async(req,res)=>{
     try {
         req.session.leve1Completed =false
         req.session.leve2Completed =false
@@ -845,13 +866,26 @@ app.get('/student',async(req,res)=>{
         req.session.AnwWord3 =''
         req.session.AnwWord4 =''
         req.session.AnwWord5 =''
+        req.session.emailOfStLo=req.body.email
         req.session.save()
-        const find = await SchemaExercise.find()
+        res.json("done")
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+
+app.get('/student',async(req,res)=>{
+    try {
+
+        const find = await SchemaExercise.find({email:req.session.emailOfStLo})
         res.render('studentLanding.jade',{exercisename:find})
     } catch (error) {
         res.json(error.message)
     }
 })
+
+
 
 
 app.get('/level',async(req,res)=>{
@@ -1026,7 +1060,7 @@ app.get('/level1game',async(req,res)=>{
             req.session.save()
         }
         let m =req.session.levelName
-        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:3})
+        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:3,email:req.session.emailOfStLo})
         req.session.totalQuestionLevel1=find.length
         const filter = find.slice(req.session.start,req.session.start+1)
         if(filter.length !=0){
@@ -1068,7 +1102,7 @@ app.get('/level2game',async(req,res)=>{
             req.session.save()
         }
         let m =req.session.levelName
-        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:4})
+        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:4,email:req.session.emailOfStLo})
        
         req.session.totalQuestionLevel2=find.length
         req.session.save()
@@ -1112,7 +1146,7 @@ app.get('/level3game',async(req,res)=>{
             req.session.save()
         }
         let m =req.session.levelName
-        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:5})
+        const find =await ThreeWordS.find({exerciseName:m.toLocaleLowerCase(),wordLength:5,email:req.session.emailOfStLo})
         req.session.totalQuestionLevel3=find.length
         req.session.save()
         const filter = find.slice(req.session.start,req.session.start+1)
