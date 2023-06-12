@@ -11,12 +11,14 @@ html
             h1(style='color:white;margin-top:1em') Login with email ID...
             div.button-class-1(style='height:350px').content 
                 input(type="email" placeholder="Enter admin email ID...").emailId
+                input(type="password" placeholder="Enter password" style="margin-top:4%").password
                 button.btnCon Contiune 
-                button(style="margin-top:10%").back Back
+                button(style="margin-top:6%").back Back
                 
         script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
         script.
                 let val = document.querySelector('.emailId')
+                let pass =document.querySelector('.password')
                 $(document).ready(function() {
                     $('.btnCon').click(function() {
                         
@@ -24,7 +26,7 @@ html
                             $.ajax({
                                 url: "/post/loginChecking",
                                 method: "POST",
-                                data: {email: val.value },
+                                data: {email: val.value,password:pass.value },
                                 success: function(response) {
                                     if(response =="done"){
                                         location.replace("/post/adminbtn")

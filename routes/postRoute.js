@@ -2,6 +2,7 @@ const express =require('express')
 const multer =require('multer')
 const session =require('express-session')
 const cookieParser = require("cookie-parser");
+const bcrypt =require('bcrypt')
 const app =express()
 app.use(cookieParser());
 app.use(session({secret: 'Your_Secret_Key', resave: true, saveUninitialized: true}))
@@ -71,6 +72,7 @@ app.post('/loginChecking',async(req,res)=>{
         req.session.deleteExercise =''
         req.session.emailId =req.body.email
         req.session.save()
+        console.log(req.body)
         res.json("done")
     } catch (error) {
         res.json(error.message)
