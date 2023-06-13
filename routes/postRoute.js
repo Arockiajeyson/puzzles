@@ -71,6 +71,8 @@ app.post('/loginChecking',async(req,res)=>{
         req.session.idED =0 
         req.session.deleteExercise =''
         req.session.emailId =req.body.email
+        let bcrypts =await bcrypt.hash(req.body.password,12)
+        req.session.password=bcrypts
         req.session.save()
         console.log(req.body)
         res.json("done")
@@ -205,6 +207,7 @@ app.post('/threeworddata',upload.array('audioFiles', 3),async(req,res)=>{
         const storingData = await ThreeWordS.create({
             exerciseName:req.session.exerciseName.toLocaleLowerCase(),
             email:req.session.emailId,
+            password: req.session.password,
             wordLength:3,
             sentence:megeringWord,
             Word1:req.body.word1,
@@ -229,6 +232,7 @@ app.post('/fourworddata',upload.array('audioFiles1', 4),async(req,res)=>{
     const storingData = await ThreeWordS.create({
         exerciseName:req.session.exerciseName.toLocaleLowerCase(),
         email:req.session.emailId,
+        password: req.session.password,
         wordLength:4,
         sentence:megeringWord,
         Word1:req.body.word1,
@@ -259,6 +263,7 @@ app.post('/fiveworddata',upload.array('audioFiles2', 5),async(req,res)=>{
     const storingData = await ThreeWordS.create({
         exerciseName:req.session.exerciseName.toLocaleLowerCase(),
         email:req.session.emailId,
+        password: req.session.password,
         wordLength:5,
         sentence:megeringWord,
         Word1:req.body.word1,
@@ -345,6 +350,7 @@ app.post('/editThree',upload.array("audioEdit",3),async(req,res)=>{
         req.body.exerciseName =findingEx.exerciseName
         req.body.wordLength =findingEx.wordLength
         req.body.email=findingEx.email
+        req.body.password=findingEx.password
         if(findingEx.Word1 != req.body.Word1 || findingEx.Word2 != req.body.Word2 || findingEx.Word3 != req.body.Word3){
             console.log('inside')
             if(findingEx.Word1 != Word1 && findingEx.Word2 != Word2){
@@ -414,6 +420,7 @@ app.post('/editFour',upload.array("audioEdit",4),async(req,res)=>{
         req.body.exerciseName =findingEx.exerciseName
         req.body.wordLength =findingEx.wordLength
         req.body.email=findingEx.email
+        req.body.password=findingEx.password
         if(findingEx.Word1 != req.body.Word1 || findingEx.Word2 != req.body.Word2 || findingEx.Word3 != req.body.Word3 || findingEx.Word4 != req.body.Word4){
             // console.log('inside')
             if(findingEx.Word1 !=Word1){
@@ -548,6 +555,7 @@ app.post('/editFive',upload.array("audioEdit",5),async(req,res)=>{
         req.body.exerciseName =findingEx.exerciseName
         req.body.wordLength =findingEx.wordLength
         req.body.email=findingEx.email
+        req.body.password=findingEx.password
         if(findingEx.Word1 != req.body.Word1 || findingEx.Word2 != req.body.Word2 || findingEx.Word3 != req.body.Word3 || findingEx.Word4 != req.body.Word4 || findingEx.Word5 != req.body.Word5){
             // console.log('inside')
             if(findingEx.Word1 !=Word1){
@@ -824,25 +832,6 @@ app.get('/addingQToNew',async(req,res)=>{
 
 app.get('/studentLogin',async(req,res)=>{
     try {
-        // req.session.leve1Completed =false
-        // req.session.leve2Completed =false
-        // req.session.leve3Completed =false
-        // req.session.correctAnswerLevel1=0
-        // req.session.totalQuestionLevel1=0
-        // req.session.correctAnswerLevel2=0
-        // req.session.totalQuestionLevel2=0
-        // req.session.correctAnswerLevel3=0
-        // req.session.totalQuestionLevel3=0
-        // req.session.autaAnswer=""
-        // req.session.mode=0
-        // req.session.start=0
-        // req.session.AnwWord1 =''
-        // req.session.AnwWord2 =''
-        // req.session.AnwWord3 =''
-        // req.session.AnwWord4 =''
-        // req.session.AnwWord5 =''
-        // req.session.emailOfStLo=''
-        // req.session.save()
         res.render('studentLogin.jade')
     } catch (error) {
         res.json(error.message)
@@ -870,7 +859,16 @@ app.post('/studentAdminEmailID',async(req,res)=>{
         req.session.AnwWord5 =''
         req.session.emailOfStLo=req.body.email
         req.session.save()
-        res.json("done")
+        const find =await ThreeWordS.findOne({email:req.body.email})
+        if(find){
+            const compare =await bcrypt.compare(req.body.password,find.password)
+            if(compare){
+                req.session.save()
+                return res.json("done")
+            }else{
+                return res.json('password worng')
+            }
+        }
     } catch (error) {
         res.json(error.message)
     }

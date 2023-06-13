@@ -30,6 +30,8 @@ html
                                 success: function(response) {
                                     if(response =="done"){
                                         location.replace("/post/student")
+                                    }else if(response =="password worng"){
+                                        alert('Enter correct passowrd')
                                     }else{
                                         location.reload()
                                     }
