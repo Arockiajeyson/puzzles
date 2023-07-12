@@ -1,0 +1,63 @@
+doctype html
+html
+    head
+        title Puzzle
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css') 
+
+    body
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            div.content-div             
+                div.adminpageimg
+                    h2(style='color:white').addpageheading WELCOME TO ADMIN PAGE
+                    img(src="/asset/thinking-1.png" ).img-style-rigth
+                    img(src="/asset/i am possible.png").impossible
+                div.editDelte-left-side-div
+                    form(action="" method='POST' enctype="multipart/form-data").table-form.content.button-class-1  
+                        select#exercise(name='exercise' value="select").select-delet-and-edit
+                            option Select the exercise name...
+                            each items in exercisename
+                                option(value="#{items.exerciseName}")=items.exerciseName
+                        a(style='margin-top:2em;padding-top:4.5%').quit-a.clicking Continue
+                        a(href='/post/adminbtn' style='margin-top:2em;padding-top:4.5%').quit-a Back   
+
+
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(type="text/javascript" src="/header.js")        
+        script. 
+                let inp =document.querySelector('#exercise')
+                let addHyperLink =document.querySelector('.clicking')
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
+                $(document).ready(function() {
+                    $('#exercise').change(function() {
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML =""
+                    });
+                    $('.clicking').click(function() {
+                        if(inp.value =="Select the exercise name..."){
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ='Please Select Exercise Name'
+                        }else{
+                            //- addHyperLink.setAttribute("href", "/post/continue")
+                            $.ajax({
+                                url: "/post/resultChecking",
+                                method: "POST",
+                                data: {exerciseName: inp.value },
+                                success: function(response) {
+                                    if(response=='yes'){
+                                        location.replace('/post/finalResult/checking')
+                                    }else if(response =='no'){
+                                        alertHeader.style.display='inline'
+                                        alertHeader.innerHTML ='Results For This Exercise Is Not Available'
+                                    }
+                                },
+                                error: function(err) {
+                                console.log(err);
+                                }
+                            });
+                        }
+                    });
+                });

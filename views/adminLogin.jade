@@ -6,29 +6,65 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:7%;padding:.5em;position:absolute;right:0;top:2%')
-            h1(style='color:white;margin-top:1em') Login with email ID...
-            div.button-class-1(style='height:350px').content 
-                input(type="email" placeholder="Enter admin email ID...").emailId
-                input(type="password" placeholder="Enter password" style="margin-top:4%").password
-                button.btnCon Contiune 
-                button(style="margin-top:6%").back Back
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            //- h1.loginheading Login with email ID...
+            div.flex-row      
+                div.side-div   
+                    div 
+                        h1 
+                            img(src="/asset/delete.png", alt="", srcset="" style='width:5%;margin-top:-.3em')
+                            span(style='color:white;margin-left:.3em') The 
+                            span(style='color:white') rearrange 
+                            span(style='color:white') sentences jumbled 
+                        h1 
+                            img(src="/asset/check-mark.png", alt="", srcset="" style='width:6%;margin-top:-.3em')
+                            span(style='color:white;margin-left:.3em') Rearrange the jumbled sentences
+                            span.img-left-side    
+                div.button-class-1.content.logindiv
+                    h1.log Teacher login 
+                    input(type="text" placeholder="Enter teacher email ID..." ).emailId
+                    input(type="password" placeholder="Enter password..." style="margin-top:4%").password
+                    button.btnCon.hoverBtn Login 
+                    button(style="margin-top:6%").back.hoverBtn Back
+                    
                 
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(type="text/javascript" src="/header.js")       
         script.
                 let val = document.querySelector('.emailId')
-                let pass =document.querySelector('.password')
+                let pass =document.querySelector('.password')//.header-alert
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
+                $(document).ready(function() {
+                    $('.emailId').focus(function() {
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML=""
+                    });
+                    $('.password').focus(function() {
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML=""
+                    });
+                    
+                });
                 $(document).ready(function() {
                     $('.btnCon').click(function() {
                         
-                        if(val.value !=""){
+                        if(val.value !="" &&  pass.value !=""){
                             $.ajax({
                                 url: "/post/loginChecking",
                                 method: "POST",
                                 data: {email: val.value,password:pass.value },
                                 success: function(response) {
-                                    if(response =="done"){
+                                    if(response =="Enter correct password"){
+                                        alertHeader.style.display='inline'
+                                        alertHeader.innerHTML ="Enter Correct Password"
+                                    }else if(response =="Enter correct email id"){
+                                        alertHeader.style.display='inline'
+                                        alertHeader.innerHTML ="Enter Correct Email Id"
+                                    }
+                                    else if(response =="done"){
                                         location.replace("/post/adminbtn")
                                     }else{
                                         location.reload()
@@ -39,7 +75,14 @@ html
                                 }
                             });
                         }else{
-                            alert('Please enter mail Id')
+                            if(val.value =="") {
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML ='Please Enter Email Id'
+                            }
+                            else {
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML ='Please Enter Password'
+                            }
                         }
                     
                     });

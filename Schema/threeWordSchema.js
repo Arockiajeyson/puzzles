@@ -17,5 +17,5 @@ const exercise = new mongoose.Schema({
     Audio5:{type:String},
 })
 
-const exerciseModel =mongoose.model('KEquestioner',exercise)
+const exerciseModel =mongoose.model('SB QMaster',exercise)
 module.exports=exerciseModel

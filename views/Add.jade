@@ -6,29 +6,45 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:7%;padding:.5em;position:absolute;right:0;top:2%')
-            h1(style='color:white;margin-top:1em') Enter the exercise name to start with...
-            div.button-class-1(style='height:450px').content 
-                if(myva !=" ")
-                    input(type="text" value="#{myva}" style='height:3em;border-radius:.5em;font-size:1.3em;text-align:center' name='exerciseName' placeholder='Enter exercise name and click submit button...' class='inputEX')
-                else 
-                    input(type="text"  style='height:3em;border-radius:.5em;font-size:1.3em;text-align:center' name='exerciseName' placeholder='Enter exercise name and click submit button...' class='inputEX')    
-                a(class='three') Three words sentence
-                a( class='four') Four words sentence
-                a(href='/post/fiveWord' class='five') Five words sentence
-                a(href='/post/adminbtn').quit-a Back
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            //- h1.addheading Enter the exercise name to start with...            
+            div.content-div   
+                div.adminpageimg
+                    h2(style='color:white').addpageheading WELCOME TO ADMIN PAGE
+                    img(src="/asset/thinking-1.png").img-style-rigth
+                    img(src="/asset/i am possible.png").impossible
+                div.button-class-1.content.addpagecontent 
+                    if(myva !=" ")
+                        input(type="text" value="#{myva}" name='exerciseName' placeholder='Enter exercise name...' class='inputEX').input-add-existing
+                    else 
+                        input(type="text" name='exerciseName' placeholder='Enter exercise name...' class='inputEX').input-add-existing    
+                    a(class='three' style='padding-top:1.8%') Three words sentence
+                    a( class='four' style='padding-top:1.8%') Four words sentence
+                    a(href='/post/fiveWord' class='five' style='padding-top:1.8%') Five words sentence
+                    a(href='/post/adminbtn' style='padding-top:1.8%').quit-a Back
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(type="text/javascript" src="/header.js")       
         script. 
                 let inp =document.querySelector('.inputEX')
                 document.querySelector(".three").removeAttribute("href")
                 document.querySelector(".four").removeAttribute("href")
                 document.querySelector(".five").removeAttribute("href")
                 //- console.log(myva)
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
+                $(document).ready(function() {
+                    $('.inputEX').focus(function() {
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML=""
+                    });
+                });
                 $(document).ready(function() {
                     $('.three').click(function() {
                         if(inp.value ==""){
-                            alert('please enter exercise name')
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ='Please Enter Exercise Name'
                         }else{
                             document.querySelector(".three").setAttribute("href", "/post/threeWord");
                             var myData = 3;
@@ -47,7 +63,8 @@ html
                     });
                     $('.four').click(function() {
                        if(inp.value ==""){
-                            alert('please enter exercise name')
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ='Please Enter Exercise Name'
                        }else{
                             document.querySelector(".four").setAttribute("href", "/post/fourWord");
                             var myData = 4;
@@ -66,7 +83,8 @@ html
                     });
                     $('.five').click(function() {
                         if(inp.value ==""){
-                            alert('please enter exercise name')
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ='Please Enter Exercise Name'
                         }else{
                             document.querySelector(".five").setAttribute("href", "/post/fiveWord");
                             var myData = 5;

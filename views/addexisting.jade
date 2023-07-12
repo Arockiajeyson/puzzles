@@ -6,34 +6,57 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
-            h1(style='color:white;margin-top:1em') Select the exercise name and click the continue button...
-            div(style='width:30%')
-                form(action="" method='POST' enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1  
-                    select#exercise(name='exercise' style='width:100%;height:15%;border-radius:.3em;font-size:1.3em' value="select")
-                        option Select the exercise name...
-                        each items in exercisename
-                            option(value="#{items.exerciseName}")=items.exerciseName
-                    a(href='/post/addingQToNew').quit-a.clicking Continue
-                    a(href='/post/adminbtn' style='margin-top:2em;padding-top:5%').quit-a Back   
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            //- h1.addheading Select the exercise name             
+            div.content-div
+                div.adminpageimg
+                    h2(style='color:white').addpageheading WELCOME TO ADMIN PAGE
+                    img(src="/asset/thinking-1.png").img-style-rigth
+                    img(src="/asset/i am possible.png").impossible  
+                div.addexistingAnswer
+                    form(action="" method='POST' enctype="multipart/form-data").content.button-class-1.table-form  
+                        select#exercise(name='exercise' value="select").selectingexercise
+                            option Select the exercise name...
+                            each items in exercisename
+                                option(value="#{items.exerciseName}")=items.exerciseName
+                        a(style='margin-top:2em;padding-top:4.5%').quit-a.clicking Continue
+                        a(href='/post/adminbtn' style='margin-top:2em;padding-top:4.5%').quit-a Back   
 
 
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(type="text/javascript" src="/header.js")        
         script. 
                 let inp =document.querySelector('#exercise')
+                let addHyperLink =document.querySelector('.clicking')
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
                 $(document).ready(function() {
-                    $('.clicking').click(function() {
-                    $.ajax({
-                        url: "/post/ToExisiting",
-                        method: "POST",
-                        data: {name: inp.value },
-                        success: function(response) {
-                        console.log(response);
-                        },
-                        error: function(err) {
-                        console.log(err);
-                        }
+                    $('#exercise').change(function() {
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML =""
                     });
+
+                    $('.clicking').click(function() {
+                        if(inp.value =="Select the exercise name..."){
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ='Please Select Exercise Name'
+                        }else{
+                            alertHeader.style.display='none'
+                            alertHeader.innerHTML =""
+                            addHyperLink.setAttribute("href", "/post/addingQToNew")
+                            $.ajax({
+                                url: "/post/ToExisiting",
+                                method: "POST",
+                                data: {name: inp.value },
+                                success: function(response) {
+                                console.log(response);
+                                },
+                                error: function(err) {
+                                console.log(err);
+                                }
+                            });
+                        }
                     });
                 });

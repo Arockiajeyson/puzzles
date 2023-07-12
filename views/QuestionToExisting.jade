@@ -6,16 +6,21 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:7%;padding:.5em;position:absolute;right:0;top:2%')
-            h1(style='color:white;margin-top:1em') Enter the exercise name to start with...
-            div.button-class-1(style='height:450px').content 
-                input(type="text" value="#{exname}" style='height:3em;border-radius:.5em;font-size:1.3em;text-align:center' name='exerciseName' placeholder='Enter exercise name and click submit button...' class='inputEX')
-                a(href='/post/threeWord' class='three') Three words sentence
-                a(href='/post/fourWord' class='four') Four words sentence
-                a(href='/post/fiveWord' class='five') Five words sentence
-                a(href='/post/adminbtn').quit-a Back
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        div.container-md.viewpageContainer
+            div.headerViewpage 
+            div.content-div
+                div.adminpageimg
+                    h2(style='color:white').addpageheading WELCOME TO ADMIN PAGE
+                    img(src="/asset/thinking-1.png" ).img-style-rigth
+                    img(src="/asset/i am possible.png").impossible
+                div.button-class-1.addpagecontent.content 
+                    input(type="text" value="#{exname}" name='exerciseName' placeholder='Enter exercise name and click the button...' class='inputEX').input-add-existing
+                    a(href='/post/threeWord' class='three') Three words sentence
+                    a(href='/post/fourWord' class='four') Four words sentence
+                    a(href='/post/fiveWord' class='five') Five words sentence
+                    a(href='/post/adminbtn').quit-a Back
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(type="text/javascript" src="/header.js")        
         script. 
                 let inp =document.querySelector('.inputEX')
                 $(document).ready(function() {

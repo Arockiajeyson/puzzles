@@ -6,57 +6,149 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
-            h1(style='color:white;margin-top:1em') Select the exercise name and click the continue button...
-            div(style='width:30%').content.button-class-1
-                //- form( enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1  
-                p(style='font-size:1.3em') Exercise Name : #{name}
-                a(href='/post/level1game' style='padding-top: .1em;').level level 1
-                if level1 ==false
-                    button(style='margin-top:1em;padding-top: .1em;').btn-level.level2 level 2
-                else 
-                    a(href='/post/level2game' style='margin-top:1em;padding-top: .1em;').level level 2
-                if  level2 == false || level1 == false 
-                    button(style='margin-top:1em;padding-top: .1em;').btn-level.level3 level 3
-                else            
-                    a(href='/post/level3game' style='margin-top:1em;padding-top: .1em;').level level 3  
-                a(href='/post/student' style='margin-top:1em;padding-top: .1em;').level Back 
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            div.content-div 
+                div.adminpageimg
+                    h2(style='color:white') WELCOME TO STUDENT PAGE
+                    img(src="/asset/thinking-1.png" ).img-style-rigth
+                    img(src="/asset/i am possible.png").impossible
+                div.content.button-class-1.adminpageContent.level-selecting-width  
+                    p(style='font-size:1.3em') Exercise Name : 
+                        span.name-exercise #{name}
+                    button(style='padding-bottom:.3em;').btn-link-1.level.q-selectin.hoverBtn Level 1
+                    if level1 ==false
+                        button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-2.btn-level.level2.q-selectin.hoverBtn Level 2
+                    else 
+                        button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-2.level.q-selectin.hoverBtn Level 2
+                    if  level2 == false || level1 == false 
+                        button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-3.btn-level.level3.q-selectin.hoverBtn Level 3
+                    else            
+                        button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-3.q-selectin.level.hoverBtn Level 3  
+                    button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-6.q-selectin.level.hoverBtn Back 
 
 
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(type="text/javascript" src="/header.js")       
         script. 
-                let inp =document.querySelector('#exercise')
-                $(document).ready(function() {
-                    $('.level2').click(function() {
-                    $.ajax({
-                        url: "/post/level1TorF",
-                        method: "POST",
-                        data: {name: 'level2' },
-                        success: function(response) {
-                            alert(response)
-                            //- window.location.href = '/post/level1game'
-                            console.log(response);
-                        },
-                        error: function(err) {
-                        console.log(err);
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
+                function timeOut(){
+                    setTimeout(()=>{
+                        location.reload()
+                    },1500)
+                }
+                if(#{mode} ==1){
+                    let btn =document.querySelectorAll('.q-selectin')
+                    let link1,link2,link3,link4
+                    link1 =btn[0].classList[0]
+                    if(#{level1} ==false){
+                        link2 =btn[1].classList[0]
+                    }else{
+                        link2 =btn[1].classList[0]
+                    }
+                    if(#{level2} ==false){
+                        link3 =btn[2].classList[0]
+                    }else{
+                        link3 =btn[2].classList[0]
+                    }
+                    link4 =btn[3].classList[0]
+                    //- console.log(btn)
+                    let cnt=0
+                    let interval=setInterval(()=>{
+                        if(cnt==0){
+                            let changingback = document.querySelector(`.${link4}`).style.backgroundColor ="#2512b0"
+                            let changeclor = document.querySelector(`.${link4}`).style.color ="white"
+                            let selectingback = document.querySelector(`.${link1}`).style.backgroundColor ="yellow"
+                            let selectingclor = document.querySelector(`.${link1}`).style.color ="black"
+                            cnt++
                         }
-                    });
-                    });
-                });
-                $(document).ready(function() {
-                    $('.level3').click(function() {
-                    $.ajax({
-                        url: "/post/level2TorF",
-                        method: "POST",
-                        data: {name: 'level2' },
-                        success: function(response) {
-                            alert(response)
-                            console.log(response);
-                        },
-                        error: function(err) {
-                        console.log(err);
+                        else if(cnt ==1){
+                            let changingback = document.querySelector(`.${link1}`).style.backgroundColor ="#2512b0"
+                            let changeclor = document.querySelector(`.${link1}`).style.color ="white"
+                            let selectingback = document.querySelector(`.${link2}`).style.backgroundColor ="yellow"
+                            let selectingclor = document.querySelector(`.${link2}`).style.color ="black"
+                            cnt++
                         }
+                        else if(cnt ==2){
+                            let changingback = document.querySelector(`.${link2}`).style.backgroundColor ="#2512b0"
+                            let changeclor = document.querySelector(`.${link2}`).style.color ="white"
+                            let selectingback = document.querySelector(`.${link3}`).style.backgroundColor ="yellow"
+                            let selectingclor = document.querySelector(`.${link3}`).style.color ="black"
+                            cnt++
+                        }
+                        else if(cnt ==3){
+                            let changingback = document.querySelector(`.${link3}`).style.backgroundColor ="#2512b0"
+                            let changeclor = document.querySelector(`.${link3}`).style.color ="white"
+                            let selectingback = document.querySelector(`.${link4}`).style.backgroundColor ="yellow"
+                            let selectingclor = document.querySelector(`.${link4}`).style.color ="black"
+                            cnt=0
+                        }
+                    },1500)
+                    document.addEventListener("click",()=>{
+                        clearInterval(interval)
+                        if(document.querySelector(`.${link1}`).style.backgroundColor =="yellow"){
+                            location.replace('/post/level1game')
+                        }
+                        else if(document.querySelector(`.${link2}`).style.backgroundColor =="yellow"){
+                            if(#{level1} ==false){
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML='Please Complete Level 1'
+                                timeOut()
+                            }else{
+                                location.replace('/post/level2game')
+                            }
+                        }
+                        else if(document.querySelector(`.${link3}`).style.backgroundColor =="yellow"){
+                            if(#{level2} ==false && #{level1} ==false){
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML='Please Complete Level 1 and Level 2'
+                                timeOut()
+                            }else if(#{level2} ==false){
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML='Please Complete Level 2'
+                                timeOut()
+                            }else{
+                                location.replace('/post/level3game')
+                            }
+                        }else{
+                            location.replace('/post/student')
+                        }
+                    })
+                }else{
+                    let inp =document.querySelector('#exercise')
+                    $(document).ready(function() {
+                        $('.btn-link-1').click(function() {
+                            location.replace('/post/level1game')
+                        });
                     });
+                    $(document).ready(function() {
+                        $('.btn-link-2').click(function() {
+                            if(#{level1} ==false){
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML='Please Complete Level 1'
+                            }else{
+                                location.replace('/post/level2game')
+                            }
+                        });
                     });
-                });
+                    $(document).ready(function() {
+                        $('.btn-link-3').click(function() {
+                            if(#{level2} ==false && #{level1} ==false){
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML='Please Complete Level 1 and Level 2'
+                            }else if(#{level2} ==false){
+                                alertHeader.style.display='inline'
+                                alertHeader.innerHTML='Please Complete Level 2'
+                            }else{
+                                location.replace('/post/level3game')
+                            }
+                        });
+                    });
+                    $(document).ready(function() {
+                        $('.btn-link-6').click(function() {
+                            location.replace('/post/student')
+                        });
+                    });
+                }
