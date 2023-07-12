@@ -5,5 +5,5 @@ const exercise = new mongoose.Schema({
     email:{type:String}
 })
 
-const exerciseModel =mongoose.model('exerciseName',exercise)
+const exerciseModel =mongoose.model('SB Exercise Master',exercise)
 module.exports=exerciseModel 

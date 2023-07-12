@@ -22,31 +22,31 @@ function submit(sub, reag) {
         let urlP;
         let dataW;
         let replaceLoction;
-        if(ans4 ==null){
+        if (ans4 == null) {
             word1 = document.querySelector('.answer-1').innerHTML
             word2 = document.querySelector('.answer-2').innerHTML
             word3 = document.querySelector('.answer-3').innerHTML
-            urlP="/post/resultAnswerL1"
-            dataW={ Aword1: word1, Aword2: word2, Aword3: word3 }
-            replaceLoction='/post/nextQ'
-        }else if(ans5 ==null){
+            urlP = "/post/resultAnswerL1"
+            dataW = { Aword1: word1, Aword2: word2, Aword3: word3 }
+            replaceLoction = '/post/nextQ'
+        } else if (ans5 == null) {
             word1 = document.querySelector('.answer-1').innerHTML
             word2 = document.querySelector('.answer-2').innerHTML
             word3 = document.querySelector('.answer-3').innerHTML
             word4 = document.querySelector('.answer-4').innerHTML
-            urlP="/post/resultAnswerL2"
-            dataW={ Aword1: word1, Aword2: word2, Aword3: word3, Aword4: word4 }
-            replaceLoction='/post/nextQLev2'
-        }else{
+            urlP = "/post/resultAnswerL2"
+            dataW = { Aword1: word1, Aword2: word2, Aword3: word3, Aword4: word4 }
+            replaceLoction = '/post/nextQLev2'
+        } else {
             word1 = document.querySelector('.answer-1').innerHTML
             word2 = document.querySelector('.answer-2').innerHTML
             word3 = document.querySelector('.answer-3').innerHTML
             word4 = document.querySelector('.answer-4').innerHTML
             word5 = document.querySelector('.answer-5').innerHTML
-            urlP="/post/resultAnswerL3"
-            dataW={ Aword1: word1, Aword2: word2, Aword3: word3, Aword4: word4, Aword5: word5 }
-            replaceLoction='/post/nextQLev3'
-        }   
+            urlP = "/post/resultAnswerL3"
+            dataW = { Aword1: word1, Aword2: word2, Aword3: word3, Aword4: word4, Aword5: word5 }
+            replaceLoction = '/post/nextQLev3'
+        }
         $.ajax({
             url: urlP,
             method: "POST",
@@ -101,28 +101,56 @@ function level() {
         let p1 = document.querySelectorAll(".modeScan")[0].classList[0]
         let p2 = document.querySelectorAll(".modeScan")[1].classList[0]
         let p3 = document.querySelectorAll(".modeScan")[2].classList[0]
-        let cunt = 0
+        let words1=true
+        let words2=true
+        let words3=true
         let intervel = setInterval(function () {
-            if (cunt == 0) {
+            if (wor1.innerHTML !== " " && words1 ==true) {
+                let audio1 = document.querySelector('.audio1')
+                audio1.play()
                 let v = document.querySelector(`.${p1}`)
                 v.style.backgroundColor = "yellow"
                 let pv = document.querySelector(`.${p3}`)
                 pv.style.backgroundColor = "#b1e1f4"
-                cunt++
-            } else if (cunt == 1) {
+                let pV1 = document.querySelector(`.${p2}`)
+                pV1.style.backgroundColor = "#b1e1f4"
+                words1=false
+                if(wor2.innerHTML == " " && wor3.innerHTML ==" "){
+                    words1=true
+                }
+            } 
+            else if (wor2.innerHTML !== " " && words2 ==true) {
+                let audio1 = document.querySelector('.audio2')
+                audio1.play()
                 let pV = document.querySelector(`.${p1}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p2}`)
                 v.style.backgroundColor = "yellow"
-                cunt++
-            } else if (cunt == 2) {
+                let pv1 = document.querySelector(`.${p3}`)
+                pv1.style.backgroundColor = "#b1e1f4"
+                // words2=false
+                if(wor3.innerHTML ==" "){
+                    words1=true
+                }else{
+                    words2=false
+                }
+                
+            } 
+            else if ( wor3.innerHTML !==" " && words3 ==true) {
+                
+                let audio1 = document.querySelector('.audio3')
+                audio1.play()
                 let pV = document.querySelector(`.${p2}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p3}`)
                 v.style.backgroundColor = "yellow"
-                cunt = 0
+                let pV1 = document.querySelector(`.${p1}`)
+                pV1.style.backgroundColor = "#b1e1f4"
+                words1=true
+                words2=true
             }
-        }, 1500);
+            
+        }, 2500);
 
 
         document.addEventListener("click", () => {
@@ -130,12 +158,17 @@ function level() {
             let p1Color = document.querySelectorAll(".modeScan")[0].style.backgroundColor
             let p2Color = document.querySelectorAll(".modeScan")[1].style.backgroundColor
             let p3Color = document.querySelectorAll(".modeScan")[2].style.backgroundColor
-            
+
 
             if (p1Color == "yellow") {
                 console.log('p1')
                 let audio1 = document.querySelector('.audio1')
                 audio1.play()
+                wor1.style.border = 'none'
+                wor1.style.boxShadow = 'none'
+                words1 =false
+                words2=true
+                words3=true
                 if (ans1.innerHTML == ' ') {
                     console.log(wor1.innerHTML)
                     ans1.innerHTML = wor1.innerHTML
@@ -158,8 +191,13 @@ function level() {
                 }
 
             } else if (p2Color == 'yellow') {
+                words2=false
+                words1=true
+                words3=true
                 let audio1 = document.querySelector('.audio2')
                 audio1.play()
+                wor2.style.border = 'none'
+                wor2.style.boxShadow = 'none'
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor2.innerHTML
                     wor2.innerHTML = " "
@@ -180,8 +218,13 @@ function level() {
                     onclicking()
                 }
             } else if (p3Color == 'yellow') {
+                words3 =false
+                words2=true
+                words1=true
                 let audio1 = document.querySelector('.audio3')
                 audio1.play()
+                wor3.style.border = 'none'
+                wor3.style.boxShadow = 'none'
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor3.innerHTML
                     wor3.innerHTML = " "
@@ -212,35 +255,81 @@ function level() {
         let p2 = document.querySelectorAll(".modeScan")[1].classList[0]
         let p3 = document.querySelectorAll(".modeScan")[2].classList[0]
         let p4 = document.querySelectorAll(".modeScan")[3].classList[0]
-
-        let cunt = 0
+        let words1=true
+        let words2=true
+        let words3=true
+        let words4=true
         let intervel = setInterval(function () {
-            if (cunt == 0) {
+            if (wor1.innerHTML !== " " && words1==true) {
+                let audio1 = document.querySelector('.audio1')
+                audio1.play()
                 let v = document.querySelector(`.${p1}`)
                 v.style.backgroundColor = "yellow"
+                let pV1 = document.querySelector(`.${p2}`)
+                pV1.style.backgroundColor = "#b1e1f4"
                 let pv = document.querySelector(`.${p4}`)
                 pv.style.backgroundColor = "#b1e1f4"
-                cunt++
-            } else if (cunt == 1) {
+                let pV2 = document.querySelector(`.${p3}`)
+                pV2.style.backgroundColor = "#b1e1f4"
+                words1=false
+                if(wor2.innerHTML == " " &&wor3.innerHTML == " " && wor4.innerHTML == " "){
+                    words1=true
+                }
+                
+            } else if (wor2.innerHTML !== " " && words2==true) {
+                let audio1 = document.querySelector('.audio2')
+                audio1.play()
                 let pV = document.querySelector(`.${p1}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p2}`)
                 v.style.backgroundColor = "yellow"
-                cunt++
-            } else if (cunt == 2) {
+                let pV2 = document.querySelector(`.${p3}`)
+                pV2.style.backgroundColor = "#b1e1f4"
+                let pv1 = document.querySelector(`.${p4}`)
+                pv1.style.backgroundColor = "#b1e1f4"
+                if(wor3.innerHTML == " " && wor4.innerHTML == " "){
+                    words1=true
+                    words2=true
+                }else{
+                    words2=false
+                }
+                
+                
+            } else if (wor3.innerHTML !== " " && words3==true) {
+                let audio1 = document.querySelector('.audio3')
+                audio1.play()
+                let pV1 = document.querySelector(`.${p1}`)
+                pV1.style.backgroundColor = "#b1e1f4"
                 let pV = document.querySelector(`.${p2}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p3}`)
                 v.style.backgroundColor = "yellow"
-                cunt++
-            } else if (cunt == 3) {
+                let pv2 = document.querySelector(`.${p4}`)
+                pv2.style.backgroundColor = "#b1e1f4"
+                if(wor4.innerHTML == " "){
+                    words1=true
+                    words2=true
+                    words3=true
+                }else{
+                    words3=false
+                }
+               
+            } else if (wor4.innerHTML !== " " && words4 ==true) {
+                let audio1 = document.querySelector('.audio4')
+                audio1.play()
+                let pV1 = document.querySelector(`.${p1}`)
+                pV1.style.backgroundColor = "#b1e1f4"
+                let pV2 = document.querySelector(`.${p2}`)
+                pV2.style.backgroundColor = "#b1e1f4"
                 let pV = document.querySelector(`.${p3}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p4}`)
                 v.style.backgroundColor = "yellow"
-                cunt = 0
+                words1=true
+                words2=true
+                words3=true
             }
-        }, 1500);
+        }, 2500);
 
         document.addEventListener("click", () => {
 
@@ -248,12 +337,18 @@ function level() {
             let p2Color = document.querySelectorAll(".modeScan")[1].style.backgroundColor
             let p3Color = document.querySelectorAll(".modeScan")[2].style.backgroundColor
             let p4Color = document.querySelectorAll(".modeScan")[3].style.backgroundColor
-            
+
 
             if (p1Color == "yellow") {
                 console.log('p1')
                 let audio1 = document.querySelector('.audio1')
                 audio1.play()
+                wor1.style.border = 'none'
+                wor1.style.boxShadow = 'none'
+                words1=false
+                words2=true
+                words3=true
+                words4=true
                 if (ans1.innerHTML == ' ') {
                     console.log(wor1.innerHTML)
                     ans1.innerHTML = wor1.innerHTML
@@ -282,6 +377,12 @@ function level() {
             } else if (p2Color == 'yellow') {
                 let audio1 = document.querySelector('.audio2')
                 audio1.play()
+                wor2.style.border = 'none'
+                wor2.style.boxShadow = 'none'
+                words2=false
+                words1=true
+                words3=true
+                words4=true
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor2.innerHTML
                     wor2.innerHTML = " "
@@ -309,6 +410,12 @@ function level() {
             } else if (p3Color == 'yellow') {
                 let audio1 = document.querySelector('.audio3')
                 audio1.play()
+                wor3.style.border = 'none'
+                wor3.style.boxShadow = 'none'
+                words3=false
+                words1=true
+                words2=true
+                words4=true
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor3.innerHTML
                     wor3.innerHTML = " "
@@ -336,6 +443,12 @@ function level() {
             } else if (p4Color == "yellow") {
                 let audio1 = document.querySelector('.audio4')
                 audio1.play()
+                wor4.style.border = 'none'
+                wor4.style.boxShadow = 'none'
+                words4=false
+                words1=true
+                words2=true
+                words3=true
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor4.innerHTML
                     wor4.innerHTML = " "
@@ -373,40 +486,114 @@ function level() {
         let p4 = document.querySelectorAll(".modeScan")[3].classList[0]
         let p5 = document.querySelectorAll(".modeScan")[4].classList[0]
 
-        let cunt = 0
+        let words1=true
+        let words2=true
+        let words3=true
+        let words4=true
+        let words5=true
         let intervel = setInterval(function () {
-            if (cunt == 0) {
+            if (wor1.innerHTML !== " " &&words1 ==true) {
+                let audio1 = document.querySelector('.audio1')
+                audio1.play()
                 let v = document.querySelector(`.${p1}`)
                 v.style.backgroundColor = "yellow"
                 let pv = document.querySelector(`.${p5}`)
                 pv.style.backgroundColor = "#b1e1f4"
-                cunt++
-            } else if (cunt == 1) {
+                let pV1 = document.querySelector(`.${p2}`)
+                pV1.style.backgroundColor = "#b1e1f4"
+                let pV2 = document.querySelector(`.${p3}`)
+                pV2.style.backgroundColor = "#b1e1f4"
+                let pV3 = document.querySelector(`.${p4}`)
+                pV3.style.backgroundColor = "#b1e1f4"
+                if(wor2.innerHTML == " " && wor3.innerHTML == " " && wor4.innerHTML == " " && wor5.innerHTML == " "){
+                    words1 =true
+                }else{
+                    words1=false
+                }
+                
+            } else if (wor2.innerHTML !== " " && words2==true) {
+                let audio1 = document.querySelector('.audio2')
+                audio1.play()
                 let pV = document.querySelector(`.${p1}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p2}`)
                 v.style.backgroundColor = "yellow"
-                cunt++
-            } else if (cunt == 2) {
+                let pV2 = document.querySelector(`.${p3}`)
+                pV2.style.backgroundColor = "#b1e1f4"
+                let pV3 = document.querySelector(`.${p4}`)
+                pV3.style.backgroundColor = "#b1e1f4"
+                let pv1 = document.querySelector(`.${p5}`)
+                pv1.style.backgroundColor = "#b1e1f4"
+                if(wor3.innerHTML == " " && wor4.innerHTML == " " && wor5.innerHTML == " "){
+                    words1 =true
+                    words2=true
+                }else{
+                    words2=false
+                }
+                
+            } else if (wor3.innerHTML !== " " && words3==true) {
+                let audio1 = document.querySelector('.audio3')
+                audio1.play()
                 let pV = document.querySelector(`.${p2}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p3}`)
                 v.style.backgroundColor = "yellow"
-                cunt++
-            } else if (cunt == 3) {
+                let pV3 = document.querySelector(`.${p4}`)
+                pV3.style.backgroundColor = "#b1e1f4"
+                let pv1 = document.querySelector(`.${p5}`)
+                pv1.style.backgroundColor = "#b1e1f4"
+                let pV2 = document.querySelector(`.${p1}`)
+                pV2.style.backgroundColor = "#b1e1f4"
+                if( wor4.innerHTML == " " && wor5.innerHTML == " "){
+                    words1 =true
+                    words2=true
+                    words3=true
+                }else{
+                    words3=false
+                }
+                
+            } else if (wor4.innerHTML !== " " && words4==true) {
+                let audio1 = document.querySelector('.audio4')
+                audio1.play()
                 let pV = document.querySelector(`.${p3}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p4}`)
                 v.style.backgroundColor = "yellow"
-                cunt++
-            } else if (cunt == 4) {
+                let pV3 = document.querySelector(`.${p2}`)
+                pV3.style.backgroundColor = "#b1e1f4"
+                let pv1 = document.querySelector(`.${p5}`)
+                pv1.style.backgroundColor = "#b1e1f4"
+                let pV2 = document.querySelector(`.${p1}`)
+                pV2.style.backgroundColor = "#b1e1f4"
+                if(wor5.innerHTML == " "){
+                    words1 =true
+                    words2=true
+                    words3=true
+                    words4=true
+                }else{
+                    words4=false
+                }
+                
+            } else if (wor5.innerHTML !== " " && words5==true) {
+                let audio1 = document.querySelector('.audio5')
+                audio1.play()
                 let pV = document.querySelector(`.${p4}`)
                 pV.style.backgroundColor = "#b1e1f4"
                 let v = document.querySelector(`.${p5}`)
                 v.style.backgroundColor = "yellow"
-                cunt = 0
+                let pV1 = document.querySelector(`.${p3}`)
+                pV1.style.backgroundColor = "#b1e1f4"
+                let pV3 = document.querySelector(`.${p2}`)
+                pV3.style.backgroundColor = "#b1e1f4"
+                let pV2 = document.querySelector(`.${p1}`)
+                pV2.style.backgroundColor = "#b1e1f4"
+                words1=true
+                words2=true
+                words3=true
+                words4=true
+                
             }
-        }, 1500);
+        }, 2500);
 
         document.addEventListener("click", () => {
 
@@ -415,12 +602,19 @@ function level() {
             let p3Color = document.querySelectorAll(".modeScan")[2].style.backgroundColor
             let p4Color = document.querySelectorAll(".modeScan")[3].style.backgroundColor
             let p5Color = document.querySelectorAll(".modeScan")[4].style.backgroundColor
-            
+
 
             if (p1Color == "yellow") {
                 console.log('p1')
+                words1=false
+                words2=true
+                words3=true
+                words4=true
+                words5=true
                 let audio1 = document.querySelector('.audio1')
                 audio1.play()
+                wor1.style.border = 'none'
+                wor1.style.boxShadow = 'none'
                 if (ans1.innerHTML == ' ') {
                     console.log(wor1.innerHTML)
                     ans1.innerHTML = wor1.innerHTML
@@ -450,8 +644,15 @@ function level() {
                 }
 
             } else if (p2Color == 'yellow') {
+                words1=true
+                words2=false
+                words3=true
+                words4=true
+                words5=true
                 let audio1 = document.querySelector('.audio2')
                 audio1.play()
+                wor2.style.border = 'none'
+                wor2.style.boxShadow = 'none'
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor2.innerHTML
                     wor2.innerHTML = " "
@@ -480,8 +681,15 @@ function level() {
                     onclicking()
                 }
             } else if (p3Color == 'yellow') {
+                words1=true
+                words2=true
+                words3=false
+                words4=true
+                words5=true
                 let audio1 = document.querySelector('.audio3')
                 audio1.play()
+                wor3.style.border = 'none'
+                wor3.style.boxShadow = 'none'
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor3.innerHTML
                     wor3.innerHTML = " "
@@ -510,8 +718,15 @@ function level() {
                     onclicking()
                 }
             } else if (p4Color == "yellow") {
+                words1=true
+                words2=true
+                words3=true
+                words4=false
+                words5=true
                 let audio1 = document.querySelector('.audio4')
                 audio1.play()
+                wor4.style.border = 'none'
+                wor4.style.boxShadow = 'none'
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor4.innerHTML
                     wor4.innerHTML = " "
@@ -540,8 +755,15 @@ function level() {
                     onclicking()
                 }
             } else if (p5Color == "yellow") {
-                let audio1 = document.querySelector('.audio4')
+                words1=true
+                words2=true
+                words3=true
+                words4=true
+                words5=false
+                let audio1 = document.querySelector('.audio5')
                 audio1.play()
+                wor5.style.border = 'none'
+                wor5.style.boxShadow = 'none'
                 if (ans1.innerHTML == ' ') {
                     ans1.innerHTML = wor5.innerHTML
                     wor5.innerHTML = " "

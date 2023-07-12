@@ -6,32 +6,35 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
-            h4(style='color:white;margin-top:1em;text-align:center') Click the sentence that you want to delete/edit after that click delete/edit button...
-            div(style='width:100%;color:white;display:flex;flex-direction:column;justify-content:center;align-items:center;margin-top:5%')
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            h4(style='color:white;margin-top:1em;text-align:center') Note : Click the sentence that you want to 'Edit' or 'Delete'. After that click on 'Edit' or 'Delete' button.
+            div.table-content-div
                 table.TableDeleteEdit   
                     tr 
-                        th(style="width:7%") S.no 
-                        th Sentence / exercisename : #{exnames}
+                        th(style="width:7%;color: black;") S. no 
+                        th(style="color: black;") #{exnames}
                          
                     each items,index in mydata
                         tr(class='sentence' data-value="#{items._id}" onclick="myfunction(this)" style="cursor:pointer").deSelect 
                             td(class='exercisename' style="width:7%")=index+1
                             td=items.sentence
                             
-                div(style='width:30%;margin-top:5%')         
-                    a(href='/post/editanddelete' ).deEBack Back
-                    a(href='/post/edit').deEBack Edit 
-                    a(href='/post/delete').deleteExercise.deEBack Delete     
+                div.delete-back-btn         
+                    button.back-btn.notback   Back  
+                    button.edit-button.notback   Edit  
+                    button.deleteExercise.notback Delete    
 
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(type="text/javascript" src="/header.js")        
         script. 
                 //- let inp =document.querySelector('.inputEX')
                 let exName =document.querySelector('.sentence')
                 //- let sentence =document.querySelector('.idexercise')
                 let exname =''
-                
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
 
                 function myfunction (element){
                     exname = element.getAttribute("data-value")
@@ -39,7 +42,8 @@ html
                     let rows = document.getElementsByTagName('tr');
 
                     for (let i = 1; i < rows.length; i++) {
-                        
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML=""
                         if (rows[i].classList.contains('democlass')) {
                             console.log(rows[i].classList.contains('democlass'))
                             rows[i].classList.remove('democlass');
@@ -54,19 +58,40 @@ html
                 $(document).ready(function() {
                     $('.deleteExercise').click(function() {
                     var myData = 3;
+                    if(exname ==''){
+                        alertHeader.style.display='inline'
+                        alertHeader.innerHTML ='Please Select The Sentence To Procced With'
+                    }else{
+                        $.ajax({
+                            url: "/post/deleteex",
+                            method: "delete",
+                            data: { id: exname },
+                            success: function(response) {
+                                if(response =="deleted No exercise"){
+                                    location.replace("/post/getEditDelete")
+                                }
+                                else if(response =="deleted"){
+                                    location.reload()
+                                }
+                            },
+                            error: function(err) {
+                                console.log(err);
+                            }
+                        });
+                    }
                     
-                    $.ajax({
-                        url: "/post/deleteex",
-                        method: "delete",
-                        data: { id: exname },
-                        success: function(response) {
-                            alert(response)
-                            console.log(response);
-                        },
-                        error: function(err) {
-                            console.log(err);
+                    });
+
+                    $('.edit-button').click(function() {
+                        if(exname ==''){
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ='Please Select The Sentence To Procced With'
+                        }else{
+                            location.replace("/post/edit")
                         }
                     });
+                    $('.back-btn').click(function() {
+                        location.replace("/post/getEditDelete")
                     });
                 });
                 $(document).ready(function() {

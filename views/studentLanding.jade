@@ -6,31 +6,52 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
-            h1(style='color:white;margin-top:1em') Select the exercise name and click the continue button...
-            div(style='width:30%')
-                form(action="" method='POST' enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1  
-                    select#exercise(name='exercise' style='width:100%;height:15%;border-radius:.3em;font-size:1.3em')
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            div.content-div
+                div.adminpageimg
+                    h2(style='color:white') WELCOME TO STUDENT PAGE
+                    img(src="/asset/thinking-1.png").img-style-rigth
+                    img(src="/asset/i am possible.png").impossible
+                div.content.button-class-1.adminpageContent  
+                    select#exercise(name='exercise').exerciseSelectin-tag
                         option Select the exercise name...
                         each items in exercisename
                             option(value="#{items.exerciseName}")=items.exerciseName
-                    select.Mode(name='exercise' style='width:100%;height:15%;border-radius:.3em;font-size:1.3em;margin-top:5%')
+                    select.Mode(name='exercise').modeSelecting-tag
                         option Select the mode...
                         option(value="Click") Click
                         option(value="Scan") Scan        
-                    a(href='/post/level' class="disable-a").quit-a Continue
-                    a(href='/' style='margin-top:2em').quit-a Back   
+                    a(href='/post/level' class="disable-a" style='padding-top:3.5%').quit-a Continue
+                    a(href='/' style='margin-top:2em;padding-top:3.5%').quit-a Back   
 
 
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')  
+        script(type="text/javascript" src="/header.js")      
         script. 
                 let inp =document.querySelector('#exercise')
                 let btnA =document.querySelector('.disable-a')
                 let mode =document.querySelector('.Mode')
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
                 document.querySelector(".disable-a").removeAttribute("href")
                 $(document).ready(function() {
+                    $('.quit-a').click(function() {
+                        if(inp.value =="Select the exercise name..."){
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ="Please Select Exercise Name"
+                        }
+                        else if(mode.value =="Select the mode..."){
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML ="Please Select Mode"
+                        }
+                    });
+                });
+                $(document).ready(function() {
                     $('#exercise').change(function() {
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML =""
                     $.ajax({
                         url: "/post/levelValue",
                         method: "POST",
@@ -48,6 +69,8 @@ html
                 $(document).ready(function() {
                     $('.Mode').change(function() {
                     document.querySelector(".disable-a").setAttribute("href", "/post/level");
+                    alertHeader.style.display='none'
+                    alertHeader.innerHTML=""
                     $.ajax({
                         url: "/post/mode",
                         method: "POST",

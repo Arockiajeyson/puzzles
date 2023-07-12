@@ -6,44 +6,46 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
-            h1(style='color:white;margin-top:1em') Arrange the words in correct format...
-            div(style='width:60%;height:85vh').content.button-class-1
-                //- form( enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1 
-                div(style='display:flex;justify-content:space-between')  
-                    h3 Level 2
-                    h3 Q.no : #{level}
-                h3(style='margin-top:3%;text-align:center') Question    
-                div(style='display:flex;border:2px solid black;padding:27px;margin-top:2%;border-radius:.3em;font-size:1.4em;justify-content:space-around;box-shadow: 5px 5px 5px rgb(83, 81, 81);') 
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-1.modeScan #{question[0].Word5}
-                    audio(controls='' style="display:none" class="audio1") 
-                        source(src="/uploaded files/#{question[0].Audio5}" )
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-2.modeScan #{question[0].Word3}
-                    audio(controls='' style="display:none" class="audio2") 
-                        source(src="/uploaded files/#{question[0].Audio3}" )
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-3.modeScan #{question[0].Word4}
-                    audio(controls='' style="display:none" class="audio3") 
-                        source(src="/uploaded files/#{question[0].Audio4}" )
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-4.modeScan #{question[0].Word1}
-                    audio(controls='' style="display:none" class="audio4") 
-                        source(src="/uploaded files/#{question[0].Audio1}" )
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:20%;text-align:center;height:60px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.2em').word-5.modeScan #{question[0].Word2}
-                    audio(controls='' style="display:none" class="audio5") 
-                        source(src="/uploaded files/#{question[0].Audio2}" )
-                h3(style='margin-top:3%;text-align:center') Answer
-                div(style='display:flex;justify-content:center;border:2px solid black;margin-top:2%;border-radius:.3em;font-size:1.4em;height:25vh;box-shadow: 5px 5px 5px rgb(83, 81, 81);').answerBack 
-                    p(style='padding-top:5%;font-size:1.2em').answer-1 
-                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-2 
-                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-3 
-                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-4 
-                    p(style='padding-top:5%;font-size:1.2em;margin-left:2%').answer-5 
-                div(style='display:flex;justify-content:space-between;margin-top:7%')         
-                    a(href='/post/nextQLev3' style='width:30%' class="answerss").answerSuAndRe Submit
-                    a(href='/post/level3game' style='width:30%;float:left').answerSuAndRe Rearrange
+        div.container-md.viewpageContainer
+            div.headerViewpage 
+            div.student-level-div-five
+                h3.h3-tag-answer Note: Arrange the words in correct format.
+                div.content.button-class-1.five-word-answer
+                    //- form( enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1 
+                    div.levelandex  
+                        h3.lev-h3 Level 3
+                        h3.lev-h3 Q.no : #{level}
+                    h3(style='text-align:center;font-weight:800') Question    
+                    div.div-question-tag.div-five-question-tag 
+                        p.word-1.modeScan.para-tag-q.q-four.align-items.align-five-items #{question[0].Word5}
+                        audio(controls=''  class="audio1").audiohidden 
+                            source(src="/uploaded files/#{question[0].Audio5}" )
+                        p.word-2.modeScan.para-tag-q.q-four.align-items.align-five-items #{question[0].Word3}
+                        audio(controls=''  class="audio2").audiohidden 
+                            source(src="/uploaded files/#{question[0].Audio3}" )
+                        p.word-3.modeScan.para-tag-q.q-four.align-items.align-five-items #{question[0].Word4}
+                        audio(controls=''  class="audio3").audiohidden 
+                            source(src="/uploaded files/#{question[0].Audio4}" )
+                        p.word-4.modeScan.para-tag-q.q-four.align-items.align-five-items #{question[0].Word1}
+                        audio(controls=''  class="audio4").audiohidden 
+                            source(src="/uploaded files/#{question[0].Audio1}" )
+                        p.word-5.modeScan.para-tag-q.q-four.align-items.align-five-items #{question[0].Word2}
+                        audio(controls=''  class="audio5").audiohidden 
+                            source(src="/uploaded files/#{question[0].Audio2}" )
+                    h3.ans-h3 Answer
+                    div.answer-div.answerBack 
+                        p.span-tag-answer.answer-1 
+                        p.span-tag-answer.answer-2 
+                        p.span-tag-answer.answer-3 
+                        p.span-tag-answer.answer-4 
+                        p.span-tag-answer.answer-5 
+                    div.bottom-ans-btn         
+                        a(href='/post/nextQLev3' style='width:20%;padding-top:.6%' class="answerss").answerSuAndRe Submit
+                        a(href='/post/level3game' style='width:20%;float:left;padding-top:.6%').answerSuAndRe Re-do
 
 
         script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(type="text/javascript" src="/header.js")
         if(mode ==1)       
             script(type="text/javascript" src="/timer.js")
         else    
@@ -86,6 +88,8 @@ html
                         $('.word-1').click(function() {
                             let audio1 =document.querySelector('.audio1')
                             audio1.play()
+                            wor1.style.border='none'
+                            wor1.style.boxShadow='none'
                             if(ans1.innerHTML == ' '){
                                 console.log(wor1.innerHTML)
                                 ans1.innerHTML=wor1.innerHTML
@@ -113,6 +117,8 @@ html
                         $('.word-2').click(function() {
                             let audio1 =document.querySelector('.audio2')
                             audio1.play()
+                            wor2.style.border='none'
+                            wor2.style.boxShadow='none'
                             if(ans1.innerHTML ==' '){
                                 ans1.innerHTML=wor2.innerHTML
                                 wor2.innerHTML =" "
@@ -140,6 +146,8 @@ html
                             //- console.log(wor3.innerHTML)
                             let audio1 =document.querySelector('.audio3')
                             audio1.play()
+                            wor3.style.border='none'
+                            wor3.style.boxShadow='none'
                             if(ans1.innerHTML ==' '){
                                 ans1.innerHTML=wor3.innerHTML
                                 wor3.innerHTML =" "
@@ -169,6 +177,8 @@ html
                             //- console.log(wor3.innerHTML)
                             let audio1 =document.querySelector('.audio4')
                             audio1.play()
+                            wor4.style.border='none'
+                            wor4.style.boxShadow='none'
                             if(ans1.innerHTML ==' '){
                                 ans1.innerHTML=wor4.innerHTML
                                 wor4.innerHTML =" "
@@ -196,6 +206,8 @@ html
                         $('.word-5').click(function() {
                             let audio1 =document.querySelector('.audio5')
                             audio1.play()
+                            wor5.style.border='none'
+                            wor5.style.boxShadow='none'
                             if(ans1.innerHTML ==' '){
                                 ans1.innerHTML=wor5.innerHTML
                                 wor5.innerHTML =" "

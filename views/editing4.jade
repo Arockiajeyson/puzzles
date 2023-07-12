@@ -6,65 +6,62 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
-            h6(style='color:white;margin-top:1em') Edit the word and upload respective audio file......
-            div(style='width:70%;color:white;display:flex;flex-direction:column;justify-content:center;align-items:center')
+        div.container-md.viewpageContainer
+            div.headerViewpage 
+            h4.edit-four-word-heading.edit-heading-margin-top Note: Edit the word and upload respective audio file.
+            div.edit-content-div.edit-margin-top-div-four
                 each items in edit
-                    form(action="/post/editFour" method="post" enctype="multipart/form-data" style='width:100%;background-color:#7fdbff;padding:1em;border-radius:.6em;box-shadow: 5px 5px 5px rgb(83, 81, 81);') 
-                        div(style="display:flex;flex-direction:column;justify-content: space-evenly;width:100%;")
-                            
-                            div(style="width:100%;display:flex;flex-direction:row;justify-content: space-evenly")
-                                div 
-                                    p(style="margin-left:10%;color:black") Word1 
-                                    input(type="text" name="Word1" value="#{items.Word1}" style="height:40px")
-                                div 
-                                    p(style='color:black') Audio1
-                                    input(type="file" name="audioEdit" style="height:40px")
-                                div(style="margin-top:2%;margin-left:-2.5em")      
-                                    audio(controls='' )
-                                        source(src="/uploaded files/#{items.Audio1}" )
-                        div(style="display:flex;flex-direction:column;justify-content: space-evenly;width:100%;margin-top:5%")   
-                               
-                            div(style="width:100%;display:flex;flex-direction:row;justify-content: space-evenly")
-                                div 
-                                    p(style="margin-left:10%;color:black") Word2 
-                                    input(type="text" value="#{items.Word2}" name="Word2" style="height:40px")
-                                div 
-                                    p(style='color:black') Audio2
-                                    input(type="file" name="audioEdit" style="height:40px")
-                                div(style="margin-top:2%;margin-left:-2.5em")     
-                                    audio(controls='' style="float:right")
-                                        source(src="/uploaded files/#{items.Audio2}")
-                        div(style="display:flex;flex-direction:column;justify-content: space-evenly;width:100%;margin-top:5%")  
-                             
-                            div(style="width:100%;display:flex;flex-direction:row;justify-content: space-evenly")
-                                div 
-                                    p(style="margin-left:10%;color:black") Word3 
-                                    input(type="text" value="#{items.Word3}" name="Word3" style="height:40px")
-                                div 
-                                    p(style='color:black') Audio3
-                                    input(type="file" name="audioEdit" style="height:40px")
-                                div(style="margin-top:2%;margin-left:-2.5em")     
-                                    audio(controls='' style="float:right")
-                                        source(src="/uploaded files/#{items.Audio3}")
-                        div(style="display:flex;flex-direction:column;justify-content: space-evenly;width:100%;margin-top:5%")  
-                             
-                            div(style="width:100%;display:flex;flex-direction:row;justify-content: space-evenly")
-                                div 
-                                    p(style="margin-left:10%;color:black") Word4
-                                    input(type="text" value="#{items.Word4}" name="Word4" style="height:40px")
-                                div 
-                                    p(style='color:black') Audio4
-                                    input(type="file" name="audioEdit" style="height:40px")
-                                div(style="margin-top:2%;margin-left:-2.5em")     
-                                    audio(controls='' style="float:right")
-                                        source(src="/uploaded files/#{items.Audio4}")                
-                        div(style="display:flex;flex-direction:row;justify-content:center;width:100%") 
-                            button(style="padding-top:0").sub-edit  submit 
-                            a(href="/post/continue").back-edit Back              
+                    form(action="/post/editFour" method="post" enctype="multipart/form-data" ).edit-form-tag 
+                        div.edit-div-content
+                            div 
+                                p.edit-p-tag Word1 
+                                input(type="text" name="Word1" value="#{items.Word1}").edit-input-field
+                            div 
+                                p.edit-p-tag Audio1
+                                input(type="file" name="audioEdit" style="height:40px").input-file-tag-edit
+                            div.audio-tag-div  
+                                p.edit-pre-tag-p Pervious Audio 1    
+                                audio(controls='' ).audio-height
+                                    source(src="/uploaded files/#{items.Audio1}" )
+                        div.edit-div-content
+                            div 
+                                p.edit-p-tag Word2 
+                                input(type="text" value="#{items.Word2}" name="Word2").edit-input-field
+                            div 
+                                p.edit-p-tag Audio2
+                                input(type="file" name="audioEdit" style="height:40px").input-file-tag-edit
+                            div.audio-tag-div  
+                                p.edit-pre-tag-p Pervious Audio 2   
+                                audio(controls='' style="float:right").audio-height
+                                    source(src="/uploaded files/#{items.Audio2}")
+                        div.edit-div-content
+                            div 
+                                p.edit-p-tag Word3 
+                                input(type="text" value="#{items.Word3}" name="Word3" ).edit-input-field
+                            div 
+                                p.edit-p-tag Audio3
+                                input(type="file" name="audioEdit" style="height:40px").input-file-tag-edit
+                            div.audio-tag-div  
+                                p.edit-pre-tag-p Pervious Audio 3   
+                                audio(controls='' style="float:right").audio-height
+                                    source(src="/uploaded files/#{items.Audio3}")
+                        div.edit-div-content  
+                            div 
+                                p.edit-p-tag Word4
+                                input(type="text" value="#{items.Word4}" name="Word4").edit-input-field
+                            div 
+                                p.edit-p-tag Audio4
+                                input(type="file" name="audioEdit" style="height:40px").input-file-tag-edit
+                            div.audio-tag-div
+                                p.edit-pre-tag-p Pervious Audio 4     
+                                audio(controls='' style="float:right").audio-height
+                                    source(src="/uploaded files/#{items.Audio4}")                
+                        div.form-bottom-btn-edit 
+                            button(style="padding-top:0;width:15%").sub-edit  submit 
+                            a(href="/post/continue" style="width:15%;padding-left:4.6%;margin-left:20%").back-edit Back              
 
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')        
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(type="text/javascript" src="/header.js")       
         script. 
                 //- let inp =document.querySelector('.inputEX')
                 let exName =document.querySelector('.sentence')

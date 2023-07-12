@@ -1,7 +1,78 @@
-doctype html 
-html 
-    head 
-        title checking 
-    body 
-            
+doctype html
+html
+    head
+        title Puzzle
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous')
+        link(rel='stylesheet' href='/style.css') 
 
+    body
+        div.container-md.viewpageContainer
+            h3.header-alert
+            div.headerViewpage 
+            div.table-content-div-result
+                table.result-table  
+                    tr 
+                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Exercise Name
+                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Student Name
+                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Level 1
+                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Level 2
+                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Level 3
+                        //- th.datatable(style='font-size: 1.4em;color:#0C2D48') No.Of.Attempts
+                         
+                    each items,index in data
+                        tr(class='sentence' data-value="#{items._id}" onclick="myfunction(this)" style="cursor:pointer") 
+                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.exerciseName
+                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.username
+                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.level1
+                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.level2
+                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.level3 
+                            //- td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.NoOfAttempt 
+                div.back-check-result         
+                    a(href='/post/resultViewRoute' ).deEBack Back
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(type="text/javascript" src="/header.js")        
+        script. 
+                //- let inp =document.querySelector('.inputEX')
+                let exName =document.querySelector('.sentence')
+                //- 
+                let alertHeader =document.querySelector('.header-alert')
+                alertHeader.style.display='none'
+                $(document).ready(function() {
+                    $('.deleteExercise').click(function() {
+                    var myData = 3;
+                    
+                    $.ajax({
+                        url: "/post/deleteex",
+                        method: "delete",
+                        data: { id: exname },
+                        success: function(response) {
+                            alertHeader.style.display='inline'
+                            alertHeader.innerHTML =response
+                            console.log(response);
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                    });
+                });
+                $(document).ready(function() {
+                    $('.sentence').click(function() {
+                    $.ajax({
+                        url: "/post/editid",
+                        method: "post",
+                        data: { id: exname },
+                        success: function(response) {
+                        console.log(response,'lkll');
+                        },
+                        error: function(err) {
+                        console.log(err);
+                        }
+                    });
+                    });
+                });
+
+                
+                    
+                              
+        

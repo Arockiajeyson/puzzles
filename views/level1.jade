@@ -6,37 +6,38 @@ html
         link(rel='stylesheet' href='/style.css') 
 
     body.body
-        div.container-md(style='padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center')
-            img(src="/asset/kavi2-removebg-preview.png", alt="" style='width:5%;position:absolute;top:2%;right:4%')
-            h1(style='color:white;margin-top:1em') Arrange the words in correct format...
-            div(style='width:50%;height:85vh').content.button-class-1
-                //- form( enctype="multipart/form-data" style='display:flex;flex-direction:column;width:100%').content.button-class-1 
-                div(style='display:flex;justify-content:space-between')  
-                    h3 Level 1
-                    h3 Q.no : #{level}
-                h3(style='margin-top:3%;text-align:center') Question 
-                p(style="display:none").modeCapture #{mode}   
-                div(style='display:flex;border:2px solid black;padding:27px;margin-top:2%;border-radius:.3em;font-size:1.4em;justify-content:space-around;box-shadow: 5px 5px 5px rgb(83, 81, 81);').setTime 
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:25%;text-align:center;height:80%;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.3em').word-1.modeScan #{question[0].Word3}
-                    audio(controls='' style="display:none" class="audio1") 
-                        source(src="/uploaded files/#{question[0].Audio3}" )
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:25%;text-align:center;height:80%;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.3em').word-2.modeScan #{question[0].Word1}
-                    audio(controls='' style="display:none" class="audio2") 
-                        source(src="/uploaded files/#{question[0].Audio1}" )
-                    p(style='border:2px solid black;padding:10px;border-radius:.3em;cursor:pointer;width:25%;text-align:center;height:70px;box-shadow: 5px 5px 5px rgb(83, 81, 81);font-size:1.3em').word-3.modeScan #{question[0].Word2}
-                    audio(controls='' style="display:none" class="audio3") 
-                        source(src="/uploaded files/#{question[0].Audio2}" )
-                h3(style='margin-top:3%;text-align:center') Answer
-                div(style='display:flex;justify-content:center;border:2px solid black;margin-top:2%;border-radius:.3em;font-size:1.4em;height:25vh;box-shadow: 5px 5px 5px rgb(83, 81, 81);').answerBack 
-                    span(style='padding-top:7%;font-size:1.3em').answer-1 
-                    span(style='padding-top:7%;font-size:1.3em;margin-left:2%').answer-2 
-                    span(style='padding-top:7%;font-size:1.3em;margin-left:2%').answer-3 
-                div(style='display:flex;justify-content:space-between;margin-top:7%')         
-                    a(href='/post/nextQ' style='width:30%' class="answerss").answerSuAndRe Submit
-                    a(href='/post/level1game' style='width:30%;float:left' ).answerSuAndRe Rearrange
+        div.container-md.viewpageContainer
+            div.headerViewpage 
+            div.student-level-div
+                h3.h3-tag-answer Note: Arrange the words in correct format.
+                div.student-answer-question.content.button-class-1 
+                    div.levelandex  
+                        h3.lev-h3 Level 1
+                        h3.lev-h3 Q.no : #{level}
+                    h3(style='text-align:center').lev-h3 Question 
+                    p(style="display:none").modeCapture #{mode}   
+                    div.div-question-tag.setTime 
+                        p.word-1.modeScan.para-tag-q.align-items #{question[0].Word3}
+                        audio(controls=''  class="audio1").audiohidden  
+                            source(src="/uploaded files/#{question[0].Audio3}" ).src1
+                        p.word-2.modeScan.para-tag-q.align-items #{question[0].Word1}
+                        audio(controls=''  class="audio2").audiohidden  
+                            source(src="/uploaded files/#{question[0].Audio1}" ).src2
+                        p.word-3.modeScan.para-tag-q.align-items #{question[0].Word2}
+                        audio(controls=''  class="audio3").audiohidden  
+                            source(src="/uploaded files/#{question[0].Audio2}" ).src3
+                    h3.ans-h3 Answer
+                    div.answer-div.answerBack 
+                        span.span-tag-answer.answer-1 
+                        span.span-tag-answer.answer-2 
+                        span.span-tag-answer.answer-3 
+                    div.bottom-ans-btn         
+                        a(href='/post/nextQ' style='width:30%;padding-top:.6%' class="answerss").answerSuAndRe Submit
+                        a(href='/post/level1game' style='width:30%;float:left;padding-top:.6%' ).answerSuAndRe Re-do
 
 
-        script(src='https://code.jquery.com/jquery-3.6.0.min.js')  
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(type="text/javascript" src="/header.js") 
         if(mode ==1)
             script(type="text/javascript" src="/timer.js")
                    
@@ -73,6 +74,9 @@ html
                     $('.word-1').click(function() {
                         let audio1 =document.querySelector('.audio1')
                         audio1.play()
+                        wor1.style.border='none'
+                        wor1.style.boxShadow='none'
+                        //- document.querySelector('.src1').removeAttribute("src")
                         if(ans1.innerHTML == ' '){
                             console.log(wor1.innerHTML)
                             ans1.innerHTML=wor1.innerHTML
@@ -93,7 +97,10 @@ html
                 $(document).ready(function() {
                     $('.word-2').click(function() {
                         let audio1 =document.querySelector('.audio2')
+                        wor2.style.border='none'
+                        wor2.style.boxShadow='none'
                         audio1.play()
+                        audio1.removeAttribute('src')
                         if(ans1.innerHTML ==' '){
                             ans1.innerHTML=wor2.innerHTML
                             wor2.innerHTML =" "
@@ -111,9 +118,11 @@ html
                 });
                 $(document).ready(function() {
                     $('.word-3').click(function() {
-                    
+                        wor3.style.border='none'
+                        wor3.style.boxShadow='none'
                         let audio1 =document.querySelector('.audio3')
                         audio1.play()
+                        audio1.removeAttribute('src')
                         if(ans1.innerHTML ==' '){
                             ans1.innerHTML=wor3.innerHTML
                             wor3.innerHTML =" "

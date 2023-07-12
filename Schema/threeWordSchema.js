@@ -3,7 +3,6 @@ const mongoose =require('mongoose')
 const exercise = new mongoose.Schema({
     exerciseName:{type:String},
     email:{type:String},
-    password:{type:String},
     sentence:{type:String},
     wordLength:{type:Number},
     Word1:{type:String},
@@ -18,5 +17,5 @@ const exercise = new mongoose.Schema({
     Audio5:{type:String},
 })
 
-const exerciseModel =mongoose.model('KEquestioner',exercise)
+const exerciseModel =mongoose.model('SB QMaster',exercise)
 module.exports=exerciseModel
