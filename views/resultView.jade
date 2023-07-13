@@ -16,12 +16,12 @@ html
                     img(src="/asset/i am possible.png").impossible
                 div.editDelte-left-side-div
                     form(action="" method='POST' enctype="multipart/form-data").table-form.content.button-class-1  
-                        select#exercise(name='exercise' value="select").select-delet-and-edit
+                        select#exercise(name='exercise' value="select" style="padding-left:2%").select-delet-and-edit
                             option Select the exercise name...
                             each items in exercisename
                                 option(value="#{items.exerciseName}")=items.exerciseName
-                        a(style='margin-top:2em;padding-top:4.5%').quit-a.clicking Continue
-                        a(href='/post/adminbtn' style='margin-top:2em;padding-top:4.5%').quit-a Back   
+                        a(style='margin-top:2em;padding-top:4.2%;font-size:1.8em').quit-a.clicking Continue
+                        a(href='/post/adminbtn' style='margin-top:2em;padding-top:4.2%;font-size:1.8em').quit-a Back   
 
 
         script(src='https://code.jquery.com/jquery-3.6.0.min.js')
@@ -39,7 +39,7 @@ html
                     $('.clicking').click(function() {
                         if(inp.value =="Select the exercise name..."){
                             alertHeader.style.display='inline'
-                            alertHeader.innerHTML ='Please Select Exercise Name'
+                            alertHeader.innerHTML ='Please select Exercise Name'
                         }else{
                             //- addHyperLink.setAttribute("href", "/post/continue")
                             $.ajax({
@@ -51,7 +51,7 @@ html
                                         location.replace('/post/finalResult/checking')
                                     }else if(response =='no'){
                                         alertHeader.style.display='inline'
-                                        alertHeader.innerHTML ='Results For This Exercise Is Not Available'
+                                        alertHeader.innerHTML ='Results for this Exercise is not Available'
                                     }
                                 },
                                 error: function(err) {

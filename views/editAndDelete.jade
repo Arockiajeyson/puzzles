@@ -17,12 +17,12 @@ html
                 //- h1(style='color:white;margin-top:1em') Select the exercise name and click the continue button...
                 div.editDelte-left-side-div
                     form(action="" method='POST' enctype="multipart/form-data").table-form.content.button-class-1  
-                        select#exercise(name='exercise' value="select").select-delet-and-edit
+                        select#exercise(name='exercise' value="select" style='padding-left:2%').select-delet-and-edit
                             option Select the exercise name...
                             each items in exercisename
                                 option(value="#{items.exerciseName}")=items.exerciseName
-                        a(style='margin-top:2em;padding-top:4.5%').quit-a.clicking Continue
-                        a(href='/post/adminbtn' style='margin-top:2em;padding-top:4.5%').quit-a Back   
+                        a(style='margin-top:2em;padding-top:4.2%;font-size:1.8em').quit-a.clicking Continue
+                        a(href='/post/adminbtn' style='margin-top:2em;padding-top:4.2%;font-size:1.8em').quit-a Back   
 
 
         script(src='https://code.jquery.com/jquery-3.6.0.min.js')
@@ -40,7 +40,7 @@ html
                     $('.clicking').click(function() {
                         if(inp.value =="Select the exercise name..."){
                             alertHeader.style.display='inline'
-                            alertHeader.innerHTML ='Please Select Exercise Name'
+                            alertHeader.innerHTML ='Please select Exercise Name'
                         }else{
                             //- addHyperLink.setAttribute("href", "/post/continue")
                             $.ajax({
@@ -50,7 +50,7 @@ html
                                 success: function(response) {
                                     if(response =="no"){
                                         alertHeader.style.display='inline'
-                                        alertHeader.innerHTML ='Questions Are Not Available For This Exercise'
+                                        alertHeader.innerHTML ='Questions are not Available for this Exercise'
                                     }else{
                                         location.replace("/post/continue")
                                     }
