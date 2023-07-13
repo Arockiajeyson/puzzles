@@ -94,7 +94,7 @@ html
                         else if(document.querySelector(`.${link2}`).style.backgroundColor =="yellow"){
                             if(#{level1} ==false){
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML='Please Complete Level 1'
+                                alertHeader.innerHTML='Please complete Level 1'
                                 timeOut()
                             }else{
                                 location.replace('/post/level2game')
@@ -103,11 +103,11 @@ html
                         else if(document.querySelector(`.${link3}`).style.backgroundColor =="yellow"){
                             if(#{level2} ==false && #{level1} ==false){
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML='Please Complete Level 1 and Level 2'
+                                alertHeader.innerHTML='Please complete Level 1 and Level 2'
                                 timeOut()
                             }else if(#{level2} ==false){
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML='Please Complete Level 2'
+                                alertHeader.innerHTML='Please complete Level 2'
                                 timeOut()
                             }else{
                                 location.replace('/post/level3game')
@@ -127,7 +127,7 @@ html
                         $('.btn-link-2').click(function() {
                             if(#{level1} ==false){
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML='Please Complete Level 1'
+                                alertHeader.innerHTML='Please complete Level 1'
                             }else{
                                 location.replace('/post/level2game')
                             }
@@ -137,10 +137,10 @@ html
                         $('.btn-link-3').click(function() {
                             if(#{level2} ==false && #{level1} ==false){
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML='Please Complete Level 1 and Level 2'
+                                alertHeader.innerHTML='Please complete Level 1 and Level 2'
                             }else if(#{level2} ==false){
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML='Please Complete Level 2'
+                                alertHeader.innerHTML='Please complete Level 2'
                             }else{
                                 location.replace('/post/level3game')
                             }

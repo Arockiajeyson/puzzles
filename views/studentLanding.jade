@@ -15,16 +15,16 @@ html
                     img(src="/asset/thinking-1.png").img-style-rigth
                     img(src="/asset/i am possible.png").impossible
                 div.content.button-class-1.adminpageContent  
-                    select#exercise(name='exercise').exerciseSelectin-tag
+                    select#exercise(name='exercise' style='padding-left:2%').exerciseSelectin-tag
                         option Select the exercise name...
                         each items in exercisename
                             option(value="#{items.exerciseName}")=items.exerciseName
-                    select.Mode(name='exercise').modeSelecting-tag
+                    select.Mode(name='exercise' style='padding-left:2%').modeSelecting-tag
                         option Select the mode...
                         option(value="Click") Click
                         option(value="Scan") Scan        
-                    a(href='/post/level' class="disable-a" style='padding-top:3.5%').quit-a Continue
-                    a(href='/' style='margin-top:2em;padding-top:3.5%').quit-a Back   
+                    a(href='/post/level' class="disable-a" style='padding-top:2.8%;font-size:1.8em').quit-a Continue
+                    a(href='/' style='margin-top:2em;padding-top:2.8%;font-size:1.8em').quit-a Back   
 
 
         script(src='https://code.jquery.com/jquery-3.6.0.min.js')  
@@ -40,11 +40,11 @@ html
                     $('.quit-a').click(function() {
                         if(inp.value =="Select the exercise name..."){
                             alertHeader.style.display='inline'
-                            alertHeader.innerHTML ="Please Select Exercise Name"
+                            alertHeader.innerHTML ="Please select Exercise Name"
                         }
                         else if(mode.value =="Select the mode..."){
                             alertHeader.style.display='inline'
-                            alertHeader.innerHTML ="Please Select Mode"
+                            alertHeader.innerHTML ="Please select Mode"
                         }
                     });
                 });
