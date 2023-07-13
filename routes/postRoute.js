@@ -253,7 +253,7 @@ app.post('/threeworddata', upload.array('audioFiles', 3), async (req, res) => {
     let wordCap = req.body.word1
     // req.body.word1 = wordCap.charAt(0).toUpperCase() + wordCap.slice(1)
     let megeringWord = `${req.body.word1} ${req.body.word2} ${req.body.word3}`
-    const storingData = await ThreeWordS.create({
+    const storingData = new ThreeWordS({
         exerciseName: req.session.exerciseName,
         email: req.session.emailId,
         wordLength: 3,
@@ -265,6 +265,8 @@ app.post('/threeworddata', upload.array('audioFiles', 3), async (req, res) => {
         Audio2: audioUrls[1],
         Audio3: audioUrls[2]
     })
+    await storingData.save()
+    // console.log(storingData)
     res.redirect('/post/threeWord')
 })
 
@@ -277,7 +279,7 @@ app.post('/fourworddata', upload.array('audioFiles1', 4), async (req, res) => {
     let wordCap = req.body.word1
     // req.body.word1 = wordCap.charAt(0).toUpperCase() + wordCap.slice(1)
     let megeringWord = `${req.body.word1} ${req.body.word2} ${req.body.word3} ${req.body.word4}`
-    const storingData = await ThreeWordS.create({
+    const storingData = new ThreeWordS({
         exerciseName: req.session.exerciseName,
         email: req.session.emailId,
         wordLength: 4,
@@ -291,7 +293,7 @@ app.post('/fourworddata', upload.array('audioFiles1', 4), async (req, res) => {
         Audio3: audioUrls[2],
         Audio4: audioUrls[3]
     })
-
+    await storingData.save()
     // console.log(audioUrls)
     res.redirect('/post/fourWord')
 })
@@ -307,7 +309,7 @@ app.post('/fiveworddata', upload.array('audioFiles2', 5), async (req, res) => {
     // req.body.word1 = wordCap.charAt(0).toUpperCase() + wordCap.slice(1)
     let megeringWord = `${req.body.word1} ${req.body.word2} ${req.body.word3} ${req.body.word4} ${req.body.word5}`
     console.log(megeringWord)
-    const storingData = await ThreeWordS.create({
+    const storingData = new ThreeWordS({
         exerciseName: req.session.exerciseName,
         email: req.session.emailId,
         wordLength: 5,
@@ -323,8 +325,8 @@ app.post('/fiveworddata', upload.array('audioFiles2', 5), async (req, res) => {
         Audio4: audioUrls[3],
         Audio5: audioUrls[4]
     })
-
-    console.log(storingData)
+    await storingData.save()
+    // console.log(storingData)
     res.redirect('/post/fiveWord')
 })
 
@@ -378,6 +380,7 @@ app.delete('/deleteex', async (req, res) => {
         // console.log(delelting)
         //req.session.deleteExercise
         //req.session.emailId
+        delelting.save()
         const find =await ThreeWordS.find({email:req.session.emailId,exerciseName:req.session.deleteExercise})
         if(find.length==0){
             res.json('deleted No exercise')
@@ -450,6 +453,7 @@ app.post('/editThree', upload.array("audioEdit", 3), async (req, res) => {
             }
         }
         const update = await ThreeWordS.updateOne({ _id: findingEx._id }, req.body)
+        update.save()
         res.redirect('/post/continue')
 
     } catch (error) {
@@ -582,7 +586,7 @@ app.post('/editFour', upload.array("audioEdit", 4), async (req, res) => {
         }
         // console.log(req.body)
         const update = await ThreeWordS.updateOne({ _id: findingEx._id }, req.body)
-        console.log(update)
+        update.save()
         res.redirect('/post/continue')
 
     } catch (error) {
@@ -846,6 +850,7 @@ app.post('/editFive', upload.array("audioEdit", 5), async (req, res) => {
         }
         // console.log(req.body)
         const update = await ThreeWordS.updateOne({ _id: findingEx._id }, req.body)
+        update.save()
         // console.log(update)
         res.redirect('/post/continue')
 
@@ -958,36 +963,22 @@ app.get('/level', async (req, res) => {
         req.session.correctAnswerLevel3 = 0
         req.session.totalQuestionLevel3 = 0
         req.session.save()
-        console.log('in level route')
         if (req.session.new==true) {
             const find = await Result.findOne({username:req.session.username,exerciseName:req.session.levelName})
-            if(find){
-                const idadd = await Result.updateOne({username:req.session.username,exerciseName:req.session.levelName},{
-                    username: req.session.username,
-                    exerciseName: req.session.levelName,
-                    email: req.session.emailOfStLo,
-                    level1: 'Not taken',
-                    level2: 'Not taken',
-                    level3: 'Not taken',
-                    NoOfAttempt:find.NoOfAttempt+1
-                })
-            }else{
-                console.log('creating')
+            console.log(find)
+            if(find==null){
                 const idadd = await Result.create({
                     username: req.session.username,
                     exerciseName: req.session.levelName,
                     email: req.session.emailOfStLo,
                     level1: 'Not taken',
                     level2: 'Not taken',
-                    level3: 'Not taken',
-                    NoOfAttempt:1
+                    level3: 'Not taken'
                 })
             }
             req.session.new=false
             req.session.save()
         }
-        // const checkingId =await Result.findById({_id:req.session.mongoId})
-        // console.log(checkingId)
         res.render('levelsSelecting.jade', { name: req.session.levelName, level1: req.session.leve1Completed, level2: req.session.leve2Completed, level3: req.session.leve3Completed, mode: req.session.mode })
     } catch (error) {
         res.json(error)
@@ -1170,6 +1161,7 @@ app.get('/level1game', async (req, res) => {
                 const update = await Result.updateOne({ username: req.session.username,exerciseName:req.session.levelName }, {
                     level1: 'Completed'
                 })
+                
             } else {
                 const update = await Result.updateOne({ username: req.session.username,exerciseName:req.session.levelName }, {
                     level1: 'Not completed'
@@ -1311,7 +1303,7 @@ app.get('/finalResult', async (req, res) => {
     const result = await Result.find({ email: req.session.emailId })
     console.log(result)
     if (result.length == 0) {
-        return res.json('Results Are Not Available')
+        return res.json('Results are not Available')
     } else {
         return res.json('yes')
     }

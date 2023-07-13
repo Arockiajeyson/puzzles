@@ -7,7 +7,6 @@ const exercise = new mongoose.Schema({
     level1:{type:String},
     level2:{type:String},
     level3:{type:String},
-    NoOfAttempt:{type:Number}
 })
 
 const Model =mongoose.model('SB student result',exercise)
