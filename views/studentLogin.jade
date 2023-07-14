@@ -59,10 +59,10 @@ html
                                 success: function(response) {
                                     if(response =='Email id is not exist'){
                                         alertHeader.style.display='inline'
-                                        alertHeader.innerHTML=response
+                                        alertHeader.innerHTML="Email Id Is Not Exist"
                                     }else if(response =='User name is worng'){
                                         alertHeader.style.display='inline'
-                                        alertHeader.innerHTML=response
+                                        alertHeader.innerHTML="User Name Is Worng"
                                     }
                                     else if(response =="done"){
                                         location.replace("/post/student")
@@ -77,11 +77,11 @@ html
                         }else{
                             if(val.value =="") {
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML ='Please enter Email Id'
+                                alertHeader.innerHTML ='Please Enter Email Id'
                             }
                             else {
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML ='Please enter Password'
+                                alertHeader.innerHTML ='Please Enter Password'
                             }
                         }
                     

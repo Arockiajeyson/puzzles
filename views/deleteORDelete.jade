@@ -60,17 +60,18 @@ html
                     var myData = 3;
                     if(exname ==''){
                         alertHeader.style.display='inline'
-                        alertHeader.innerHTML ='Please select The Sentence to Procced With'
+                        alertHeader.innerHTML ='Please Select The Sentence To Procced With'
                     }else{
                         $.ajax({
                             url: "/post/deleteex",
                             method: "delete",
                             data: { id: exname },
                             success: function(response) {
+                                console.log(response)
                                 if(response =="deleted No exercise"){
                                     location.replace("/post/getEditDelete")
                                 }
-                                else if(response =="deleted"){
+                                else if(response =='deleted'){
                                     location.reload()
                                 }
                             },
@@ -85,7 +86,7 @@ html
                     $('.edit-button').click(function() {
                         if(exname ==''){
                             alertHeader.style.display='inline'
-                            alertHeader.innerHTML ='Please select The Sentence to Procced With'
+                            alertHeader.innerHTML ='Please Select The Sentence To Procced With'
                         }else{
                             location.replace("/post/edit")
                         }

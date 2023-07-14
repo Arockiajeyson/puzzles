@@ -18,6 +18,21 @@ body {
     background-color: #b1e1f4;
     box-shadow: 5px 5px 5px rgb(83, 81, 81);
 }
+.adimLogin{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 420px;
+    border-radius: .7em;
+    padding: 1.6em;
+    background-color: #b1e1f4;
+    box-shadow: 5px 5px 5px rgb(83, 81, 81);
+}
+.logindiv-adim{
+    margin-left: 10%;
+    /* height: 400px; */
+    margin-top: 4%;
+}
 
 .adminContent {
     width: 50%;
@@ -1003,7 +1018,7 @@ th {
 .notAv>p {
     font-size: 1.7em;
     margin-top: 10%;
-    color: red;
+    color: rgba(206, 5, 5, 0.861);
 }
 
 .notAv>button {
@@ -1186,6 +1201,40 @@ th {
     margin-left: 1%;
     margin-top: -2%;
 }
-.padding-bottom{
-    margin-bottom: 5%;
+.margin-top-login{
+    margin-top: -3%;
+}
+.emaail-1{
+    height: 400px;
+}
+.adimLogin >button{
+    height: 50px;
+    background-color: #2512b0;
+    border: none;
+    border-radius: .3em;
+    text-align: center;
+    color: white;
+    font-size: 1.6em;
+    text-decoration: none;
+    margin-top: 4%;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px rgb(83, 81, 81);
+}
+
+.input-admin-padd{
+    padding-bottom: 10%;
+}
+.btn-forgot{
+    text-decoration: none;
+    font-size: 1.6em;
+    margin-top: 4%;
+    background-color: #2512b0;
+    height: 50px;
+    color: white;
+    border-radius: .3em;
+    padding-top: 1%;
+    text-align: center;
+}
+.hover:hover{
+    color: white;
 }
