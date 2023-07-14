@@ -377,10 +377,6 @@ app.delete('/deleteex', async (req, res) => {
         req.session.deleteExId =req.body.id
         req.session.save()
         const delelting = await ThreeWordS.deleteOne({ _id: req.session.deleteExId })
-        // console.log(delelting)
-        //req.session.deleteExercise
-        //req.session.emailId
-        delelting.save()
         const find =await ThreeWordS.find({email:req.session.emailId,exerciseName:req.session.deleteExercise})
         if(find.length==0){
             res.json('deleted No exercise')
@@ -412,7 +408,15 @@ app.post('/editThree', upload.array("audioEdit", 3), async (req, res) => {
         req.body.password = findingEx.password
         if (findingEx.Word1 != req.body.Word1 || findingEx.Word2 != req.body.Word2 || findingEx.Word3 != req.body.Word3) {
             // console.log('inside')
-            if (findingEx.Word1 != Word1 && findingEx.Word2 != Word2) {
+            if (findingEx.Word1 != Word1 && findingEx.Word2 != Word2 && findingEx.Word3 != Word3) {
+                req.body.Word1 = Word1
+                req.body.Word2 = Word2
+                req.body.Word3 = Word3
+                req.body.Audio1 = audioUrls[0]
+                req.body.Audio2 = audioUrls[1]
+                req.body.Audio3 = audioUrls[2]
+            }
+            else if (findingEx.Word1 != Word1 && findingEx.Word2 != Word2) {
                 req.body.Word1 = Word1
                 req.body.Audio1 = audioUrls[0]
                 req.body.Word2 = Word2
@@ -431,14 +435,6 @@ app.post('/editThree', upload.array("audioEdit", 3), async (req, res) => {
                 req.body.Word3 = Word3
                 req.body.Audio3 = audioUrls[1]
             }
-            else if (findingEx.Word1 != Word1 && findingEx.Word2 != Word2 && findingEx.Word3 != Word3) {
-                req.body.Word1 = Word1
-                req.body.Word2 = Word2
-                req.body.Word3 = Word3
-                req.body.Audio1 = audioUrls[0]
-                req.body.Audio2 = audioUrls[1]
-                req.body.Audio3 = audioUrls[2]
-            }
             else if (findingEx.Word1 != Word1) {
                 req.body.Word1 = Word1
                 req.body.Audio1 = audioUrls[0]
@@ -453,7 +449,7 @@ app.post('/editThree', upload.array("audioEdit", 3), async (req, res) => {
             }
         }
         const update = await ThreeWordS.updateOne({ _id: findingEx._id }, req.body)
-        update.save()
+        // console.log(update)
         res.redirect('/post/continue')
 
     } catch (error) {
@@ -586,7 +582,7 @@ app.post('/editFour', upload.array("audioEdit", 4), async (req, res) => {
         }
         // console.log(req.body)
         const update = await ThreeWordS.updateOne({ _id: findingEx._id }, req.body)
-        update.save()
+        // update.save()
         res.redirect('/post/continue')
 
     } catch (error) {
@@ -850,7 +846,7 @@ app.post('/editFive', upload.array("audioEdit", 5), async (req, res) => {
         }
         // console.log(req.body)
         const update = await ThreeWordS.updateOne({ _id: findingEx._id }, req.body)
-        update.save()
+        // update.save()
         // console.log(update)
         res.redirect('/post/continue')
 
@@ -1303,7 +1299,7 @@ app.get('/finalResult', async (req, res) => {
     const result = await Result.find({ email: req.session.emailId })
     console.log(result)
     if (result.length == 0) {
-        return res.json('Results are not Available')
+        return res.json('Results Are Not Available')
     } else {
         return res.json('yes')
     }

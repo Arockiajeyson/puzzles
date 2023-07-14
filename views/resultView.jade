@@ -39,7 +39,7 @@ html
                     $('.clicking').click(function() {
                         if(inp.value =="Select the exercise name..."){
                             alertHeader.style.display='inline'
-                            alertHeader.innerHTML ='Please select Exercise Name'
+                            alertHeader.innerHTML ='Please Select Exercise Name'
                         }else{
                             //- addHyperLink.setAttribute("href", "/post/continue")
                             $.ajax({
@@ -51,7 +51,7 @@ html
                                         location.replace('/post/finalResult/checking')
                                     }else if(response =='no'){
                                         alertHeader.style.display='inline'
-                                        alertHeader.innerHTML ='Results for this Exercise is not Available'
+                                        alertHeader.innerHTML ='Results For This Exercise Is Not Available'
                                     }
                                 },
                                 error: function(err) {

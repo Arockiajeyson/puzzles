@@ -22,12 +22,13 @@ html
                             img(src="/asset/check-mark.png", alt="", srcset="" style='width:6%;margin-top:-.3em')
                             span(style='color:white;margin-left:.3em') Rearrange the jumbled sentences
                             span.img-left-side    
-                div.button-class-1.content.logindiv
-                    h1.log Teacher login 
+                div.adimLogin.logindiv-adim
+                    h1.log.margin-top-login Teacher login 
                     input(type="text" placeholder="Enter teacher email ID..." ).emailId
-                    input(type="password" placeholder="Enter password..." style="margin-top:4%").password
-                    button.btnCon.hoverBtn Login 
-                    button(style="margin-top:6%").back.hoverBtn Back
+                    input(type="password" placeholder="Enter password..." style="margin-top:4%;").password
+                    button.btnCon.hoverBtn.input-admin-padd Login 
+                    button.back.hoverBtn.input-admin-padd Back
+                    a(href='https://kavi.enability.in/teachers/resetpassword' target="_blank").btn-forgot.input-admin-padd.hoverBtn.hover Forgot password?
                     
                 
         script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
@@ -59,10 +60,10 @@ html
                                 success: function(response) {
                                     if(response =="Enter correct password"){
                                         alertHeader.style.display='inline'
-                                        alertHeader.innerHTML ="Enter correct Password"
+                                        alertHeader.innerHTML ="Enter Correct Password"
                                     }else if(response =="Enter correct email id"){
                                         alertHeader.style.display='inline'
-                                        alertHeader.innerHTML ="Enter correct Email Id"
+                                        alertHeader.innerHTML ="Enter Correct Email Id"
                                     }
                                     else if(response =="done"){
                                         location.replace("/post/adminbtn")
@@ -77,11 +78,11 @@ html
                         }else{
                             if(val.value =="") {
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML ='Please enter Email Id'
+                                alertHeader.innerHTML ='Please Enter Email Id'
                             }
                             else {
                                 alertHeader.style.display='inline'
-                                alertHeader.innerHTML ='Please enter Password'
+                                alertHeader.innerHTML ='Please Enter Password'
                             }
                         }
                     
