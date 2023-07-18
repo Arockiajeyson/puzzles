@@ -166,10 +166,6 @@ a:hover {
     color: white;
 }
 
-.btn:hover {
-    /* background-color: rgb(142, 142, 241); */
-}
-
 .img-class {
     width: 50%;
     border-radius: .6em;
@@ -183,19 +179,20 @@ table {
     border-collapse: collapse;
     width: 60%;
     font-size: 1.2em;
-    background-color: #00B4D4;
-    color: black;
+    background-color: white;
+    color: #2512b0;
+    border: 2px solid black;
 }
 
 td,
-th {
-    border: 2px solid white;
+th{
+    border: 2px solid black;
     text-align: left;
     padding: 8px;
     font-size: 1.2em;
     text-align: center;
     width: 30%;
-    color: black;
+    color: #2512b0;
 }
 
 .emailId,
@@ -756,7 +753,7 @@ th {
 }
 
 .level-selecting-width {
-    width: 40%;
+    width: 30%;
 }
 
 .student-level-div {
@@ -954,20 +951,21 @@ th {
 .result-table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
     font-size: 1.1em;
     box-shadow: 5px 5px 5px rgb(105, 104, 104);
-    background-color: #00B4D4;
+    background-color: white;
+    color: #0a29a4;
 }
 
 .result-table>td,
 th {
-    border: 2px solid white;
+    border: 2px solid black;
     padding: 8px;
     font-size: 1.2em;
     text-align: center;
-    width: 100px;
-    color: rgb(8, 238, 238);
+    width: 50px;
+    color: #0a29a4;
     /* background-color: #d89400; */
 }
 
@@ -986,7 +984,7 @@ th {
     top: 5%;
     background-color: #b1e1f4;
     background-color: tr;
-    padding: .7em;
+    padding: .5em;
     color: rgba(206, 5, 5, 0.861);
     font-weight: bold;
     border-radius: .3em;
@@ -995,7 +993,7 @@ th {
 
 .name-exercise {
     font-size: 1em;
-    font-weight: bolder;
+    font-weight: lighter;
 }
 
 .levelnotav {
@@ -1237,4 +1235,7 @@ th {
 }
 .hover:hover{
     color: white;
+}
+.level-select-mar-width{
+    margin-left: 15%;
 }

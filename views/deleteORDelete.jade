@@ -12,9 +12,9 @@ html
             h4(style='color:white;margin-top:1em;text-align:center') Note : Click the sentence that you want to 'Edit' or 'Delete'. After that click on 'Edit' or 'Delete' button.
             div.table-content-div
                 table.TableDeleteEdit   
-                    tr 
-                        th(style="width:7%;color: black;") S. no 
-                        th(style="color: black;") #{exnames}
+                    tr(style='border: 2px solid black;') 
+                        th(style="width:7%;color: #2512b0;border: 2px solid black;") S. No 
+                        th(style="color: #2512b0;border: 2px solid black;") #{exnames}
                          
                     each items,index in mydata
                         tr(class='sentence' data-value="#{items._id}" onclick="myfunction(this)" style="cursor:pointer").deSelect 

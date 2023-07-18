@@ -15,15 +15,15 @@ html
                     img(src="/asset/thinking-1.png").img-style-rigth
                     img(src="/asset/i am possible.png").impossible
                 div.content.button-class-1.adminpageContent  
-                    select#exercise(name='exercise' style='padding-left:2%').exerciseSelectin-tag
-                        option Select the exercise name...
+                    select#exercise(name='exercise' style='padding-left:2%' placeholder='Select The Exercise').exerciseSelectin-tag
+                        option(style='display:none') Select The Exercise Name
                         each items in exercisename
                             option(value="#{items.exerciseName}")=items.exerciseName
-                    select.Mode(name='exercise' style='padding-left:2%').modeSelecting-tag
-                        option Select the mode...
+                    select.Mode(name='exercise'  style='padding-left:2%' placeholder='Select The Mode').modeSelecting-tag
+                        option(style='display:none') Select The Mode
                         option(value="Click") Click
                         option(value="Scan") Scan        
-                    a(href='/post/level' class="disable-a" style='padding-top:2.8%;font-size:1.8em').quit-a Continue
+                    a(class='me' href='/post/level' class="disable-a" style='padding-top:2.8%;font-size:1.8em').quit-a Continue
                     a(href='/' style='margin-top:2em;padding-top:2.8%;font-size:1.8em').quit-a Back   
 
 
@@ -38,49 +38,42 @@ html
                 document.querySelector(".disable-a").removeAttribute("href")
                 $(document).ready(function() {
                     $('.quit-a').click(function() {
-                        if(inp.value =="Select the exercise name..."){
+                        if(inp.value =="Select The Exercise Name"){
                             alertHeader.style.display='inline'
                             alertHeader.innerHTML ="Please Select Exercise Name"
                         }
-                        else if(mode.value =="Select the mode..."){
+                        else if(mode.value =="Select The Mode"){
                             alertHeader.style.display='inline'
                             alertHeader.innerHTML ="Please Select Mode"
+                        }else{
+                            console.log(inp.value)
+                            console.log(mode.value)
+                            $.ajax({
+                                url: "/post/levelValue",
+                                method: "POST",
+                                data: {name: inp.value ,Mode:mode.value},
+                                success: function(response) {
+                                 if(response =='yes'){
+                                    let element =document.createElement('a')
+                                    element.href='/post/level'
+                                    element.click()
+                                 }else{
+                                    alertHeader.style.display='inline'
+                                    alertHeader.innerHTML ="Question Are Not Available For this Exercise"
+                                 }
+                                },
+                                error: function(err) {
+                                 console.log(err);
+                                }
+                            });
                         }
                     });
-                });
-                $(document).ready(function() {
                     $('#exercise').change(function() {
                         alertHeader.style.display='none'
                         alertHeader.innerHTML =""
-                    $.ajax({
-                        url: "/post/levelValue",
-                        method: "POST",
-                        data: {name: inp.value },
-                        success: function(response) {
-                        console.log(response);
-                        },
-                        error: function(err) {
-                        console.log(err);
-                        }
                     });
-                    });
-                });
-
-                $(document).ready(function() {
                     $('.Mode').change(function() {
-                    document.querySelector(".disable-a").setAttribute("href", "/post/level");
-                    alertHeader.style.display='none'
-                    alertHeader.innerHTML=""
-                    $.ajax({
-                        url: "/post/mode",
-                        method: "POST",
-                        data: {Mode:mode.value },
-                        success: function(response) {
-                        console.log(response);
-                        },
-                        error: function(err) {
-                        console.log(err);
-                        }
-                    });
+                        alertHeader.style.display='none'
+                        alertHeader.innerHTML =""
                     });
                 });
