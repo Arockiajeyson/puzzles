@@ -984,7 +984,9 @@ th {
     top: 5%;
     background-color: #b1e1f4;
     background-color: tr;
-    padding: .5em;
+    padding: .2em;
+    padding-left: .5em;
+    padding-right: .5em;
     color: rgba(206, 5, 5, 0.861);
     font-weight: bold;
     border-radius: .3em;
