@@ -10,10 +10,13 @@ let ans4 = document.querySelector('.answer-4')
 let wor5 = document.querySelector('.word-5')
 let ans5 = document.querySelector('.answer-5')
 
-function submit(sub, reag) {
+function submit(sub, reag ,three) {
     if (reag == "yellow") {
         location.reload();
-    } else {
+    } else if(three =="yellow"){
+        location.replace('/post/level');
+    }
+    else {
         let word1;
         let word2;
         let word3;
@@ -69,15 +72,22 @@ function onclicking() {
         if (suRcunt == 0) {
             document.querySelectorAll(".answerSuAndRe")[0].style.backgroundColor = 'yellow'
             document.querySelectorAll(".answerSuAndRe")[0].style.color = 'black'
-            document.querySelectorAll(".answerSuAndRe")[1].style.backgroundColor = '#2512b0'
-            document.querySelectorAll(".answerSuAndRe")[1].style.color = 'white'
+            document.querySelectorAll(".answerSuAndRe")[2].style.backgroundColor = '#2512b0'
+            document.querySelectorAll(".answerSuAndRe")[2].style.color = 'white'
             suRcunt++
         } else if (suRcunt == 1) {
             document.querySelectorAll(".answerSuAndRe")[1].style.backgroundColor = 'yellow'
             document.querySelectorAll(".answerSuAndRe")[1].style.color = 'black'
             document.querySelectorAll(".answerSuAndRe")[0].style.backgroundColor = '#2512b0'
             document.querySelectorAll(".answerSuAndRe")[0].style.color = 'white'
-            suRcunt = 0
+            suRcunt++
+        }
+        else if (suRcunt == 2) {
+            document.querySelectorAll(".answerSuAndRe")[2].style.backgroundColor = 'yellow'
+            document.querySelectorAll(".answerSuAndRe")[2].style.color = 'black'
+            document.querySelectorAll(".answerSuAndRe")[1].style.backgroundColor = '#2512b0'
+            document.querySelectorAll(".answerSuAndRe")[1].style.color = 'white'
+            suRcunt =0
         }
     }, 1500)
 
@@ -86,7 +96,8 @@ function onclicking() {
         clearInterval(sub1);
         let one = document.querySelectorAll(".answerSuAndRe")[0].style.backgroundColor
         let two = document.querySelectorAll(".answerSuAndRe")[1].style.backgroundColor
-        submit(one, two)
+        let three = document.querySelectorAll(".answerSuAndRe")[2].style.backgroundColor
+        submit(one, two , three)
     })
 }
 
@@ -95,7 +106,7 @@ function onclicking() {
 function level() {
     if (ans4 == null) {
         let modes = document.querySelector(".modeCapture").innerHTML
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             document.querySelectorAll(".answerSuAndRe")[i].removeAttribute("href")
         }
         let p1 = document.querySelectorAll(".modeScan")[0].classList[0]
@@ -248,7 +259,7 @@ function level() {
             }
         })
     } else if (ans5 == null) {
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             document.querySelectorAll(".answerSuAndRe")[i].removeAttribute("href")
         }
         let p1 = document.querySelectorAll(".modeScan")[0].classList[0]
@@ -477,7 +488,7 @@ function level() {
             }
         })
     } else {
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             document.querySelectorAll(".answerSuAndRe")[i].removeAttribute("href")
         }
         let p1 = document.querySelectorAll(".modeScan")[0].classList[0]

@@ -74,8 +74,9 @@ app.post('/loginChecking', async (req, res) => {
         req.session.emailId = req.body.email
         req.session.save()
         if (req.session.emailId == 'grkasthuri@enability.in') {
-            console.log('login')
+            // console.log('login')
             let bcrypts = await bcrypt.compare(req.body.password, '$2b$12$lqJgdLbacVFlBAh0nnddRO279WSlyW4f0Nk565vb5McMtrTcns31m')
+            // console.log(bcrypts)
             if (bcrypts == false) {
                 return res.json('Enter correct password')
             } else {
@@ -971,31 +972,32 @@ app.get('/level', async (req, res) => {
                 level2: 'Not taken',
                 level3: 'Not taken'
             })
-        }
-        req.session.new = false
-        req.session.save()
-        
-        if (find.level1 == "Not taken" || find.level1 == "Not completed") {
-            // req.session.leve1Completed = false
+            req.session.leve1Completed = false
             req.session.leve2Completed = false
             req.session.leve3Completed = false
             req.session.save()
-        } else if (find.level1 == "Completed") {
-            // console.log('level 1 completed')
-            req.session.leve1Completed = true
-            req.session.save()
+        }else{
+            if (find.level1 == "Not taken" || find.level1 == "Not completed") {
+                // req.session.leve1Completed = false
+                req.session.leve2Completed = false
+                req.session.leve3Completed = false
+                req.session.save()
+            } else if (find.level1 == "Completed") {
+                // console.log('level 1 completed')
+                req.session.leve1Completed = true
+                req.session.save()
+            }
+    
+            if (find.level2 == "Not taken" || find.level2 == "Not completed") {
+                // req.session.leve1Completed = false
+                req.session.leve2Completed = false
+                req.session.leve3Completed = false
+                req.session.save()
+            } else if (find.level2 == "Completed" && find.level1 == "Completed") {
+                req.session.leve2Completed = true
+                req.session.save()
+            }
         }
-
-        if (find.level2 == "Not taken" || find.level2 == "Not completed") {
-            // req.session.leve1Completed = false
-            req.session.leve2Completed = false
-            req.session.leve3Completed = false
-            req.session.save()
-        } else if (find.level2 == "Completed") {
-            req.session.leve2Completed = true
-            req.session.save()
-        }
-        // }
         res.render('levelsSelecting.jade', { name: req.session.levelName, level1: req.session.leve1Completed, level2: req.session.leve2Completed, level3: req.session.leve3Completed, mode: req.session.mode })
     } catch (error) {
         res.json(error)
