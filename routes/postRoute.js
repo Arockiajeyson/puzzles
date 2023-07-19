@@ -9,8 +9,8 @@ app.use(session({ secret: 'Your_Secret_Key', resave: true, saveUninitialized: tr
 const SchemaExercise = require('../Schema/exercise')
 const ThreeWordS = require('../Schema/threeWordSchema')
 const Result = require('../Schema/result')
-const StudentDetail =require('../Schema/studentlogin')
-const TeacherDetail =require('../Schema/teacherLogin')
+const StudentDetail = require('../Schema/studentlogin')
+const TeacherDetail = require('../Schema/teacherLogin')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -73,15 +73,15 @@ app.post('/loginChecking', async (req, res) => {
         req.session.deleteExercise = ''
         req.session.emailId = req.body.email
         req.session.save()
-        if(req.session.emailId =='grkasthuri@enability.in'){
+        if (req.session.emailId == 'grkasthuri@enability.in') {
             console.log('login')
-            let bcrypts = await bcrypt.compare(req.body.password,'$2b$12$lqJgdLbacVFlBAh0nnddRO279WSlyW4f0Nk565vb5McMtrTcns31m')
-            if(bcrypts ==false){
+            let bcrypts = await bcrypt.compare(req.body.password, '$2b$12$lqJgdLbacVFlBAh0nnddRO279WSlyW4f0Nk565vb5McMtrTcns31m')
+            if (bcrypts == false) {
                 return res.json('Enter correct password')
-            }else{
+            } else {
                 res.json("done")
             }
-        }else{
+        } else {
             return res.json('Enter correct email id')
         }
         // req.session.save()
@@ -94,10 +94,10 @@ app.post('/loginChecking', async (req, res) => {
 app.get('/editanddelete', async (req, res) => {
     try {
         const find = await SchemaExercise.find({ email: req.session.emailId })
-        const word =await ThreeWordS.find({email:req.session.emailId})
-        if(find.length ==0 || word.length==0){
+        const word = await ThreeWordS.find({ email: req.session.emailId })
+        if (find.length == 0 || word.length == 0) {
             return res.json('No exercise')
-        }else{
+        } else {
             return res.json('done')
         }
         // res.render('editAndDelete.jade', { exercisename: find })
@@ -106,7 +106,7 @@ app.get('/editanddelete', async (req, res) => {
     }
 })
 
-app.get('/getEditDelete',async(req,res)=>{
+app.get('/getEditDelete', async (req, res) => {
     try {
         const find = await SchemaExercise.find({ email: req.session.emailId })
         res.render('editAndDelete.jade', { exercisename: find })
@@ -163,25 +163,25 @@ app.get('/continue', async (req, res) => {
     }
 })
 
-app.post('/resultChecking',async(req,res)=>{
-    req.session.resultCheckingEx =req.body.exerciseName
+app.post('/resultChecking', async (req, res) => {
+    req.session.resultCheckingEx = req.body.exerciseName
     req.session.save()
-    const find =await Result.find({ email: req.session.emailId,exerciseName:req.session.resultCheckingEx })
-    if(find.length==0){
+    const find = await Result.find({ email: req.session.emailId, exerciseName: req.session.resultCheckingEx })
+    if (find.length == 0) {
         return res.json('no')
-    }else{
+    } else {
         return res.json('yes')
     }
-    
+
 })
 
-app.get('/resultViewRoute',async(req,res)=>{
-    const find =await SchemaExercise.find({ email: req.session.emailId })
-    res.render('resultView.jade',{exercisename:find})
+app.get('/resultViewRoute', async (req, res) => {
+    const find = await SchemaExercise.find({ email: req.session.emailId })
+    res.render('resultView.jade', { exercisename: find })
 })
 
 app.get('/finalResult/checking', async (req, res) => {
-    const result = await Result.find({ email: req.session.emailId,exerciseName:req.session.resultCheckingEx })
+    const result = await Result.find({ email: req.session.emailId, exerciseName: req.session.resultCheckingEx })
     return res.render('checking.jade', { data: result })
 })
 
@@ -190,10 +190,10 @@ app.post('/exerciseDate', async (req, res) => {
         let word = req.body.name
         req.session.deleteExercise = word
         req.session.save()
-        const find =await ThreeWordS.find({ email: req.session.emailId ,exerciseName:req.session.deleteExercise})
-        if(find.length ==0){
+        const find = await ThreeWordS.find({ email: req.session.emailId, exerciseName: req.session.deleteExercise })
+        if (find.length == 0) {
             res.json('no')
-        }else{
+        } else {
             res.json('yes')
         }
     } catch (error) {
@@ -374,16 +374,16 @@ app.get('/delete', async (req, res) => {
 
 app.delete('/deleteex', async (req, res) => {
     try {
-        req.session.deleteExId =req.body.id
+        req.session.deleteExId = req.body.id
         req.session.save()
         const delelting = await ThreeWordS.deleteOne({ _id: req.session.deleteExId })
-        const find =await ThreeWordS.find({email:req.session.emailId,exerciseName:req.session.deleteExercise})
-        if(find.length==0){
+        const find = await ThreeWordS.find({ email: req.session.emailId, exerciseName: req.session.deleteExercise })
+        if (find.length == 0) {
             res.json('deleted No exercise')
-        }else{
+        } else {
             res.json('deleted')
         }
-        
+
     } catch (error) {
         res.json(error.message)
     }
@@ -917,11 +917,11 @@ app.post('/studentAdminEmailID', async (req, res) => {
         req.session.AnwWord5 = ''
         req.session.emailOfStLo = req.body.email
         req.session.username = req.body.username
-        req.session.new=true
+        req.session.new = true
         req.session.save()
         const find = await ThreeWordS.findOne({ email: req.body.email })
-        if (req.session.emailOfStLo =='grkasthuri@enability.in') {
-            if(req.session.username !=='Jeyson'){
+        if (req.session.emailOfStLo == 'grkasthuri@enability.in') {
+            if (req.session.username !== 'Jeyson') {
                 return res.json('User name is worng')
             }
             req.session.save()
@@ -938,7 +938,7 @@ app.post('/studentAdminEmailID', async (req, res) => {
 app.get('/student', async (req, res) => {
     try {
         const find = await SchemaExercise.find({ email: req.session.emailOfStLo })
-        req.session.new=true
+        req.session.new = true
         req.session.save()
         res.render('studentLanding.jade', { exercisename: find })
     } catch (error) {
@@ -951,7 +951,7 @@ app.get('/student', async (req, res) => {
 
 app.get('/level', async (req, res) => {
     try {
-        console.log(req.session.levelName)
+        // console.log(req.session.levelName)
         req.session.correctAnswerLevel1 = 0
         req.session.totalQuestionLevel1 = 0
         req.session.correctAnswerLevel2 = 0
@@ -959,22 +959,43 @@ app.get('/level', async (req, res) => {
         req.session.correctAnswerLevel3 = 0
         req.session.totalQuestionLevel3 = 0
         req.session.save()
-        if (req.session.new==true) {
-            const find = await Result.findOne({username:req.session.username,exerciseName:req.session.levelName})
-            console.log(find)
-            if(find==null){
-                const idadd = await Result.create({
-                    username: req.session.username,
-                    exerciseName: req.session.levelName,
-                    email: req.session.emailOfStLo,
-                    level1: 'Not taken',
-                    level2: 'Not taken',
-                    level3: 'Not taken'
-                })
-            }
-            req.session.new=false
+
+        const find = await Result.findOne({ username: req.session.username, exerciseName: req.session.levelName })
+        // console.log(find)
+        if (find == null) {
+            const idadd = await Result.create({
+                username: req.session.username,
+                exerciseName: req.session.levelName,
+                email: req.session.emailOfStLo,
+                level1: 'Not taken',
+                level2: 'Not taken',
+                level3: 'Not taken'
+            })
+        }
+        req.session.new = false
+        req.session.save()
+        
+        if (find.level1 == "Not taken" || find.level1 == "Not completed") {
+            // req.session.leve1Completed = false
+            req.session.leve2Completed = false
+            req.session.leve3Completed = false
+            req.session.save()
+        } else if (find.level1 == "Completed") {
+            // console.log('level 1 completed')
+            req.session.leve1Completed = true
             req.session.save()
         }
+
+        if (find.level2 == "Not taken" || find.level2 == "Not completed") {
+            // req.session.leve1Completed = false
+            req.session.leve2Completed = false
+            req.session.leve3Completed = false
+            req.session.save()
+        } else if (find.level2 == "Completed") {
+            req.session.leve2Completed = true
+            req.session.save()
+        }
+        // }
         res.render('levelsSelecting.jade', { name: req.session.levelName, level1: req.session.leve1Completed, level2: req.session.leve2Completed, level3: req.session.leve3Completed, mode: req.session.mode })
     } catch (error) {
         res.json(error)
@@ -985,16 +1006,9 @@ app.get('/level', async (req, res) => {
 
 app.post('/levelValue', async (req, res) => {
     try {
+        // console.log(req.body)
         req.session.levelName = req.body.name
         req.session.save()
-    } catch (error) {
-        res.json(error.message)
-    }
-})
-
-app.post('/mode', async (req, res) => {
-    try {
-        // mode= req.body.Mode
         if (req.body.Mode == "Scan") {
             req.session.mode = 1
             req.session.save()
@@ -1002,23 +1016,30 @@ app.post('/mode', async (req, res) => {
             req.session.mode = 0
             req.session.save()
         }
-    } catch (error) {
-        res.json(error.message)
-    }
-})
-
-app.post('/level1TorF', async (req, res) => {
-    try {
-        // console.log('comoming',req.body.name)
-        if (!req.session.leve1Completed) {
-            console.log('comoming')
-            res.json('please complete level 1')
+        const find = await ThreeWordS.find({ email: req.session.emailOfStLo, exerciseName: req.session.levelName })
+        // console.log(find , "new")
+        if (find.length != 0) {
+            return res.json('yes')
+        } else {
+            return res.json('no')
         }
     } catch (error) {
         res.json(error.message)
     }
 })
 
+
+app.post('/level1TorF', async (req, res) => {
+    try {
+        // console.log('comoming',req.body.name)
+        if (!req.session.leve1Completed) {
+            // console.log('comoming')
+            res.json('please complete level 1')
+        }
+    } catch (error) {
+        res.json(error.message)
+    }
+})
 
 
 app.post('/level2TorF', async (req, res) => {
@@ -1138,6 +1159,7 @@ app.get('/level1game', async (req, res) => {
         }
         let m = req.session.levelName
         const find = await ThreeWordS.find({ exerciseName: req.session.levelName, wordLength: 3, email: req.session.emailOfStLo })
+        // console.log(find)
         if (find.length == 0) {
             req.session.leve1Completed = true
             req.session.save()
@@ -1154,12 +1176,12 @@ app.get('/level1game', async (req, res) => {
             req.session.leve1Completed = true
             req.session.save()
             if (req.session.correctAnswerLevel1 == req.session.totalQuestionLevel1) {
-                const update = await Result.updateOne({ username: req.session.username,exerciseName:req.session.levelName }, {
+                const update = await Result.updateOne({ username: req.session.username, exerciseName: req.session.levelName }, {
                     level1: 'Completed'
                 })
-                
+
             } else {
-                const update = await Result.updateOne({ username: req.session.username,exerciseName:req.session.levelName }, {
+                const update = await Result.updateOne({ username: req.session.username, exerciseName: req.session.levelName }, {
                     level1: 'Not completed'
                 })
             }
@@ -1215,11 +1237,11 @@ app.get('/level2game', async (req, res) => {
             req.session.leve2Completed = true
             req.session.save()
             if (req.session.correctAnswerLevel2 == req.session.totalQuestionLevel2) {
-                const update = await Result.updateOne({ username: req.session.username ,exerciseName:req.session.levelName}, {
+                const update = await Result.updateOne({ username: req.session.username, exerciseName: req.session.levelName }, {
                     level2: 'Completed'
                 })
             } else {
-                const update = await Result.updateOne({ username: req.session.username ,exerciseName:req.session.levelName}, {
+                const update = await Result.updateOne({ username: req.session.username, exerciseName: req.session.levelName }, {
                     level2: 'Not completed'
                 })
             }
@@ -1268,11 +1290,11 @@ app.get('/level3game', async (req, res) => {
             // console.log(autaAnswer)
             req.session.save()
             if (req.session.correctAnswerLevel3 == req.session.totalQuestionLevel3) {
-                const update = await Result.updateOne({ username: req.session.username ,exerciseName:req.session.levelName}, {
+                const update = await Result.updateOne({ username: req.session.username, exerciseName: req.session.levelName }, {
                     level3: 'Completed'
                 })
             } else {
-                const update = await Result.updateOne({ username: req.session.username ,exerciseName:req.session.levelName}, {
+                const update = await Result.updateOne({ username: req.session.username, exerciseName: req.session.levelName }, {
                     level3: 'Not completed'
                 })
             }

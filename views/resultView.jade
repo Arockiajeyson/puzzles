@@ -16,8 +16,8 @@ html
                     img(src="/asset/i am possible.png").impossible
                 div.editDelte-left-side-div
                     form(action="" method='POST' enctype="multipart/form-data").table-form.content.button-class-1  
-                        select#exercise(name='exercise' value="select" style="padding-left:2%").select-delet-and-edit
-                            option Select the exercise name...
+                        select#exercise(name='exercise' style="padding-left:2%").select-delet-and-edit
+                            option(style="display:none") Select The Exercise Name...
                             each items in exercisename
                                 option(value="#{items.exerciseName}")=items.exerciseName
                         a(style='margin-top:2em;padding-top:4.2%;font-size:1.8em').quit-a.clicking Continue
@@ -37,7 +37,7 @@ html
                         alertHeader.innerHTML =""
                     });
                     $('.clicking').click(function() {
-                        if(inp.value =="Select the exercise name..."){
+                        if(inp.value =="Select The Exercise Name..."){
                             alertHeader.style.display='inline'
                             alertHeader.innerHTML ='Please Select Exercise Name'
                         }else{

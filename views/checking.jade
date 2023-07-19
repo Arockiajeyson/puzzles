@@ -12,23 +12,23 @@ html
             div.table-content-div-result
                 table.result-table  
                     tr 
-                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Exercise Name
-                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Student Name
-                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Level 1
-                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Level 2
-                        th.datatable(style='font-size: 1.4em;color:#0C2D48') Level 3
+                        th.datatable(style='font-size: 1.4em;color:#0a29a4;background-color: lightblue;') Exercise Name
+                        th.datatable(style='font-size: 1.4em;color:#0a29a4;background-color: lightblue;') Student Name
+                        th.datatable(style='font-size: 1.4em;color:#0a29a4;background-color: lightblue;') Level 1
+                        th.datatable(style='font-size: 1.4em;color:#0a29a4;background-color: lightblue;') Level 2
+                        th.datatable(style='font-size: 1.4em;color:#0a29a4;background-color: lightblue;') Level 3
                         //- th.datatable(style='font-size: 1.4em;color:#0C2D48') No.Of.Attempts
                          
                     each items,index in data
                         tr(class='sentence' data-value="#{items._id}" onclick="myfunction(this)" style="cursor:pointer") 
-                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.exerciseName
-                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.username
-                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.level1
-                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.level2
-                            td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.level3 
+                            td.datatable(style='font-size: 1.1em;color:#0a29a4')=items.exerciseName
+                            td.datatable(style='font-size: 1.1em;color:#0a29a4')=items.username
+                            td.datatable(style='font-size: 1.1em;color:#0a29a4')=items.level1
+                            td.datatable(style='font-size: 1.1em;color:#0a29a4')=items.level2
+                            td.datatable(style='font-size: 1.1em;color:#0a29a4')=items.level3 
                             //- td.datatable(style='font-size: 1.1em;color:#0C2D48')=items.NoOfAttempt 
                 div.back-check-result         
-                    a(href='/post/resultViewRoute' ).deEBack Back
+                    button( class='back-btn' style='height:45px;padding-top:.7%').deEBack Back
         script(src='https://code.jquery.com/jquery-3.6.0.min.js')
         script(type="text/javascript" src="/header.js")        
         script. 
@@ -69,6 +69,9 @@ html
                         console.log(err);
                         }
                     });
+                    });
+                    $('.back-btn').click(function() {
+                        location.replace('/post/resultViewRoute')
                     });
                 });
 
