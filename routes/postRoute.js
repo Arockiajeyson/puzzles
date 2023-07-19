@@ -978,7 +978,7 @@ app.get('/level', async (req, res) => {
             req.session.save()
         }else{
             if (find.level1 == "Not taken" || find.level1 == "Not completed") {
-                // req.session.leve1Completed = false
+                req.session.leve1Completed = false
                 req.session.leve2Completed = false
                 req.session.leve3Completed = false
                 req.session.save()
