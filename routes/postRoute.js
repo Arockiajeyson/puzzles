@@ -397,7 +397,6 @@ app.post('/editThree', upload.array("audioEdit", 3), async (req, res) => {
         const audioUrls = req.files.map(file => file.filename)
 
         const findingEx = await ThreeWordS.findOne({ _id: req.session.idED })
-
         let Word1 = req.body.Word1
         let Word2 = req.body.Word2
         let Word3 = req.body.Word3
@@ -978,7 +977,7 @@ app.get('/level', async (req, res) => {
             req.session.save()
         }else{
             if (find.level1 == "Not taken" || find.level1 == "Not completed") {
-                req.session.leve1Completed = false
+                // req.session.leve1Completed = false
                 req.session.leve2Completed = false
                 req.session.leve3Completed = false
                 req.session.save()
@@ -1289,7 +1288,10 @@ app.get('/level3game', async (req, res) => {
         const filter = find.slice(req.session.start, req.session.start + 1)
         if (filter.length != 0) {
             req.session.autaAnswer = filter[0].sentence
-            // console.log(autaAnswer)
+            req.session.save()
+            res.render('level3.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode })
+        } else {
+            req.session.start = 0
             req.session.save()
             if (req.session.correctAnswerLevel3 == req.session.totalQuestionLevel3) {
                 const update = await Result.updateOne({ username: req.session.username, exerciseName: req.session.levelName }, {
@@ -1300,10 +1302,6 @@ app.get('/level3game', async (req, res) => {
                     level3: 'Not completed'
                 })
             }
-            res.render('level3.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode })
-        } else {
-            req.session.start = 0
-            req.session.save()
             res.render('result.jade', { correct: req.session.correctAnswerLevel3, total: req.session.totalQuestionLevel3, mode: req.session.mode })
         }
     } catch (error) {
