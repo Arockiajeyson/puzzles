@@ -975,9 +975,11 @@ app.get('/level', async (req, res) => {
             req.session.leve2Completed = false
             req.session.leve3Completed = false
             req.session.save()
-        }else{
-            if (find.level1 == "Not taken" || find.level1 == "Not completed") {
-                // req.session.leve1Completed = false
+        } else {
+            const findsLevel1 = await ThreeWordS.find({ exerciseName: req.session.levelName, wordLength: 3, email: req.session.emailOfStLo })
+
+            if ((find.level1 == "Not taken" || find.level1 == "Not completed") && findsLevel1.length !== 0) {
+                req.session.leve1Completed = false
                 req.session.leve2Completed = false
                 req.session.leve3Completed = false
                 req.session.save()
@@ -986,8 +988,9 @@ app.get('/level', async (req, res) => {
                 req.session.leve1Completed = true
                 req.session.save()
             }
-    
-            if (find.level2 == "Not taken" || find.level2 == "Not completed") {
+            const findsLevel2 = await ThreeWordS.find({ exerciseName: req.session.levelName, wordLength: 4, email: req.session.emailOfStLo })
+
+            if ((find.level2 == "Not taken" || find.level2 == "Not completed") && findsLevel2.length !== 0) {
                 // req.session.leve1Completed = false
                 req.session.leve2Completed = false
                 req.session.leve3Completed = false
@@ -1221,7 +1224,6 @@ app.get('/level2game', async (req, res) => {
         const find = await ThreeWordS.find({ exerciseName: req.session.levelName, wordLength: 4, email: req.session.emailOfStLo })
         // console.log(find)
         if (find.length == 0) {
-            console.log('level2 not')
             req.session.leve2Completed = true
             req.session.save()
             return res.render('levelnotavai.jade', { level: 'Level 2 is not available for this exercise', mode: req.session.mode })
