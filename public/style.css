@@ -1235,3 +1235,6 @@ th {
 .level-select-mar-width{
     margin-left: 15%;
 }
+.levelAudio-1,.levelAudio-2,.levelAudio-3,.levelAudio-4 {
+    display: none;
+}

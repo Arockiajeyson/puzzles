@@ -22,6 +22,11 @@ html
             if(#{mode} ==1){
                 document.querySelector('.back').style.backgroundColor='yellow'
                 document.querySelector('.back').style.color='black'
+                let audiSub =document.createElement('audio')
+                let source =document.createElement('source')
+                source.src='/asset/finish.mp3'
+                audiSub.append(source)
+                audiSub.play()
                 document.addEventListener('click',()=>{
                     
                     location.replace('/post/level')
