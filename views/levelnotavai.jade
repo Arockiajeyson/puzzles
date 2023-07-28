@@ -21,11 +21,17 @@ html
                     let cnt=0
                     let interval = setInterval(()=>{
                         if(cnt ==0){
+                            let audiSub =document.createElement('audio')
+                            let source =document.createElement('source')
+                            source.src='/asset/back audio.mp3'
+                            audiSub.append(source)
+                            audiSub.play()
                             document.querySelector('.click-btn').style.backgroundColor='yellow'
                             document.querySelector('.click-btn').style.color='black'
                             document.addEventListener("click",()=>{
                                 location.replace('/post/level')
                             })
+
                         }
                     },1500)
                 }else{

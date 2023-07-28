@@ -19,19 +19,32 @@ html
                         span.name-exercise #{name}
                     button(style='padding-bottom:.3em;').btn-link-1.level.q-selectin.hoverBtn Easy 
                         span(style='font-size:.7em') (Level 1)
+                        audio(controls='').levelAudio-1 
+                            source(src="/asset/level 1.mp3" )
                     if level1 ==false
                         button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-2.btn-level.level2.q-selectin.hoverBtn Intermittent 
                             span(style='font-size:.7em') (Level 2)
+                            audio(controls='').levelAudio-2 
+                                source(src="/asset/level 2.mp3" )
                     else 
                         button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-2.level.q-selectin.hoverBtn Intermittent 
                             span(style='font-size:.7em') (Level 2)
+                            audio(controls='').levelAudio-2 
+                                source(src="/asset/level 2.mp3" )
                     if  level2 == false || level1 == false 
                         button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-3.btn-level.level3.q-selectin.hoverBtn Hard 
                             span(style='font-size:.7em') (Level 3)
+                            audio(controls='').levelAudio-3 
+                                source(src="/asset/level 3.mp3" )
                     else            
                         button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-3.q-selectin.level.hoverBtn Hard  
-                            span(style='font-size:.7em') (Level 3) 
+                            span(style='font-size:.7em') (Level 3)
+                            audio(controls='').levelAudio-3 
+                                source(src="/asset/level 3.mp3" ) 
                     button(style='margin-top:.7em;padding-bottom:.3em;').btn-link-6.q-selectin.level.hoverBtn Back 
+                    audio(controls='').levelAudio-4 
+                        source(src="/asset/back audio.mp3" ) 
+                    
 
 
         script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
@@ -63,6 +76,8 @@ html
                     let cnt=0
                     let interval=setInterval(()=>{
                         if(cnt==0){
+                            let audi =document.querySelector('.levelAudio-1')
+                            audi.play()
                             let changingback = document.querySelector(`.${link4}`).style.backgroundColor ="#2512b0"
                             let changeclor = document.querySelector(`.${link4}`).style.color ="white"
                             let selectingback = document.querySelector(`.${link1}`).style.backgroundColor ="yellow"
@@ -70,6 +85,8 @@ html
                             cnt++
                         }
                         else if(cnt ==1){
+                            let audi =document.querySelector('.levelAudio-2')
+                            audi.play()
                             let changingback = document.querySelector(`.${link1}`).style.backgroundColor ="#2512b0"
                             let changeclor = document.querySelector(`.${link1}`).style.color ="white"
                             let selectingback = document.querySelector(`.${link2}`).style.backgroundColor ="yellow"
@@ -77,6 +94,8 @@ html
                             cnt++
                         }
                         else if(cnt ==2){
+                            let audi =document.querySelector('.levelAudio-3')
+                            audi.play()
                             let changingback = document.querySelector(`.${link2}`).style.backgroundColor ="#2512b0"
                             let changeclor = document.querySelector(`.${link2}`).style.color ="white"
                             let selectingback = document.querySelector(`.${link3}`).style.backgroundColor ="yellow"
@@ -84,6 +103,8 @@ html
                             cnt++
                         }
                         else if(cnt ==3){
+                            let audi =document.querySelector('.levelAudio-4')
+                            audi.play()
                             let changingback = document.querySelector(`.${link3}`).style.backgroundColor ="#2512b0"
                             let changeclor = document.querySelector(`.${link3}`).style.color ="white"
                             let selectingback = document.querySelector(`.${link4}`).style.backgroundColor ="yellow"
