@@ -1,9 +1,28 @@
-const mongoose =require('mongoose')
+var mongoose = require('mongoose');
 
-const exercise = new mongoose.Schema({
-    Teachermail:{type:String},
-    password:{type:String}
-})
+var TeacherloginSchema = new mongoose.Schema({
+	name:{
+		type: String,
+     	index: true
+	},
+	username: {
+		type: String,
+	},
+	password: {
+		type: String
+	},
+	school: {
+		type: String
+	},
+	resetPasswordToken: {
+		 type: String
+	},
+    resetPasswordExpires: {
+    	 type: Date
+    },
+    isVerified: { type: Boolean, default: false },
+    createdAt: { type: Date, required: true, default: Date.now }
+});
 
-const Model =mongoose.model('SB Teacher detail',exercise)
-module.exports=Model 
+const loging =mongoose.model('Teacherlogin', TeacherloginSchema);
+module.exports = loging

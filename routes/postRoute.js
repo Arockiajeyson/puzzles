@@ -10,8 +10,8 @@ const SchemaExercise = require('../Schema/exercise')
 const ThreeWordS = require('../Schema/threeWordSchema')
 const Result = require('../Schema/result')
 const StudentDetail = require('../Schema/studentlogin')
-const TeacherDetail = require('../Schema/teacherLogin')
-
+const teacherLog =require('../Schema/teacherLogin')
+// var db =require('mongodb').MongoClient
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './public/uploaded files');
@@ -73,10 +73,9 @@ app.post('/loginChecking', async (req, res) => {
         req.session.deleteExercise = ''
         req.session.emailId = req.body.email
         req.session.save()
-        if (req.session.emailId == 'grkasthuri@enability.in') {
-            // console.log('login')
-            let bcrypts = await bcrypt.compare(req.body.password, '$2b$12$lqJgdLbacVFlBAh0nnddRO279WSlyW4f0Nk565vb5McMtrTcns31m')
-            // console.log(bcrypts)
+        const find =await teacherLog.findOne({username:req.session.emailId})
+        if (find) {
+            let bcrypts = await bcrypt.compare(req.body.password, find.password)
             if (bcrypts == false) {
                 return res.json('Enter correct password')
             } else {
@@ -85,8 +84,6 @@ app.post('/loginChecking', async (req, res) => {
         } else {
             return res.json('Enter correct email id')
         }
-        // req.session.save()
-        // res.json("done")
     } catch (error) {
         res.json(error.message)
     }
@@ -919,9 +916,11 @@ app.post('/studentAdminEmailID', async (req, res) => {
         req.session.username = req.body.username
         req.session.new = true
         req.session.save()
-        const find = await ThreeWordS.findOne({ email: req.body.email })
-        if (req.session.emailOfStLo == 'grkasthuri@enability.in') {
-            if (req.session.username !== 'Jeyson') {
+        // const find = await ThreeWordS.findOne({ email: req.body.email })
+        const find2 =await StudentDetail.find({teachername_fk:req.session.emailOfStLo}) //,{studentname:req.session.username}
+        if (find2.length !==0) {
+            const find2 =await StudentDetail.findOne({teachername_fk:req.session.emailOfStLo,studentname:req.session.username,username:`${req.session.username}_${req.session.emailOfStLo}`}) //,{studentname:req.session.username}
+            if (!find2) {
                 return res.json('User name is worng')
             }
             req.session.save()
@@ -958,6 +957,7 @@ app.get('/level', async (req, res) => {
         req.session.totalQuestionLevel2 = 0
         req.session.correctAnswerLevel3 = 0
         req.session.totalQuestionLevel3 = 0
+        req.session.onlyone=0
         req.session.save()
 
         const find = await Result.findOne({ username: req.session.username, exerciseName: req.session.levelName })
@@ -1000,7 +1000,39 @@ app.get('/level', async (req, res) => {
                 req.session.save()
             }
         }
-        res.render('levelsSelecting.jade', { name: req.session.levelName, level1: req.session.leve1Completed, level2: req.session.leve2Completed, level3: req.session.leve3Completed, mode: req.session.mode })
+        req.session.level1Ava=false
+        req.session.level2Ava=false
+        req.session.level3Ava=false
+        req.session.save()
+        const findsLevel = await ThreeWordS.find({ exerciseName: req.session.levelName,email: req.session.emailOfStLo })
+        for( req.session.let=0 ; req.session.let < findsLevel.length ;req.session.let++){
+            if(findsLevel[req.session.let].wordLength ==3 && findsLevel[req.session.let].wordLength !==4 && findsLevel[req.session.let].wordLength !==5 ){
+                req.session.level1Ava=true
+            }else if(findsLevel[req.session.let].wordLength ==4 && findsLevel[req.session.let].wordLength !==3 && findsLevel[req.session.let].wordLength !==5 ){
+                req.session.level2Ava=true
+            }else if(findsLevel[req.session.let].wordLength ==5 && findsLevel[req.session.let].wordLength !==3 && findsLevel[req.session.let].wordLength !==4 ){
+                req.session.level3Ava=true
+            }
+        }
+        if(req.session.level1Ava==true && req.session.level2Ava==false && req.session.level3Ava==false){
+            req.session.onlyone=1
+            req.session.save()
+            res.redirect('/post/level1game')
+        }else if(req.session.level2Ava==true && req.session.level1Ava==false && req.session.level3Ava==false){
+            req.session.leve1Completed = true
+            req.session.leve2Completed = true
+            req.session.onlyone=1
+            req.session.save()
+            res.redirect('/post/level2game')
+        }else if(req.session.level3Ava==true && req.session.level2Ava==false && req.session.level1Ava==false){
+            req.session.leve1Completed = true
+            req.session.leve2Completed = true
+            req.session.onlyone=1
+            req.session.save()
+            res.redirect('/post/level3game')
+        }else{
+            res.render('levelsSelecting.jade', { name: req.session.levelName, level1: req.session.leve1Completed, level2: req.session.leve2Completed, level3: req.session.leve3Completed, mode: req.session.mode })
+        }
     } catch (error) {
         res.json(error)
     }
@@ -1035,9 +1067,9 @@ app.post('/levelValue', async (req, res) => {
 
 app.post('/level1TorF', async (req, res) => {
     try {
-        // console.log('comoming',req.body.name)
+        
         if (!req.session.leve1Completed) {
-            // console.log('comoming')
+            
             res.json('please complete level 1')
         }
     } catch (error) {
@@ -1174,7 +1206,7 @@ app.get('/level1game', async (req, res) => {
         if (filter.length != 0) {
             req.session.autaAnswer = filter[0].sentence
             req.session.save()
-            res.render('level1.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode })
+            res.render('level1.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode,avail:req.session.onlyone })
         } else {
             req.session.start = 0
             req.session.leve1Completed = true
@@ -1190,7 +1222,7 @@ app.get('/level1game', async (req, res) => {
                 })
             }
             // req.session.save()
-            res.render('result.jade', { correct: req.session.correctAnswerLevel1, total: req.session.totalQuestionLevel1, mode: req.session.mode })
+            res.render('result.jade', { correct: req.session.correctAnswerLevel1, total: req.session.totalQuestionLevel1, mode: req.session.mode ,avail:req.session.onlyone})
         }
     } catch (error) {
         res.json(error.message)
@@ -1234,7 +1266,7 @@ app.get('/level2game', async (req, res) => {
         if (filter.length != 0) {
             req.session.autaAnswer = filter[0].sentence
             req.session.save()
-            res.render('level2.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode })
+            res.render('level2.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode ,avail:req.session.onlyone })
         } else {
             req.session.start = 0
             req.session.leve2Completed = true
@@ -1248,7 +1280,7 @@ app.get('/level2game', async (req, res) => {
                     level2: 'Not completed'
                 })
             }
-            res.render('result.jade', { correct: req.session.correctAnswerLevel2, total: req.session.totalQuestionLevel2, mode: req.session.mode })
+            res.render('result.jade', { correct: req.session.correctAnswerLevel2, total: req.session.totalQuestionLevel2, mode: req.session.mode ,avail:req.session.onlyone})
         }
     } catch (error) {
         res.json(error.message)
@@ -1291,7 +1323,7 @@ app.get('/level3game', async (req, res) => {
         if (filter.length != 0) {
             req.session.autaAnswer = filter[0].sentence
             req.session.save()
-            res.render('level3.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode })
+            res.render('level3.jade', { question: filter, level: req.session.start + 1, mode: req.session.mode ,avail:req.session.onlyone})
         } else {
             req.session.start = 0
             req.session.save()
@@ -1304,7 +1336,7 @@ app.get('/level3game', async (req, res) => {
                     level3: 'Not completed'
                 })
             }
-            res.render('result.jade', { correct: req.session.correctAnswerLevel3, total: req.session.totalQuestionLevel3, mode: req.session.mode })
+            res.render('result.jade', { correct: req.session.correctAnswerLevel3, total: req.session.totalQuestionLevel3, mode: req.session.mode ,avail:req.session.onlyone})
         }
     } catch (error) {
         res.json(error.message)
@@ -1326,6 +1358,14 @@ app.get('/finalResult', async (req, res) => {
         return res.json('Results Are Not Available')
     } else {
         return res.json('yes')
+    }
+})
+
+app.get('/availCheck',async(req,res)=>{
+    if(req.session.onlyone ==1){
+        res.json('yes')
+    }else{
+        res.json('no')
     }
 })
 

@@ -16,7 +16,10 @@ html
                             h1.question-answer Total Questions : #{total}
                             h1.question-answer Correct Answers: #{correct}
                         img(src="/asset/congratulations-4121.gif").result-img-div 
-                    a(href='/post/level' style="margin-left:42%;margin-top:3%;padding-top:.7%").answerSuAndRe.back Finish
+                    if(avail ==1) 
+                        a(href='/post/student' style="margin-left:42%;margin-top:3%;padding-top:.7%").answerSuAndRe.back Finish
+                    else 
+                        a(href='/post/level' style="margin-left:42%;margin-top:3%;padding-top:.7%").answerSuAndRe.back Finish
     script(type="text/javascript" src="/header.js")
     script.     
             if(#{mode} ==1){
@@ -28,8 +31,11 @@ html
                 audiSub.append(source)
                 audiSub.play()
                 document.addEventListener('click',()=>{
-                    
-                    location.replace('/post/level')
+                    if(#{avail} ==1){
+                        location.replace('/post/student')
+                    }else{
+                        location.replace('/post/level')
+                    }
                 })
             }else{
                 document.querySelector('.back').addEventListener('click',()=>{

@@ -225,9 +225,25 @@ function level() {
             let p3Color = document.querySelectorAll(".modeScan")[2].style.backgroundColor
 
             if(backBtn.style.backgroundColor =='yellow'){
-                let ba =document.createElement('a')
-                ba.href ='/post/level'
-                ba.click()
+                console.log('inside ava')
+                $.ajax({
+                    url: '/post/availCheck',
+                    method: "GET",
+                    success: function (response) {
+                        if(response =='yes'){
+                            let ba =document.createElement('a')
+                            ba.href ='/post/student'
+                            ba.click()
+                        }else{
+                            let ba =document.createElement('a')
+                            ba.href ='/post/level'
+                            ba.click()
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             }else if(redoBtn.style.backgroundColor =='yellow'){
                 location.reload()
             }
@@ -454,9 +470,24 @@ function level() {
             let p4Color = document.querySelectorAll(".modeScan")[3].style.backgroundColor
 
             if(backBtn.style.backgroundColor =='yellow'){
-                let ba =document.createElement('a')
-                ba.href ='/post/level'
-                ba.click()
+                $.ajax({
+                    url: '/post/availCheck',
+                    method: "GET",
+                    success: function (response) {
+                        if(response =='yes'){
+                            let ba =document.createElement('a')
+                            ba.href ='/post/student'
+                            ba.click()
+                        }else{
+                            let ba =document.createElement('a')
+                            ba.href ='/post/level'
+                            ba.click()
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             }else if(redoBtn.style.backgroundColor =='yellow'){
                 location.reload()
             }
@@ -774,9 +805,24 @@ function level() {
             let p5Color = document.querySelectorAll(".modeScan")[4].style.backgroundColor
 
             if(backBtn.style.backgroundColor =='yellow'){
-                let ba =document.createElement('a')
-                ba.href ='/post/level'
-                ba.click()
+                $.ajax({
+                    url: '/post/availCheck',
+                    method: "GET",
+                    success: function (response) {
+                        if(response =='yes'){
+                            let ba =document.createElement('a')
+                            ba.href ='/post/student'
+                            ba.click()
+                        }else{
+                            let ba =document.createElement('a')
+                            ba.href ='/post/level'
+                            ba.click()
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             }else if(redoBtn.style.backgroundColor =='yellow'){
                 location.reload()
             }
