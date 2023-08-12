@@ -1,10 +1,55 @@
 const mongoose =require('mongoose')
 
-const exercise = new mongoose.Schema({
-    Teacheremail:{type:String},
-    StudentName:{type:String}
-})
-    
+var UserSchema = new mongoose.Schema({
+	username: {
+		type: String,
+		index: true
+	},
+	password: {
+		type: String
+	},
+	studentname: {
+		type: String
+	},
+	name: {
+		type: String
+	},
+	age: {
+		type: Number
+	},
+	school: {
+		type: String
+	},
+	classname: {
+		type: String
+	},
+	ilike: {
+		type: String
+	},
+	idislike: {
+		type: String
+	},
+	backgroundcolor: {
+		type: String
+	},
+	scancolor: {
+		type: String
+	},
+	textcolor: {
+		type: String
+	},
+	textsize: {
+		type: String
+	},
+	operationalmode: {
+		type: Number
+	},
+	teachername_fk: {
+		type: String
+	},
+        createdAt: { type: Date, required: true, default: Date.now }
+});
 
-const Model =mongoose.model('SB Student detail',exercise)
-module.exports=Model 
+let User = mongoose.model('User', UserSchema);
+
+module.exports=User
