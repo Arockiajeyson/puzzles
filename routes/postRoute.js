@@ -930,7 +930,7 @@ app.post("/editFive", upload.array("audioEdit", 5), async (req, res) => {
     const update = await ThreeWordS.updateOne({ _id: findingEx._id }, req.body);
     // update.save()
     // console.log(update)
-    res.redirect("/post/continue");
+    res.redirect("/post/continue");  
   } catch (error) {
     res.json(error.message);
   }
